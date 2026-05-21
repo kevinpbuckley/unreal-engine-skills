@@ -1,0 +1,27 @@
+{
+  "name": "unreal-engine-skills-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server for Unreal Engine Skills with Playwright and Chrome DevTools",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "install-browsers": "playwright install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["unreal-engine", "mcp", "playwright", "chrome-devtools", "ai"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "playwright": "^1.40.0",
+    "chrome-remote-interface": "^0.31.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
