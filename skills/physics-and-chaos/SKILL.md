@@ -58,7 +58,7 @@ UFUNCTION() void OnBeginOverlap(UPrimitiveComponent* Comp, AActor* Other,
 UFUNCTION() void OnHit(UPrimitiveComponent* HitComp, AActor* Other,
     UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 ```
-Handlers must be `UFUNCTION()` (they bind dynamic delegates — `unreal-delegates-and-events`).
+Handlers must be `UFUNCTION()` (they bind dynamic delegates — `delegates-and-events`).
 
 ## Traces & sweeps (asking the world)
 

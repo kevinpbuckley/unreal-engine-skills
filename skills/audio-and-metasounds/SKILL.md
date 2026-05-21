@@ -55,7 +55,7 @@ AC->Stop();
 ```
 `PlaySound*` are fire-and-forget; use `SpawnSound*`/an `UAudioComponent` (or a component placed on
 the actor) when you need to stop, fade, or change parameters later. Store persistent audio
-components in a `UPROPERTY` (`unreal-memory-and-gc`).
+components in a `UPROPERTY` (`memory-and-gc`).
 
 ## 3D spatialization & attenuation
 

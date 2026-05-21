@@ -1,5 +1,5 @@
 ---
-name: navigating-unreal-engine-source
+name: navigating-engine-source
 description: Locate, read, and cite exact Unreal Engine APIs in the on-disk engine source
   instead of guessing. Use when you need a real function signature, class hierarchy,
   UPROPERTY/UFUNCTION specifier, module name, or include path; when verifying that an API

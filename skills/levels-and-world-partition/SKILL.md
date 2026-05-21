@@ -69,7 +69,7 @@ Use these instead of copy-pasting groups of actors.
 
 - `GetWorld()` from any actor; `UWorld` exposes the persistent level and streaming levels.
 - Spawn into the current world with `SpawnActor` (see `actors-and-components`).
-- World teardown destroys per-world state (timers, World Subsystems — see `unreal-subsystems`).
+- World teardown destroys per-world state (timers, World Subsystems — see `subsystems`).
 
 ## Choosing
 
@@ -82,7 +82,7 @@ Use these instead of copy-pasting groups of actors.
 
 - **Everything in one level** → memory blowout and slow load; stream it.
 - **OFPA + source control** — many tiny files; ensure your VCS/ignore rules handle them and avoid
-  committing generated dirs (`unreal-project-structure`).
+  committing generated dirs (`project-structure`).
 - **Referencing actors across streaming boundaries** with hard pointers breaks when a cell unloads;
   use soft references / re-acquire on load (`asset-management`).
 - **World Composition for new projects** — deprecated path; use World Partition.

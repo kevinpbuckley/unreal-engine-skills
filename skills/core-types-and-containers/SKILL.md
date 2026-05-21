@@ -1,5 +1,5 @@
 ---
-name: unreal-core-types-and-containers
+name: core-types-and-containers
 description: Use Unreal's core types instead of the C++ standard library — containers (TArray,
   TMap, TSet, TArrayView), string types (FString, FName, FText) and when each applies, math
   types (FVector, FRotator, FQuat, FTransform), and utility types (TOptional, TVariant, TTuple).
@@ -47,7 +47,7 @@ TSet<FGameplayTag> Tags;
 ```
 
 `TArray` of UObject pointers stored as a member must still be a `UPROPERTY()` to keep elements
-alive (e.g. `UPROPERTY() TArray<TObjectPtr<AActor>> Spawned;`). See `unreal-memory-and-gc`.
+alive (e.g. `UPROPERTY() TArray<TObjectPtr<AActor>> Spawned;`). See `memory-and-gc`.
 
 ## Strings: FString vs FName vs FText (pick the right one)
 

@@ -115,7 +115,7 @@ Then select the GameMode per-project (Project Settings → Maps & Modes) or per-
 - **Cross-level/app-wide (audio settings, save game, current profile)** → GameInstance / a subsystem.
 
 If it must survive a level change → GameInstance or a `UGameInstanceSubsystem`
-(see `unreal-subsystems`). If only the server may decide it → GameMode.
+(see `subsystems`). If only the server may decide it → GameMode.
 
 ## C++ base + Blueprint subclass pattern
 
@@ -155,4 +155,4 @@ Official docs (UE 5.7): Gameplay Systems —
 <https://dev.epicgames.com/documentation/unreal-engine/gameplay-systems-in-unreal-engine>
 
 Read the GameModeBase login/spawn methods before overriding them; confirm signatures with
-`navigating-unreal-engine-source`.
+`navigating-engine-source`.

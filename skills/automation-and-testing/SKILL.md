@@ -98,4 +98,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Testing and Optimizing Your Content —
 <https://dev.epicgames.com/documentation/unreal-engine/testing-and-optimizing-your-content>
 
-Related: `unreal-logging-and-assertions`, `debugging-techniques`.
+Related: `logging-and-assertions`, `debugging-techniques`.

@@ -1,5 +1,5 @@
 ---
-name: unreal-project-structure
+name: project-structure
 description: Understand the layout of an Unreal project — the .uproject file, the Config/Content/
   Source/Plugins folders, the Config .ini hierarchy, and which files belong in source control.
   Use when creating or navigating a project, editing the .uproject, changing project settings via
@@ -69,7 +69,7 @@ JSON descriptor. Key fields:
 
 - **EngineAssociation:** `"5.7"` for a launcher install; a GUID for a source-built engine
   (resolved via `HKCU\Software\Epic Games\Unreal Engine\Builds`).
-- **Modules:** the game's C++ modules (see `unreal-module-and-build-system`).
+- **Modules:** the game's C++ modules (see `module-and-build-system`).
 - **Plugins:** enable/disable engine and project plugins here (or via the editor's Plugins window).
 
 A project with no `Source/` folder is **Blueprint-only**; adding any C++ class creates `Source/`

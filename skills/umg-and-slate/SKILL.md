@@ -114,8 +114,8 @@ For game UI, stay in UMG/CommonUI.
 - **`BindWidget` name mismatch** → compile/load error ("not found"); the C++ name must equal the BP
   widget name (or use `BindWidgetOptional`).
 - **Per-frame property bindings** across many widgets → CPU cost; push updates instead.
-- **Widget not in a `UPROPERTY`** but kept around → GC'd (`unreal-memory-and-gc`).
-- **Building text with `FString`** for display — use `FText` for localization (`unreal-core-types-and-containers`).
+- **Widget not in a `UPROPERTY`** but kept around → GC'd (`memory-and-gc`).
+- **Building text with `FString`** for display — use `FText` for localization (`core-types-and-containers`).
 - **Gamepad/menu navigation pain** with plain UMG → use CommonUI for input routing.
 - **Forgetting input mode/cursor** → menu doesn't receive clicks.
 

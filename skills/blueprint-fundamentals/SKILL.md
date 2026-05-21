@@ -90,7 +90,7 @@ specifiers that expose C++ to Blueprints.
 
 - **Logic-heavy Blueprints** become unmaintainable and slower than C++; refactor into C++.
 - **Blueprint assets are binary** — they don't text-merge; keep them thin and coordinate edits
-  (see `unreal-project-structure`).
+  (see `project-structure`).
 - **Reparenting** a Blueprint to a different C++ base can break node connections — plan hierarchies.
 - **Casting nodes** that hard-reference other Blueprints create asset dependencies (load cost);
   prefer interfaces or C++ base types to decouple.
@@ -103,6 +103,6 @@ Engine source (UE 5.7):
 - `Runtime/Engine/Classes/Engine/BlueprintGeneratedClass.h` — `UBlueprintGeneratedClass` (the runtime class).
 - `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — common Blueprint-callable statics.
 
-Related: `blueprint-cpp-integration`, `actors-and-components`, `unreal-cpp-fundamentals`.
+Related: `blueprint-cpp-integration`, `actors-and-components`, `cpp-fundamentals`.
 Official docs (UE 5.7): Blueprints Visual Scripting —
 <https://dev.epicgames.com/documentation/unreal-engine/blueprints-visual-scripting-in-unreal-engine>

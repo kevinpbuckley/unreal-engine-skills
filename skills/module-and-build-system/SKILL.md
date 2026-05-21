@@ -1,5 +1,5 @@
 ---
-name: unreal-module-and-build-system
+name: module-and-build-system
 description: Structure Unreal C++ into modules and configure the build with *.Build.cs
   (ModuleRules) and *.Target.cs (TargetRules). Use when creating a new module or plugin module,
   fixing "Unresolved external symbol"/"Cannot open include file"/module-not-found link errors,
@@ -82,7 +82,7 @@ Rules of thumb:
   If only in `.cpp`/private headers, make it **private**.
 - The module name is the folder name under `Source/` (or a plugin's `Source/`) that contains a
   `<Name>.Build.cs`. Find which module owns a class by locating its header's module
-  (see `navigating-unreal-engine-source`).
+  (see `navigating-engine-source`).
 - Common modules: `Core`, `CoreUObject`, `Engine`, `InputCore`, `EnhancedInput`, `UMG`,
   `Slate`, `SlateCore`, `AIModule`, `GameplayTags`, `GameplayAbilities`, `NetCore`,
   `OnlineSubsystem`. Editor-only: `UnrealEd`, `Kismet`, `BlueprintGraph` (gate with

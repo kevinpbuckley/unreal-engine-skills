@@ -70,7 +70,7 @@ correct and repeatable.
 
 - Assets remember their **source file path**; right-click → Reimport pulls updated art with the
   same settings. Keep source files in a known location (or alongside, per team convention).
-- `.uasset` is binary (see `unreal-project-structure`); coordinate edits / use LFS.
+- `.uasset` is binary (see `project-structure`); coordinate edits / use LFS.
 
 ## Naming conventions (common Epic/community prefixes)
 

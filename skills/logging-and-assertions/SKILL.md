@@ -1,5 +1,5 @@
 ---
-name: unreal-logging-and-assertions
+name: logging-and-assertions
 description: Add logging and runtime checks to Unreal C++ — UE_LOG with custom log categories
   (DECLARE_LOG_CATEGORY_EXTERN/DEFINE_LOG_CATEGORY), verbosity levels, on-screen debug messages,
   and the assertion macros check/checkf, ensure/ensureMsgf, and verify. Use when adding

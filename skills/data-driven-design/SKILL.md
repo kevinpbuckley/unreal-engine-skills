@@ -90,7 +90,7 @@ float Mult = DamageFalloff ? DamageFalloff->GetFloatValue(Distance) : 1.f;
 ## Config-driven (.ini) properties
 
 For global, programmer-near tuning, mark a `UCLASS(Config=Game)` and `UPROPERTY(Config)`; values
-read/write from `Config/DefaultGame.ini` (see `unreal-project-structure`). Use for settings, not
+read/write from `Config/DefaultGame.ini` (see `project-structure`). Use for settings, not
 for content-scale data.
 
 ## Validation
@@ -117,4 +117,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Working with Content —
 <https://dev.epicgames.com/documentation/unreal-engine/working-with-content-in-unreal-engine>
 
-Related: `asset-management`, `gameplay-tags`, `unreal-project-structure`.
+Related: `asset-management`, `gameplay-tags`, `project-structure`.

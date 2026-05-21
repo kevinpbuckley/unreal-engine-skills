@@ -89,7 +89,7 @@ UGameplayStatics::AsyncLoadGameFromSlot(TEXT("Slot0"), 0, Loaded);
 - Don't try to serialize the entire live world; capture the minimal data to **reconstruct** it on
   load (positions/ids/states), then rebuild actors.
 - Coordinate with where state lives: GameInstance/subsystems for cross-level data
-  (`unreal-subsystems`, `gameplay-framework`).
+  (`subsystems`, `gameplay-framework`).
 
 ## Serializing actor state (UPROPERTY(SaveGame))
 
@@ -108,7 +108,7 @@ games, explicit fields are clearer.
 ## Settings vs save games
 
 Game/graphics **settings** often belong in config (`UGameUserSettings`, `.ini` —
-`unreal-project-structure`) rather than a SaveGame. Use SaveGame for *gameplay* persistence.
+`project-structure`) rather than a SaveGame. Use SaveGame for *gameplay* persistence.
 
 ## Gotchas
 
@@ -129,4 +129,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Gameplay Systems —
 <https://dev.epicgames.com/documentation/unreal-engine/gameplay-systems-in-unreal-engine>
 
-Related: `unreal-subsystems`, `gameplay-framework`, `data-driven-design`.
+Related: `subsystems`, `gameplay-framework`, `data-driven-design`.

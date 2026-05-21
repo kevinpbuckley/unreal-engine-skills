@@ -61,8 +61,8 @@ These are callable from both C++ and Python — the same automation surface.
 
 ## C++ editor tools & subsystems
 
-For durable tools, write an **editor module** (Type `Editor`, `unreal-module-and-build-system`) and
-use a `UEditorSubsystem` (`unreal-subsystems`) plus Slate/menu extensions to add toolbar/menu
+For durable tools, write an **editor module** (Type `Editor`, `module-and-build-system`) and
+use a `UEditorSubsystem` (`subsystems`) plus Slate/menu extensions to add toolbar/menu
 entries. Keep this code out of runtime modules.
 
 ## Commandlets (headless)
@@ -89,4 +89,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Setting Up Your Production Pipeline —
 <https://dev.epicgames.com/documentation/unreal-engine/setting-up-your-production-pipeline-in-unreal-engine>
 
-Related: `unreal-subsystems`, `plugins-and-modules`, `asset-management`.
+Related: `subsystems`, `plugins-and-modules`, `asset-management`.

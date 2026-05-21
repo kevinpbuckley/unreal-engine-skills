@@ -26,7 +26,7 @@ space?* (debug draw), *what happened over time?* (Visual Logger), *what is the A
 ## Logging & assertions (start here)
 
 `UE_LOG` with categories, on-screen messages, and `check`/`ensure` — see
-`unreal-logging-and-assertions`. Prefer `ensure` in gameplay code so the editor survives while
+`logging-and-assertions`. Prefer `ensure` in gameplay code so the editor survives while
 surfacing the problem. For most "what's the value / did this run" questions, a log line is fastest.
 
 ## Debug drawing (visualize in the world)
@@ -96,9 +96,9 @@ Engine source (UE 5.7):
 - `Runtime/Engine/Public/DrawDebugHelpers.h` — `DrawDebug*` functions.
 - `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — `UE_VLOG*`.
 - `Runtime/GameplayDebugger/Public/GameplayDebugger.h` — Gameplay Debugger.
-- `Runtime/Core/Public/Misc/AssertionMacros.h` — `check`/`ensure` (see `unreal-logging-and-assertions`).
+- `Runtime/Core/Public/Misc/AssertionMacros.h` — `check`/`ensure` (see `logging-and-assertions`).
 
 Official docs (UE 5.7): Testing and Optimizing Your Content —
 <https://dev.epicgames.com/documentation/unreal-engine/testing-and-optimizing-your-content>
 
-Related: `unreal-logging-and-assertions`, `ai-and-navigation`, `profiling-and-optimization`.
+Related: `logging-and-assertions`, `ai-and-navigation`, `profiling-and-optimization`.

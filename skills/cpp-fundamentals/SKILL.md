@@ -1,5 +1,5 @@
 ---
-name: unreal-cpp-fundamentals
+name: cpp-fundamentals
 description: Write correct Unreal Engine C++ — the UObject reflection system, UCLASS/USTRUCT/
   UENUM/UINTERFACE, UPROPERTY and UFUNCTION specifiers, the *.generated.h pattern, class
   prefixes (U/A/F/E/I), module *_API export macros, and garbage-collection-safe ownership.
@@ -204,7 +204,7 @@ public:
 - **Editing a header's reflected surface** requires recompiling (and sometimes a Live Coding
   full rebuild); structural changes (new UPROPERTY/UFUNCTION) often need a normal build.
 - **Calling editor-only API from runtime code** → packaging failures; guard with `WITH_EDITOR`.
-- **`FName`/`FString`/`FText` mix-ups** — see `unreal-core-types-and-containers`.
+- **`FName`/`FString`/`FText` mix-ups** — see `core-types-and-containers`.
 
 ## References & source material
 
@@ -217,4 +217,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Programming with C++ —
 <https://dev.epicgames.com/documentation/unreal-engine/programming-with-cplusplus-in-unreal-engine>
 
-Use `navigating-unreal-engine-source` to confirm any specifier or signature before relying on it.
+Use `navigating-engine-source` to confirm any specifier or signature before relying on it.

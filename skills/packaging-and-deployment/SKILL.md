@@ -27,8 +27,8 @@ failures are editor-only code leaking into runtime, missing references, or confi
 
 - **Configurations:** `Debug`, `DebugGame`, **`Development`** (default for iteration; logging +
   `check`), **`Test`** (shipping-like with some tooling), **`Shipping`** (optimized; `check`
-  compiled out, minimal logging). See `unreal-logging-and-assertions` for what changes.
-- **Target types** (`*.Target.cs`, `unreal-module-and-build-system`): `Game`, `Editor`, `Server`,
+  compiled out, minimal logging). See `logging-and-assertions` for what changes.
+- **Target types** (`*.Target.cs`, `module-and-build-system`): `Game`, `Editor`, `Server`,
   `Client`, `Program`. You package the Game/Client/Server targets, not Editor.
 
 ## Cooking
@@ -69,7 +69,7 @@ list of maps. Project Settings → Maps & Modes sets the default/startup map.
 ## Shipping vs development (mind the gap)
 
 - `check`/`ensure` and most `UE_LOG` are stripped/limited in Shipping — don't rely on them for
-  logic; never put required side effects in `check` (use `verify`, `unreal-logging-and-assertions`).
+  logic; never put required side effects in `check` (use `verify`, `logging-and-assertions`).
 - Editor-only code (`WITH_EDITOR`, editor modules) isn't present — guard runtime code accordingly.
 - Always smoke-test the **packaged** build, not just PIE.
 
@@ -87,10 +87,10 @@ list of maps. Project Settings → Maps & Modes sets the default/startup map.
 Engine source (UE 5.7):
 - `Programs/UnrealBuildTool/Configuration/TargetRules.cs` — target types, build configuration fields.
 - Packaging settings live in `Config/DefaultGame.ini` (`[/Script/UnrealEd.ProjectPackagingSettings]`)
-  and Maps & Modes in `DefaultEngine.ini` (`unreal-project-structure`).
+  and Maps & Modes in `DefaultEngine.ini` (`project-structure`).
 - Build/cook/package is driven by UAT/UBT under `Engine/Source/Programs/`.
 
 Official docs (UE 5.7): Sharing and Releasing Projects —
 <https://dev.epicgames.com/documentation/unreal-engine/sharing-and-releasing-projects-for-unreal-engine>
 
-Related: `unreal-module-and-build-system`, `asset-management`, `unreal-logging-and-assertions`.
+Related: `module-and-build-system`, `asset-management`, `logging-and-assertions`.

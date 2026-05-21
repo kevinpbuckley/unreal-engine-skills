@@ -13,7 +13,7 @@ metadata:
 # Plugins & modules
 
 A **plugin** is a self-contained, reusable feature: a `.uplugin` descriptor plus one or more
-**modules** (`unreal-module-and-build-system`) and optional content/resources. Use plugins to share
+**modules** (`module-and-build-system`) and optional content/resources. Use plugins to share
 features across projects, isolate optional systems, and ship editor tools.
 
 ## When to use this skill
@@ -43,8 +43,8 @@ Plugins/MyFeature/
 └── Resources/                  # icon, etc.
 ```
 Each module follows the standard module layout and has its own `*.Build.cs`
-(`unreal-module-and-build-system`). Plugin content mounts under `/MyFeature/...`
-(`unreal-project-structure`).
+(`module-and-build-system`). Plugin content mounts under `/MyFeature/...`
+(`project-structure`).
 
 ## The `.uplugin` descriptor
 
@@ -73,7 +73,7 @@ Each module follows the standard module layout and has its own `*.Build.cs`
 ## Enabling plugins
 
 - In a project: Edit → Plugins window, or add to the `.uproject` `Plugins` array
-  (`unreal-project-structure`). Disabling unused engine plugins reduces build/footprint.
+  (`project-structure`). Disabling unused engine plugins reduces build/footprint.
 - Engine plugins live under the engine's `Plugins/`; project plugins under the project's `Plugins/`.
 
 ## Module types & loading phases (recap)
@@ -111,4 +111,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Setting Up Your Production Pipeline —
 <https://dev.epicgames.com/documentation/unreal-engine/setting-up-your-production-pipeline-in-unreal-engine>
 
-Related: `unreal-module-and-build-system`, `unreal-project-structure`, `editor-scripting-and-python`.
+Related: `module-and-build-system`, `project-structure`, `editor-scripting-and-python`.

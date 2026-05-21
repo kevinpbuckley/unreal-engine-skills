@@ -77,7 +77,7 @@ Add scopes around suspect systems so they show up by name in the profiler.
 - `stat memory`, `memreport -full` for a snapshot.
 - **LLM (Low-Level Memory tracker)** and Insights Memory for allocation attribution.
 - Watch hard references pulling large assets into memory (`asset-management`) and leaks from
-  unmanaged objects (`unreal-memory-and-gc`).
+  unmanaged objects (`memory-and-gc`).
 
 ## Common optimization levers (after measuring)
 
@@ -105,4 +105,4 @@ Engine source (UE 5.7):
 Official docs (UE 5.7): Testing and Optimizing Your Content —
 <https://dev.epicgames.com/documentation/unreal-engine/testing-and-optimizing-your-content>
 
-Related: `nanite-and-rendering`, `materials-and-shaders`, `timers-and-async`, `unreal-memory-and-gc`.
+Related: `nanite-and-rendering`, `materials-and-shaders`, `timers-and-async`, `memory-and-gc`.

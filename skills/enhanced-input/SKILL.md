@@ -27,7 +27,7 @@ deprecated). Input is data-driven: **Input Actions** (what can happen) are mappe
 ## Setup checklist
 
 1. Enable the **Enhanced Input** plugin (on by default in 5.x) and add `"EnhancedInput"` to your
-   module's `PrivateDependencyModuleNames` (see `unreal-module-and-build-system`).
+   module's `PrivateDependencyModuleNames` (see `module-and-build-system`).
 2. Set the Enhanced Input classes as defaults (Project Settings → Input):
    `Default Player Input Class = EnhancedPlayerInput`,
    `Default Input Component Class = EnhancedInputComponent`.

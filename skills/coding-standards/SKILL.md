@@ -1,5 +1,5 @@
 ---
-name: unreal-coding-standards
+name: coding-standards
 description: Write Unreal C++ that matches Epic's coding standard — type prefixes (U/A/F/E/I/T/S),
   PascalCase naming, the bBool prefix, brace/formatting conventions, const correctness, TEXT()/
   nullptr/override usage, include order with generated.h last, and using engine types/containers
@@ -13,7 +13,7 @@ metadata:
 # Unreal coding standards
 
 Match Epic's C++ conventions so code reads like the engine and the rest of the project. This skill
-is the style layer; the mechanics live in `unreal-cpp-fundamentals` and `unreal-core-types-and-containers`.
+is the style layer; the mechanics live in `cpp-fundamentals` and `core-types-and-containers`.
 The overriding rule: **match the surrounding code**.
 
 ## When to use this skill
@@ -26,7 +26,7 @@ The overriding rule: **match the surrounding code**.
 
 - **Type prefixes** (mandatory): `U` UObject (non-actor), `A` Actor, `F` plain struct/class,
   `E` enum, `I` interface, `T` template, `S` Slate widget, `G` global (rare). The name after the
-  prefix matches the file name: `AMyPawn` in `MyPawn.h`. (See `unreal-cpp-fundamentals`.)
+  prefix matches the file name: `AMyPawn` in `MyPawn.h`. (See `cpp-fundamentals`.)
 - **PascalCase** (UpperCamelCase) for types, functions, and member/local variables:
   `MaxHealth`, `ApplyDamage`, `TArray<AActor*> SpawnedActors`. Unreal does **not** use `m_` or
   snake_case for members.
@@ -56,26 +56,26 @@ The overriding rule: **match the surrounding code**.
 - **`override`** on every overridden virtual; `final` where appropriate.
 - **`const` correctness**: const member functions for non-mutating methods; `const&` for non-trivial
   parameters you don't copy.
-- **`TEXT("...")`** around every string literal so it's `TCHAR` (`unreal-core-types-and-containers`).
+- **`TEXT("...")`** around every string literal so it's `TCHAR` (`core-types-and-containers`).
 - Prefer **`enum class`** over plain enums; `uint8`-backed if Blueprint-exposed.
 - Use **engine types/containers** (`FString`, `TArray`, `TMap`, `FVector`) — not `std::string`/
-  `std::vector` (`unreal-core-types-and-containers`).
+  `std::vector` (`core-types-and-containers`).
 - Prefer `auto` only when the type is obvious from the right-hand side.
 
 ## Headers & includes
 
 - Include order in a header: `CoreMinimal.h` (or specific core headers), then engine/module headers
-  this header needs, then **`"<ThisType>.generated.h"` LAST** (`unreal-cpp-fundamentals`).
+  this header needs, then **`"<ThisType>.generated.h"` LAST** (`cpp-fundamentals`).
 - **Forward declare** in headers where possible (`class UStaticMeshComponent;`) and include the full
   header in the `.cpp` — keeps compile times and dependencies down.
 - Every reflected type uses `GENERATED_BODY()`; exported types use the module `*_API` macro
-  (`unreal-module-and-build-system`).
+  (`module-and-build-system`).
 
 ## Reflection style
 
 - Always set a `Category` on `UPROPERTY`/`UFUNCTION` exposed to the editor/Blueprints.
 - Order specifiers consistently; put `meta=(...)` last.
-- Use `TObjectPtr<>` for UObject `UPROPERTY` members (`unreal-memory-and-gc`).
+- Use `TObjectPtr<>` for UObject `UPROPERTY` members (`memory-and-gc`).
 
 ## Comments & docs
 
@@ -85,7 +85,7 @@ The overriding rule: **match the surrounding code**.
 
 ## Logging & errors
 
-- Log through a category with `UE_LOG` (`unreal-logging-and-assertions`); don't leave debug prints.
+- Log through a category with `UE_LOG` (`logging-and-assertions`); don't leave debug prints.
 - `check` for invariants, `ensure` for recoverable "shouldn't happen"; never put required side
   effects in `check`.
 
@@ -93,7 +93,7 @@ The overriding rule: **match the surrounding code**.
 
 If a file/module already follows a convention (even a local one), follow it over these defaults.
 Consistency within a codebase beats global preference. When in doubt, read a nearby engine or
-project header (`navigating-unreal-engine-source`) and mirror it.
+project header (`navigating-engine-source`) and mirror it.
 
 ## Gotchas
 
@@ -113,4 +113,4 @@ reflection conventions in practice.
 Official docs (UE 5.7): the Epic C++ Coding Standard, under Programming with C++ —
 <https://dev.epicgames.com/documentation/unreal-engine/programming-with-cplusplus-in-unreal-engine>
 
-Related: `unreal-cpp-fundamentals`, `unreal-core-types-and-containers`, `unreal-module-and-build-system`.
+Related: `cpp-fundamentals`, `core-types-and-containers`, `module-and-build-system`.

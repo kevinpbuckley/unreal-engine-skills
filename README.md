@@ -54,24 +54,24 @@ unreal-engine-skills/
 Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and built in batches.)
 
 ### Cross-cutting / meta
-- ✅ `navigating-unreal-engine-source` — locate and cite exact APIs in the on-disk engine source
-- ✅ `unreal-coding-standards` — Epic C++ coding standard, naming prefixes, conventions
+- ✅ `navigating-engine-source` — locate and cite exact APIs in the on-disk engine source
+- ✅ `coding-standards` — Epic C++ coding standard, naming prefixes, conventions
 
 ### C++ foundations
-- ✅ `unreal-cpp-fundamentals` — UObject, UCLASS/USTRUCT/UENUM, UPROPERTY/UFUNCTION, reflection, GC
-- ✅ `unreal-module-and-build-system` — modules, `*.Build.cs`, `*.Target.cs`, dependencies
-- ✅ `unreal-project-structure` — `.uproject`, Config/Content/Source layout, plugins
-- ✅ `unreal-memory-and-gc` — UPROPERTY ownership, `TObjectPtr`, weak ptrs, smart pointers
-- ✅ `unreal-core-types-and-containers` — `TArray`/`TMap`/`TSet`, `FString`/`FName`/`FText`, math types
-- ✅ `unreal-delegates-and-events` — single/multicast/dynamic delegates and events
-- ✅ `unreal-logging-and-assertions` — `UE_LOG`, log categories, `check`/`ensure`
+- ✅ `cpp-fundamentals` — UObject, UCLASS/USTRUCT/UENUM, UPROPERTY/UFUNCTION, reflection, GC
+- ✅ `module-and-build-system` — modules, `*.Build.cs`, `*.Target.cs`, dependencies
+- ✅ `project-structure` — `.uproject`, Config/Content/Source layout, plugins
+- ✅ `memory-and-gc` — UPROPERTY ownership, `TObjectPtr`, weak ptrs, smart pointers
+- ✅ `core-types-and-containers` — `TArray`/`TMap`/`TSet`, `FString`/`FName`/`FText`, math types
+- ✅ `delegates-and-events` — single/multicast/dynamic delegates and events
+- ✅ `logging-and-assertions` — `UE_LOG`, log categories, `check`/`ensure`
 
 ### Gameplay framework
 - ✅ `gameplay-framework` — GameInstance, GameMode/GameState, PlayerController, Pawn/Character, PlayerState, HUD
 - ✅ `actors-and-components` — `AActor` lifecycle, components, attachment, spawning
 - ✅ `character-and-movement` — `ACharacter`, `UCharacterMovementComponent`
 - ✅ `enhanced-input` — Enhanced Input actions, mapping contexts, bindings
-- ✅ `unreal-subsystems` — Engine/GameInstance/World/LocalPlayer subsystems
+- ✅ `subsystems` — Engine/GameInstance/World/LocalPlayer subsystems
 - ✅ `timers-and-async` — `FTimerManager`, async tasks, latent actions
 - ✅ `gameplay-tags` — `FGameplayTag`, containers, tag-driven logic
 - ✅ `gameplay-ability-system` — GAS abilities, attributes, effects, tasks

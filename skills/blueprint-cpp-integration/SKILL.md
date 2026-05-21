@@ -126,7 +126,7 @@ Use `Execute_<Func>` to call interface functions that may be implemented in Blue
 ## Exposing delegates/events to Blueprint
 
 Use a dynamic multicast delegate with `BlueprintAssignable` so designers can bind in the Event
-Graph (see `unreal-delegates-and-events`):
+Graph (see `delegates-and-events`):
 ```cpp
 UPROPERTY(BlueprintAssignable, Category="Events")
 FOnDiedSignature OnDied;
@@ -150,6 +150,6 @@ Engine source (UE 5.7):
 - `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — a large real BP library to model on.
 - `Runtime/CoreUObject/Public/UObject/Interface.h` — `UInterface`/interface plumbing.
 
-Related: `unreal-cpp-fundamentals`, `blueprint-fundamentals`, `unreal-delegates-and-events`.
+Related: `cpp-fundamentals`, `blueprint-fundamentals`, `delegates-and-events`.
 Official docs (UE 5.7): Blueprints Visual Scripting —
 <https://dev.epicgames.com/documentation/unreal-engine/blueprints-visual-scripting-in-unreal-engine>

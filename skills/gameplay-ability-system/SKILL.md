@@ -27,7 +27,7 @@ it does not attempt to cover all of GAS.
 ## Setup
 
 1. Enable the **Gameplay Abilities** plugin. Add `"GameplayAbilities"`, `"GameplayTags"`,
-   `"GameplayTasks"` to your module's dependencies (`unreal-module-and-build-system`).
+   `"GameplayTasks"` to your module's dependencies (`module-and-build-system`).
 2. Call `UAbilitySystemGlobals::Get().InitGlobalData()` once at startup (e.g. in your module's
    startup or `UAssetManager::StartInitialLoading`) — required for target data/montage prediction.
 

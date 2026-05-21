@@ -1,5 +1,5 @@
 ---
-name: unreal-delegates-and-events
+name: delegates-and-events
 description: Wire up callbacks and events in Unreal C++ with delegates — single-cast
   (DECLARE_DELEGATE), multicast (DECLARE_MULTICAST_DELEGATE), and dynamic delegates
   (DECLARE_DYNAMIC_MULTICAST_DELEGATE, BlueprintAssignable) — plus binding (BindUObject,

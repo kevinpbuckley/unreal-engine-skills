@@ -69,7 +69,7 @@ helpers exist on `UNiagaraFunctionLibrary` (e.g. `SetVectorParameter`).
   the effect completes.
 - For persistent/looping effects (an aura, a fire), keep the `UNiagaraComponent*` and call
   `Activate()`/`Deactivate()`/`DestroyComponent()` yourself.
-- Created components are UObjects — store persistent ones in a `UPROPERTY` (`unreal-memory-and-gc`).
+- Created components are UObjects — store persistent ones in a `UPROPERTY` (`memory-and-gc`).
 
 ## CPU vs GPU simulation
 

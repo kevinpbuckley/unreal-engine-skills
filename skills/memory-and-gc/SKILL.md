@@ -1,5 +1,5 @@
 ---
-name: unreal-memory-and-gc
+name: memory-and-gc
 description: Manage object lifetime safely in Unreal — the UObject garbage collector, keeping
   objects alive with UPROPERTY, TObjectPtr vs raw pointers, TWeakObjectPtr, TSoftObjectPtr, the
   root set, FGCObject for non-UObject owners, and smart pointers (TSharedPtr/TUniquePtr) for

@@ -1,5 +1,5 @@
 ---
-name: unreal-subsystems
+name: subsystems
 description: Use Unreal's Subsystems for clean, automatically-managed singletons scoped to a
   lifetime — UGameInstanceSubsystem, UWorldSubsystem, ULocalPlayerSubsystem, UEngineSubsystem
   (and UEditorSubsystem) — with Initialize/Deinitialize and ShouldCreateSubsystem. Use when you
