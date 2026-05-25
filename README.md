@@ -119,6 +119,33 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `packaging-and-deployment` — cooking, packaging, platforms
 - ✅ `debugging-techniques` — debugger, Gameplay Debugger, Visual Logger
 
+### Marketplace asset pack skills
+
+Skills for widely-used marketplace asset packs. These follow the same authoring style as the rest
+of the repo (frontmatter, system tables, *When to use*, *Gotchas*, *References & source material*)
+with one deviation from convention: skills cite the pack's documentation + its plugin asset paths (`Blueprints/...`, `Materials/...`,
+`Particles/...`) instead of `Engine/Source/...`, and code patterns are Blueprint-flavored
+pseudocode for packs that have no public C++ API.
+
+#### Ultra Dynamic Sky
+- ✅ `uds-setup-and-modes` — adding UDS to a level, Sky/Color/Project/Feature Mode
+- ✅ `uds-clouds` — Volumetric/Static/2D/Voxel clouds, movement, painter, wisps, light rays
+- ✅ `uds-time` — Time of Day, day/night cycle, runtime functions, event dispatchers
+- ✅ `uds-sun-moon-stars` — sun/moon positioning + appearance, stars, aurora, Space Layer (planets/moons/nebula)
+- ✅ `uds-lighting-and-shadows` — sun/moon directional lights, cloud shadows, sky light modes, exposure, light shafts, Light Day/Night Toggle
+- ✅ `uds-fog-and-atmosphere` — fog density/color, volumetric fog, Global Volumetric Material, dust, sky atmosphere, Simplified Color
+- ✅ `uds-simulation` — real-world sun/moon/stars (lat/long/date/time zone), city presets, Use System Time
+- ✅ `uds-cinematics-rendering` — Sequencer keyframing, Movie Render Queue, Path Tracer support, seamless cloud looping
+- ✅ `uds-modifiers-configs-state` — Sky Modifiers, Configuration Manager, save/load state, lens flare, post process components, interior + Player Occlusion, water level, on-screen UI
+- ✅ `uds-performance-mobile-troubleshooting` — perf levers, mobile + Feature Level, updating UDS, cache system (Static Properties / Hard Reset Cache), common runtime issues
+
+#### Ultra Dynamic Weather
+- ✅ `udw-setup-and-state` — weather state model, presets, Change Weather, Manual Weather State, sampling, event dispatchers, Actor Weather Status component
+- ✅ `udw-random-seasons-temperature` — Random Weather Variation, seasons (0–4), climate presets, temperature system, Temperature Volumes
+- ✅ `udw-spatial-weather` — Weather Override Volumes, Radial Storms, Weather Above Volumetric Clouds, Weather Mask Brush / Projection Box
+- ✅ `udw-particles-lightning-wind-sounds` — rain/snow/dust particles, collision modes, lightning (incl. strikable actor interface), wind systems, sounds, environment sounds (5.1 metasound)
+- ✅ `udw-material-and-screen-effects` — Surface Weather Effects, DLWE V3, Glass Rain Drips, Foliage Wind, Water Ripples, screen droplets/frost/distortion, Puddle Fluid Volume, drip splines, breath, icicles
+
 ## Authoring conventions
 
 See [`docs/skill-authoring-guide.md`](docs/skill-authoring-guide.md). In short:
