@@ -4,7 +4,7 @@ description: Control Time of Day on Ultra Dynamic Sky — setting/animating time
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: time
-  source-docs: D:\UDSdocs.txt (lines 226-269, 517-555)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS time of day
@@ -164,14 +164,12 @@ Clients tick time locally between resyncs the same way the server does. Brief de
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Controlling Time of Day — lines 226-229
-- Animate Time of Day — lines 231-237
-- Time of Day Control Functions — lines 239-251
-- Getting and Displaying Time of Day — lines 254-269
-- Triggering Events at Specific Times (dispatchers) — lines 517-544
-- Day to Night / Active Sun or Moon Vector material funcs — lines 546-556
-- Replication notes — lines 2104-2108
+Docs (Ultra Dynamic Sky 9.5):
+- [Controlling Time of Day](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-24) (incl. Animate Time of Day, time-control functions)
+- [Getting and Displaying Time of Day](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-25)
+- [Triggering Events at Specific Times](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-49) (dispatchers)
+- [Sky Utility Material Functions](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-50) (Day to Night, Active Sun or Moon Vector)
+- [Technical Notes — Replication (UDS)](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-176)
 
 Plugin asset paths:
 - `Blueprints/Utilities/` — Light Day/Night Toggle component (the light-component partner of the material `Day to Night` functions)

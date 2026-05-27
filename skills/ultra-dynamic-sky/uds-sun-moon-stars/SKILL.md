@@ -4,7 +4,7 @@ description: Control the sun, moon, stars, aurora, sky glow, and space layer (pl
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: celestial-bodies
-  source-docs: D:\UDSdocs.txt (lines 271-318, 559-614, 1963-1968)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS sun, moon, stars, aurora, space
@@ -174,16 +174,16 @@ For materials that need to know which body is currently the dominant light sourc
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Sun and Moon movement — lines 271-283
-- Manually positioning — lines 286-299
-- Sun appearance — lines 302-309
-- Moon appearance and phase — lines 312-317
-- Stars — lines 559-566
-- Aurora (2D + Volumetric) — lines 569-578
-- Sky Glow — lines 581-586
-- Space Layer (planets, moons, nebula) — lines 589-613
-- Space Layer requirements troubleshooting — lines 1963-1968
+Docs (Ultra Dynamic Sky 9.5):
+- [Adjusting Sun and Moon Movement](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-27)
+- [Manually Positioning the Sun and Moon](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-28)
+- [Sun Appearance](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-29)
+- [Moon Appearance and Phase](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-30)
+- [Stars](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-52)
+- [Aurora](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-53) (2D + Volumetric)
+- [Sky Glow](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-54)
+- [Adding Planets / Moons / Nebula Using the Space Layer](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-55)
+- [Common Issues — Space Layer Not Rendering](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-160)
 
 Plugin asset paths:
 - Component list on the UDS actor: **Sun**, **Moon**, **Sky Light** light components

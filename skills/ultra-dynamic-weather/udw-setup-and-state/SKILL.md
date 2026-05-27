@@ -4,7 +4,7 @@ description: Set up Ultra Dynamic Weather (UDW) and control its weather state �
 metadata:
   asset: Ultra Dynamic Weather (marketplace)
   category: setup
-  source-docs: D:\UDSdocs.txt (lines 942-1029, 1037-1082, 1549-1622, 2110-2153)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDW setup and weather state
@@ -231,19 +231,19 @@ Result: updates only need to go over the wire when a state-source change starts.
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Adding UDW — lines 942-955
-- Basic Controls — lines 959-964
-- Weather State (values + material state) — lines 967-993
-- What Determines the Weather State — lines 996-1011
-- Weather Settings Presets — lines 1014-1025
-- Change Weather — lines 1027-1035
-- Manual Weather State — lines 1073-1082
-- Sampling Weather State — lines 1549-1560
-- Weather Event Dispatchers — lines 1591-1608
-- Actor Weather Status component — lines 1611-1622
-- Custom Weather Behavior — lines 1786-1792
-- Replication — lines 2110-2153
+Docs (Ultra Dynamic Weather 9.5):
+- [Adding Ultra Dynamic Weather to Your Level](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-78)
+- [Basic Controls](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-79)
+- [What is Weather State?](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-81)
+- [What Determines the Weather State?](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-82)
+- [Weather Settings Presets](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-83)
+- [Change Weather](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-84)
+- [Manual Weather State](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-87)
+- [Sampling the Weather State from UDW](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-112)
+- [Weather Event Dispatchers](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-115)
+- [Actor Weather Status](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-116)
+- [Custom Weather Behavior](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-135)
+- [Technical Notes — Replication (UDW)](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-183)
 
 Plugin asset paths:
 - `Blueprints/` — Ultra Dynamic Weather actor (drag from here)

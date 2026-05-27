@@ -4,7 +4,7 @@ description: Use Ultra Dynamic Sky's real-world astronomical simulation — Simu
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: simulation
-  source-docs: D:\UDSdocs.txt (lines 394-425)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS astronomical simulation
@@ -104,9 +104,8 @@ The simulation toggles, location, date, and DST are mostly **static properties**
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Real-world simulation overview — lines 394-409
-- Accuracy notes — lines 411-415
-- Time control with simulation — lines 417-425
+Docs (Ultra Dynamic Sky 9.5):
+- [Simulation of Real World Sun, Moon and Stars](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-40) (incl. accuracy notes)
+- [Controlling Time of the Simulation](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-41)
 
 Related skills: `uds-time`, `uds-sun-moon-stars`, `uds-setup-and-modes`.

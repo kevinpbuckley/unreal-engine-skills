@@ -4,7 +4,7 @@ description: Configure Ultra Dynamic Weather's rendered effects — Rain / Snow 
 metadata:
   asset: Ultra Dynamic Weather (marketplace)
   category: weather-rendering
-  source-docs: D:\UDSdocs.txt (lines 1146-1237, 1476-1547, 1624-1671, 1972-2030)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDW particles, lightning, wind, sounds
@@ -341,16 +341,23 @@ UDW.ChangeEnvironmentSound(null)   // stop environment sounds
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Rain / Snow / Dust Particles — lines 1146-1168
-- Weather Particle Collision (Simple / Distance Field / Kill Sphere / Occlusion Volume) — lines 1171-1197
-- Shared Particle Settings (Spawning) — lines 1200-1209
-- Lightning (Flashes + Obscured + Flash Lightning + Strikable Interface) — lines 1212-1237
-- Sound Effects — lines 1476-1484
-- Sound Occlusion (Portal, UDS Outdoor Sound) — lines 1487-1496
-- Environment Sounds (metasound format) — lines 1499-1547
-- Wind Direction + Gusts + Debris + Source + Physics Force + Camera Shake — lines 1624-1670
-- Particle troubleshooting (incl. VR splash, Simulate mode) — lines 1972-2030
+Docs (Ultra Dynamic Weather 9.5):
+- [Rain Particles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-92)
+- [Snow Particles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-93)
+- [Dust Particles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-94)
+- [Weather Particle Collision](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-95) (Simple / Distance Field / Kill Sphere / Occlusion Volume)
+- [Weather Particle Spawning](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-96)
+- [Lightning](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-97) (Flashes, Obscured, Flash Lightning, Strikable Interface)
+- [Weather Sound Effects](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-108)
+- [Sound Occlusion](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-109) (Portal, UDS Outdoor Sound)
+- [Environment Sound](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-110) (metasound format)
+- [Wind Direction](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-118)
+- [Wind Debris](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-119)
+- [Wind Gusts](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-120)
+- [Wind Directional Source](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-121)
+- [Wind Physics Force](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-122)
+- [Wind Camera Shake](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-123)
+- [Common Issues — Weather](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-161) (incl. VR splash, Simulate mode)
 
 Plugin asset paths:
 - `Particles/` — Rain, Snow, Dust, Wind Debris niagara systems

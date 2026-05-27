@@ -4,7 +4,7 @@ description: Use UDS's higher-level state features — Sky Modifiers (data asset
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: state-management
-  source-docs: D:\UDSdocs.txt (lines 615-829, 932-940)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS modifiers, configurations, state, and misc features
@@ -270,18 +270,18 @@ Some classes have empty functions specifically meant for override in children �
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Configurations — lines 617-647
-- Sky Modifiers — lines 649-687
-- Saving / loading state for save games — lines 689-697
-- Sun Lens Flare — lines 700-705
-- Interior Adjustments — lines 708-716
-- Player Occlusion — lines 718-732
-- Water Level + Water Body Classes — lines 765-781
-- Post Process Components — lines 791-806
-- AmbientSound — Time and Weather Controlled — lines 808-816
-- On Screen Sky Controls — lines 818-829
-- Modifying UDS Blueprints — lines 932-940
+Docs (Ultra Dynamic Sky 9.5):
+- [Saving and Applying Configurations](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-57)
+- [Sky Modifiers](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-58)
+- [Saving the Sky and Weather State for Save Data](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-59)
+- [Sun Lens Flare](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-60)
+- [Interior Adjustments](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-61)
+- [Player Occlusion](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-62)
+- [Water Level](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-65) (incl. Water Body Classes)
+- [Post Processing](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-67) (Post Process Components)
+- [Ambient Sounds Controlled by Time and Weather](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-68)
+- [On Screen Sky Controls](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-69)
+- [Modifying UDS Blueprints](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-74)
 
 Plugin asset paths:
 - `Blueprints/Tools/` — Sky Modifier Editor, Configuration Manager, Configuration Buttons utilities

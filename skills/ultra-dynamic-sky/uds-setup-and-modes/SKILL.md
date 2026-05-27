@@ -4,7 +4,7 @@ description: How to install Ultra Dynamic Sky (UDS) in an Unreal level and pick 
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: setup
-  source-docs: D:\UDSdocs.txt (lines 1-92, 832-887)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS setup and top-level modes
@@ -145,14 +145,14 @@ Most "active" properties (Time of Day, Cloud Coverage, Fog, sun/moon colors) upd
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Setup — lines 10-31 (`Adding Ultra Dynamic Sky to Your Level`)
-- Basic Controls — lines 34-50
-- Sky Mode — lines 52-67
-- Color Mode — lines 70-76
-- Project Mode — lines 78-84
-- Feature Level — lines 86-92
-- Mobile considerations — lines 879-887
+Docs (Ultra Dynamic Sky 9.5):
+- [Adding Ultra Dynamic Sky to Your Level](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-3)
+- [Basic Controls](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-4)
+- [Sky Mode](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-5)
+- [Color Mode](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-6)
+- [Project Mode](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-7)
+- [Feature Level](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-8)
+- [Considerations for Mobile](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-72)
 
 Plugin asset paths:
 - `Blueprints/` — UDS actor (drag into level from here)

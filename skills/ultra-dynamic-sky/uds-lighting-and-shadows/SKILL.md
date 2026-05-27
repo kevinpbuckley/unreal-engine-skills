@@ -4,7 +4,7 @@ description: Configure lighting in Ultra Dynamic Sky — Sun and Moon directiona
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: lighting
-  source-docs: D:\UDSdocs.txt (lines 157-224, 499-516, 547-556, 734-738, 1846-1898)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS lighting and shadows
@@ -162,17 +162,17 @@ For *static* lighting properties (mobility, source type, certain advanced light 
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Light Components / custom actors — lines 157-169
-- Sun and Moon Directional Lights — lines 170-176
-- Cloud Shadows — lines 178-184, 1893-1898
-- Sky Light — lines 186-198
-- Exposure — lines 200-216
-- Static / Stationary Lighting — lines 218-224
-- Light Day/Night Toggle — lines 499-516
-- Day to Night material functions — lines 547-556
-- Screen Space Light Shafts — lines 734-738
-- Lighting and post processing issues — lines 1846-1898
+Docs (Ultra Dynamic Sky 9.5):
+- [Light Components](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-17) (incl. custom actors)
+- [Sun and Moon Directional Lights](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-18)
+- [Cloud Shadows](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-19)
+- [Sky Light](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-20)
+- [Exposure](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-21)
+- [Using Static/Stationary Lighting](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-22)
+- [Turning On Lights in Your Level at Night](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-48) (Light Day/Night Toggle)
+- [Sky Utility Material Functions](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-50) (Day to Night material functions)
+- [Screen Space Light Shafts](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-63)
+- [Common Issues — Lighting and Post Processing](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-143)
 
 Plugin asset paths:
 - Component list on UDS actor → **Sun**, **Moon**, **Sky Light**

@@ -4,7 +4,7 @@ description: Configure fog, volumetric fog, dust, and atmospheric coloring in Ul
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: atmosphere
-  source-docs: D:\UDSdocs.txt (lines 320-393, 1943-1961)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS fog and atmosphere
@@ -162,14 +162,13 @@ If a runtime change has no effect, look for the matching `Static Properties - <C
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Fog Density — lines 320-331
-- Fog Color — lines 333-341
-- Volumetric Fog — lines 343-349
-- Global Volumetric Material — lines 351-361
-- Dust — lines 363-369
-- Sky Atmosphere — lines 371-380
-- Simplified Color — lines 382-393
-- General rendering issues — lines 1943-1961
+Docs (Ultra Dynamic Sky 9.5):
+- [Fog Density](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-32)
+- [Fog Color](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-33)
+- [Volumetric Fog](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-34) (incl. Global Volumetric Material)
+- [Dust](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-35)
+- [Sky Atmosphere](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-37)
+- [Simplified Color](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-38)
+- [Common Issues — General Rendering](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-156)
 
 Related skills: `uds-setup-and-modes`, `uds-clouds`, `uds-modifiers-configs-state` (water level), `uds-cinematics-rendering`, `udw-particles-lightning-wind-sounds` (UDW Dust flows into UDS Dust Amount), `udw-material-and-screen-effects` (Weather Mask masking applies to Global Volumetric Material).

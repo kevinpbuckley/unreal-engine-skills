@@ -4,7 +4,7 @@ description: Apply weather to specific regions of a level with Ultra Dynamic Wea
 metadata:
   asset: Ultra Dynamic Weather (marketplace)
   category: spatial-weather
-  source-docs: D:\UDSdocs.txt (lines 1084-1144, 1440-1474)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDW spatial weather
@@ -213,12 +213,11 @@ WeatherMaskProjectionBox.FadeMaskOverTime(duration)
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Weather Override Volumes — lines 1084-1108
-- Radial Storms — lines 1111-1138
-- Weather Above Volumetric Clouds — lines 1140-1144
-- Weather Mask Brush — lines 1446-1456
-- Weather Mask Projection Box — lines 1458-1473
+Docs (Ultra Dynamic Weather 9.5):
+- [Weather Override Volumes](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-88)
+- [Radial Storms](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-89)
+- [Weather Above Volumetric Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-90)
+- [Masking Material Effect Coverage](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-106) (Weather Mask Brush, Weather Mask Projection Box)
 
 Plugin asset paths:
 - `Blueprints/Weather_Effects/` — Weather Override Volume, Radial Storm, Weather Mask Brush, Weather Mask Projection Box actor classes

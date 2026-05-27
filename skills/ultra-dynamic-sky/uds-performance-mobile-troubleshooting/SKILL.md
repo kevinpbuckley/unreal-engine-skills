@@ -4,7 +4,7 @@ description: Tune Ultra Dynamic Sky for performance, configure for mobile/consol
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: performance
-  source-docs: D:\UDSdocs.txt (lines 832-940, 1841-2031, 2032-2108)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS performance, mobile, updates, and troubleshooting
@@ -266,16 +266,17 @@ Single-layer water tests directional light intensity/color without light functio
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Performance settings — lines 832-877
-- Mobile considerations — lines 879-887
-- Updating UDS — lines 889-929
-- Modifying UDS Blueprints — lines 932-940
-- Lighting and Post Processing issues — lines 1846-1898
-- Volumetric Clouds issues — lines 1901-1939
-- General Rendering issues — lines 1943-1968
-- Cache System architecture — lines 2053-2074
-- Runtime property "takes a second / has no effect" — lines 1873-1890
-- Replication — lines 2104-2108
+Docs (Ultra Dynamic Sky 9.5):
+- [Configuring For Performance](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-71)
+- [Considerations for Mobile](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-72)
+- [How to Update UDS](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-73)
+- [Modifying UDS Blueprints](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-74)
+- [Common Issues — Lighting and Post Processing](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-143)
+- [Common Issues — Volumetric Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-150)
+- [Common Issues — General Rendering](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-156)
+- [Changing a Property at Runtime Takes a Second to Apply](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-147)
+- [Changing a Property at Runtime Has No Effect](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-148)
+- [Technical Notes — Cache System](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-172)
+- [Technical Notes — Replication (UDS)](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-176)
 
 Related skills: `uds-setup-and-modes` (Sky / Color / Project / Feature Mode selection — the biggest perf decisions), `uds-clouds` (full cloud settings; cloud rendering troubleshooting), `uds-lighting-and-shadows` (Sky Light Mode tradeoffs; static lighting; exposure), `uds-fog-and-atmosphere` (Volumetric Fog cost; hard fog lines; sky atmosphere position), `uds-modifiers-configs-state` (child blueprints for modifying UDS), `udw-spatial-weather` (child class pattern for Weather Override Volume).

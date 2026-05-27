@@ -4,7 +4,7 @@ description: Configure clouds in Ultra Dynamic Sky — Volumetric, Static, 2D Dy
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: clouds
-  source-docs: D:\UDSdocs.txt (lines 94-155, 740-789, 1901-1939)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS clouds
@@ -189,16 +189,17 @@ For **static** cloud properties (texture swaps, noise scales, etc.), call `Stati
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Volumetric Clouds — lines 94-111
-- 2D Dynamic Clouds — lines 113-119
-- Static Clouds — lines 121-127
-- Voxel Clouds — lines 129-135
-- Cloud Movement (incl. looping) — lines 137-145, 470-496
-- Cloud Wisps — lines 147-155
-- Volumetric Cloud Painter — lines 740-763
-- Volumetric Cloud Light Rays — lines 783-789
-- Cloud rendering issues — lines 1901-1939
+Docs (Ultra Dynamic Sky 9.5):
+- [Volumetric Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-10)
+- [2D Dynamic Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-11)
+- [Static Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-12)
+- [Voxel Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-13)
+- [Cloud Movement](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-14)
+- [Looping the Volumetric Cloud Movement](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-46) (for cinematics)
+- [Cloud Wisps](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-15)
+- [Painting Volumetric Cloud Coverage](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-64) (Volumetric Cloud Painter)
+- [Volumetric Cloud Light Rays](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-66)
+- [Common Issues — Volumetric Clouds](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-150)
 
 Plugin asset paths:
 - `Blueprints/Tools/` — Cloud Profile Authoring Tool, Static Clouds Authoring Tool, Volumetric Cloud Painter editor utility

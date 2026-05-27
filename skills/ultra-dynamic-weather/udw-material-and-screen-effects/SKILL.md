@@ -4,7 +4,7 @@ description: Add weather-responsive material effects and screen-space effects wi
 metadata:
   asset: Ultra Dynamic Weather (marketplace)
   category: material-and-screen-effects
-  source-docs: D:\UDSdocs.txt (lines 1240-1474, 1700-1839)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDW material and screen effects
@@ -420,26 +420,27 @@ What UDS water level affects on UDW:
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Material Effects Overview + Simulate Changing Material State Over Time — lines 1240-1255
-- Surface Weather Effects (setup, dripping/droplets, rotating models) — lines 1258-1296
-- Dynamic Landscape Weather Effects V3 (DLWE) — lines 1298-1366
-- Glass Window Rain Drips — lines 1368-1378
-- Foliage Wind Movement — lines 1380-1407
-- Water Surface Rain Ripples — lines 1409-1419
-- Sample UDW Material State / Season / Wind — lines 1421-1438
-- Rainbow — lines 1740-1752
-- Screen Droplets — lines 1754-1760
-- Screen Frost — lines 1762-1770
-- Heat Distortion — lines 1772-1778
-- Post Process Wind Fog — lines 1734-1738
-- Puddle Fluid Volume — lines 1699-1716
-- Water Level affecting weather — lines 1718-1732
-- Dripping Mesh Particles — lines 1794-1807
-- Freezing Breath — lines 1809-1821
-- Rain Drip Spline + Icicles — lines 1823-1833
-- Weather Occlusion Volume — lines 1835-1839
-- Current Weather Display widget — lines 1780-1784
+Docs (Ultra Dynamic Weather 9.5):
+- [Material Effects Overview](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-99) (incl. Simulate Changing Material State Over Time)
+- [Surface Weather Effects](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-100) (setup, dripping/droplets, rotating models)
+- [Dynamic Landscape Weather Effects](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-101) (DLWE V3)
+- [Glass Window Rain Drips](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-102)
+- [Foliage Wind Movement](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-103)
+- [Water Surface Rain Ripples](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-104)
+- [Controlling Your Own Material Effects with UDW](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-105) (Sample UDW Material State / Season / Wind)
+- [Puddle Fluid Volume](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-127)
+- [Applying Water Level to Weather](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-128)
+- [Post Process Wind Fog](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-129)
+- [Rainbow](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-130)
+- [Screen Droplets](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-131)
+- [Screen Frost](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-132)
+- [Heat Distortion](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-133)
+- [Current Weather Display Widget](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-134)
+- [Dripping Mesh Particles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-136)
+- [Freezing Breath Particles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-137)
+- [Rain Drip Spline](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-138)
+- [Icicles](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-139)
+- [Weather Occlusion Volume](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-140)
 
 Plugin asset paths:
 - `Particles/Standalone/` — Freezing Breath, Dripping Static Mesh, Dripping Skeletal Mesh niagara systems

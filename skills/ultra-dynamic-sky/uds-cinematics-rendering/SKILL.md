@@ -4,7 +4,7 @@ description: Use Ultra Dynamic Sky for cinematic work — animating UDS with Seq
 metadata:
   asset: Ultra Dynamic Sky (marketplace)
   category: cinematics
-  source-docs: D:\UDSdocs.txt (lines 427-496, 1689)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDS cinematics and rendering
@@ -170,11 +170,11 @@ Full lightning details in `udw-particles-lightning-wind-sounds`.
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Animating UDS with Sequencer — lines 427-451
-- Rendering Movies — lines 454-459
-- Path Tracer — lines 462-467
-- Looping Volumetric Clouds — lines 470-496
-- Keyframing a Lightning Flash — line 1689
+Docs (Ultra Dynamic Sky 9.5):
+- [Animating UDS with Sequencer](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-43)
+- [Rendering Movies](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-44)
+- [Rendering with the Path Tracer](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-45)
+- [Looping the Volumetric Cloud Movement](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-46)
+- [Using Weather with Sequencer](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-125) (UDW, incl. keyframing a lightning flash)
 
 Related skills: `uds-setup-and-modes`, `uds-clouds`, `uds-time`, `uds-fog-and-atmosphere`, `udw-setup-and-state`, `udw-particles-lightning-wind-sounds`.

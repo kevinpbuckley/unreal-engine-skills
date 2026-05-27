@@ -4,7 +4,7 @@ description: Configure dynamic weather variation, seasons, climate, and temperat
 metadata:
   asset: Ultra Dynamic Weather (marketplace)
   category: weather-variation
-  source-docs: D:\UDSdocs.txt (lines 1037-1070, 1563-1587)
+  source-docs: https://www.ultradynamicsky.com/Documentation/V9/9-5
 ---
 
 # UDW random weather, seasons, climate, temperature
@@ -173,12 +173,10 @@ Example: place around a fire with a positive `Temperature Offset` — temperatur
 
 ## References & source material
 
-Docs: `D:\UDSdocs.txt`
-- Random Weather Variation — lines 1037-1058
-- Seasons — lines 1061-1070
-- Temperature system + How Temperature is Calculated — lines 1563-1578
-- Temperature Volumes — lines 1581-1583
-- Show Temperature Onscreen — lines 1586-1587
+Docs (Ultra Dynamic Weather 9.5):
+- [Random Weather Variation](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-85)
+- [Seasons](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-86)
+- [Sampling Temperature](https://www.ultradynamicsky.com/Documentation/V9/9-5#section-113) (incl. how temperature is calculated, Temperature Volumes, on-screen display)
 
 Plugin asset paths:
 - `Blueprints/Weather_Effects/Weather_Presets/` — preset assets weighted by the probability maps
