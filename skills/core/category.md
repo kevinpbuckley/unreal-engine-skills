@@ -1,4 +1,4 @@
-# System
+# Core
 
 Core Unreal Engine systems and foundational knowledge required for all projects.
 
