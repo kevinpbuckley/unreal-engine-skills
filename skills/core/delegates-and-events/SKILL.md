@@ -229,7 +229,7 @@ separately. (`DelegateCombinations.h:26`)
 
 ## References & source material
 
-Engine source (UE 5.7, under `Engine/Source/Runtime/Core/Public/Delegates/`):
+Engine source (UE 5.7, under `Engine/Source/Runtime/Core/Public/`):
 - `Delegates/DelegateCombinations.h` — all `DECLARE_*` macros: single-cast:20,
   multicast:23, TS multicast:26, event:32, dynamic:35, dynamic multicast:38.
 - `Delegates/Delegate.h` — `TDelegate`/`TMulticastDelegate` concepts, binding table,

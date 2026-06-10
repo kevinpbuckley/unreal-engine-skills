@@ -40,12 +40,18 @@ unreal-engine-skills/
 ├── README.md                  # this file — index + conventions
 ├── docs/
 │   └── skill-authoring-guide.md   # house style for writing skills in this repo
+├── evals/                     # golden tasks measuring skill effectiveness (see evals/README.md)
+│   └── tasks/
+├── scripts/
+│   └── check-citations.mjs    # verifies every cited Engine/Source path exists on disk
 └── skills/
-    ├── <skill-name>/
-    │   ├── SKILL.md           # required: frontmatter + instructions
-    │   ├── references/        # optional: deep-dive docs loaded on demand
-    │   ├── scripts/           # optional: runnable helpers (e.g. editor Python)
-    │   └── assets/            # optional: templates, snippets
+    ├── <category>/            # core, ultra-dynamic-sky, ultra-dynamic-weather
+    │   ├── category.md        # category description
+    │   └── <skill-name>/
+    │       ├── SKILL.md       # required: frontmatter + instructions
+    │       ├── references/    # optional: deep-dive docs loaded on demand
+    │       ├── scripts/       # optional: runnable helpers (e.g. editor Python)
+    │       └── assets/        # optional: templates, snippets
     └── ...
 ```
 
@@ -163,5 +169,22 @@ Validate any skill against the spec with the
 [`skills-ref`](https://github.com/agentskills/agentskills/tree/main/skills-ref) tool:
 
 ```
-skills-ref validate ./skills/<skill-name>
+skills-ref validate ./skills/<category>/<skill-name>
 ```
+
+Verify that every engine-source citation in the skills still exists on disk (run after
+editing skills, and when re-targeting a new engine version):
+
+```
+node scripts/check-citations.mjs            # all skills
+node scripts/check-citations.mjs core/gameplay-tags   # one skill
+```
+
+Set `UE_ENGINE_ROOT` if your engine install is not at the default path.
+
+## Evals
+
+`evals/tasks/` holds golden tasks for high-traffic skills — realistic prompts with
+checkable acceptance criteria, used to compare an agent's output with and without the
+skill loaded. See [`evals/README.md`](evals/README.md) for the method and the UE 5.7
+compile-check workflow.
