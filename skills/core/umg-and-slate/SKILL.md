@@ -6,9 +6,14 @@ description: Build game UI in Unreal — UMG user widgets (UUserWidget) with the
   UVerticalBox/UOverlay), the meta=(BindWidget/BindWidgetOptional) pattern to wire C++ to
   Blueprint-designed widgets, CreateWidget + AddToViewport / RemoveFromParent, UWidgetComponent
   for 3D in-world UI, event binding (OnClicked AddDynamic), the Slate layer (SWidget,
-  SCompoundWidget, declarative syntax), and CommonUI for input-routed multiplatform menus. Use
-  when creating HUDs/menus/inventory/widgets, wiring UI to gameplay in C++, handling button/input
-  events, choosing UMG vs Slate vs CommonUI, or debugging BindWidget name mismatches.
+  SCompoundWidget, declarative syntax), and CommonUI for input-routed multiplatform menus —
+  plus UI best practices and performance optimization: invalidation boxes/retainer boxes/
+  volatility, widget pooling (FUserWidgetPool, ListView), event-driven updates instead of
+  property bindings or Tick, Canvas Panel nesting rules, animation cost tiers, MVVM
+  viewmodels (FieldNotify), CommonUI layer stacks (the Lyra pattern), DPI scaling, and safe
+  zones. Use when creating HUDs/menus/inventory/widgets, wiring UI to gameplay in C++,
+  handling button/input events, choosing UMG vs Slate vs CommonUI, debugging BindWidget name
+  mismatches, optimizing slow UI, or architecting screen flow for a production game.
 metadata:
   engine-version: "5.7"
   category: ui
@@ -28,6 +33,8 @@ Underneath sits **Slate**, the lower-level C++ UI framework. Prefer UMG for game
 - Choosing how to create, show, and hide widgets at runtime.
 - Building a 3D in-world widget on an actor (`UWidgetComponent`).
 - Deciding between UMG, raw Slate, or CommonUI.
+- Diagnosing or preventing UI performance problems (draw calls, per-frame cost, hitches).
+- Structuring screens/menus for a real game (layer stacks, MVVM, resolution independence).
 
 ## Mental model
 
@@ -201,6 +208,35 @@ void AMyPlayerController::HideHUD()
 | **UMG Property Binding** (legacy) | A function returning a value bound in the editor; re-evaluates every frame — avoid for many widgets. |
 | **MVVM Viewmodel plugin** | Declare `UMVVMViewModelBase` with `FieldNotify` properties; view bindings update only on change. Best for larger data-driven UIs (UE 5.1+, still Beta in 5.7). |
 
+Epic's hard rule: **never raw property bindings** — they poll every frame per widget.
+Drive updates from gameplay delegates, and pull initial state once in `NativeConstruct`.
+Full MVVM walkthrough (FieldNotify, `UE_MVVM_SET_PROPERTY_VALUE`, viewmodel design):
+[references/architecture-and-authoring.md](references/architecture-and-authoring.md).
+
+## Performance best practices (summary)
+
+The rules agents most often need — deep dive with engine citations in
+[references/performance-and-best-practices.md](references/performance-and-best-practices.md):
+
+- **One Canvas Panel at the root is fine; never nest Canvas Panels** inside reusable
+  widgets (each canvas child gets its own layer ID → extra draw calls, broken batching).
+  Build templates from `Overlay`/`HorizontalBox`/`VerticalBox`/`GridPanel`.
+- **No Tick, no OnPaint, no property bindings** — event-driven updates only.
+- Wrap rarely-changing subtrees in **`UInvalidationBox`**; mark per-frame widgets
+  **Volatile**; reach for **`URetainerBox`** (phased render-to-texture) only after that.
+- **Pool dynamic entries**: `UListView`/`UTileView` (virtualized + pooled) for lists,
+  `FUserWidgetPool` for damage numbers/markers/toasts.
+- **Hidden widgets still load and construct** — every `WidgetSwitcher` page, every
+  `TSubclassOf` reference. Delete unused widgets; async-load rare screens via soft refs.
+- Prefer **`Collapsed`** over `Hidden` (skips layout); set decorative widgets to
+  **`HitTestInvisible`**; don't call `SetVisibility`/`FText::Format` per frame.
+- **`USpacer` over `USizeBox`** for spacing; **never Scale Box + Size Box together**
+  (per-frame layout flip-flop); **Rich Text only when really needed**.
+- Animation cost tiers: **material animation > BP tween > Sequencer anim > anything
+  that changes layout**.
+- Profile with `stat Slate`, Widget Reflector (Ctrl+Shift+W), `Slate.ShowBatching`,
+  `stat dumpframe -ms=0.1`.
+
 ## Input, focus, and input mode
 
 - Override `NativeOnKeyDown`, `NativeOnMouseButtonDown`, etc. for per-widget input handling.
@@ -246,6 +282,14 @@ multiplatform UI:
 Use CommonUI for any UI with menus, modals, or gamepad navigation. Base game-HUD widgets
 on `UCommonUserWidget`; base menus on `UCommonActivatableWidget`.
 
+**Screen architecture — layer stacks (the Lyra pattern):** production games register one
+root layout with named layers, each a `UCommonActivatableWidgetStack` (or `...Queue` for
+modals) — e.g. `UI.Layer.Game` / `GameMenu` / `Menu` / `Modal` in Lyra's
+`PrimaryGameLayout`. Screens are pushed/popped by layer tag instead of `AddToViewport`,
+which gives correct Z-order, input routing to the topmost active widget, and free
+back-button handling. Details and best practices:
+[references/architecture-and-authoring.md](references/architecture-and-authoring.md).
+
 ## Slate layer (when and how)
 
 UMG wraps Slate. For **editor tools** and highly bespoke widgets not achievable in UMG,
@@ -290,6 +334,20 @@ For game UI, stay in UMG/CommonUI — Slate skips `UPROPERTY`/GC and needs more 
 - **`RemoveFromViewport` deprecated** (5.1+) — use `RemoveFromParent()`.
 - **Per-frame property bindings** across many widgets → significant CPU cost; push updates
   from gameplay instead.
+- **Canvas Panels nested inside reusable widgets** — each canvas child gets its own layer
+  ID → extra draw calls across the whole screen. One canvas at the root only; templates
+  use Overlay/boxes.
+- **Scale Box wrapping a Size Box** (or vice versa) — the two fight over desired size and
+  can flip layout every frame; let content size itself or pick one.
+- **Calling `SetVisibility` every frame** — it's surprisingly expensive (can invalidate
+  layout); only call on actual state change. Prefer `Collapsed` over `Hidden`, and
+  `HitTestInvisible` for decorations.
+- **Hidden widgets still load and construct** — unused widgets in the tree and every page
+  of a `WidgetSwitcher` pay full load/construct cost; delete leftovers, async-load rare
+  screens.
+- **Create/destroy churn for dynamic entries** — use `UListView` or `FUserWidgetPool`
+  instead; with `FUserWidgetPool`, call `ReleaseAllSlateResources()` from the owner's
+  `ReleaseSlateResources` or the pool leaks via circular refs.
 - **`OnClicked` handler not a `UFUNCTION()`** — `AddDynamic` silently fails; the bound method
   must be marked `UFUNCTION()` with the matching signature.
 - **Forgetting `SetInputMode`/cursor** — menus added to viewport that don't receive clicks
@@ -355,6 +413,14 @@ Official docs (UE 5.7, verified):
   <https://dev.epicgames.com/documentation/unreal-engine/umg-viewmodel-for-unreal-engine>
 - Common UI Plugin —
   <https://dev.epicgames.com/documentation/unreal-engine/common-ui-plugin-for-advanced-user-interfaces-in-unreal-engine>
+- UMG Best Practices —
+  <https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-best-practices-in-unreal-engine>
+- Optimization Guidelines for UMG —
+  <https://dev.epicgames.com/documentation/en-us/unreal-engine/optimization-guidelines-for-umg-in-unreal-engine>
+- Invalidation in Slate and UMG —
+  <https://dev.epicgames.com/documentation/en-us/unreal-engine/invalidation-in-slate-and-umg-for-unreal-engine>
+- UMG Safe Zones —
+  <https://dev.epicgames.com/documentation/unreal-engine/umg-safe-zones-in-unreal-engine>
 
 Deep-dive references in this skill:
 - [references/userwidget-and-binding.md](references/userwidget-and-binding.md) — full
@@ -366,3 +432,12 @@ Deep-dive references in this skill:
   `UWidgetComponent` deep dive, `UWidgetInteractionComponent`, input mode management, focus.
 - [references/slate-layer.md](references/slate-layer.md) — `SWidget` hierarchy, declarative
   syntax, `SCompoundWidget` authoring, Invalidation, and when to use Slate vs UMG.
+- [references/performance-and-best-practices.md](references/performance-and-best-practices.md) —
+  invalidation boxes/retainer boxes/volatility, event-driven updates vs property bindings,
+  widget pooling (`FUserWidgetPool`, ListView), loading/construction costs, Canvas Panel
+  and layout do/don'ts, animation cost tiers, hidden costs (`SetVisibility`,
+  `FText::Format`), and the profiling toolbox.
+- [references/architecture-and-authoring.md](references/architecture-and-authoring.md) —
+  CommonUI activatable layer stacks (the Lyra pattern), decoupling widgets from gameplay,
+  MVVM viewmodels (`FieldNotify`, `UE_MVVM_SET_PROPERTY_VALUE`), DPI scaling and
+  resolution independence, safe zones, and texture/slot-sizing authoring rules.
