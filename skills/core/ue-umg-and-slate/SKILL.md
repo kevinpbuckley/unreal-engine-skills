@@ -1,6 +1,7 @@
 ---
 name: ue-umg-and-slate
-description: Build game UI in Unreal — UMG user widgets (UUserWidget) with the C++ lifecycle
+description: >
+  Build game UI in Unreal — UMG user widgets (UUserWidget) with the C++ lifecycle
   (NativeOnInitialized, NativeConstruct, NativeDestruct, NativeTick), the widget tree and
   common leaf/panel widgets (UButton/UTextBlock/UImage/UProgressBar/UCanvasPanel/UHorizontalBox/
   UVerticalBox/UOverlay), the meta=(BindWidget/BindWidgetOptional) pattern to wire C++ to
