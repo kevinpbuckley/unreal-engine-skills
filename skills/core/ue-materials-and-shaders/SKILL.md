@@ -18,6 +18,11 @@ metadata:
 
 # Materials & shaders
 
+For generated tissue or other large organic surfaces, see
+[organic surface projection and seam diagnosis](../ue-importing-content/references/organic-surfaces-and-material-sections.md).
+Distinguish UV seams, image-border wrapping and split mesh normals before changing
+the shader; retain approved lighting and material appearance on unaffected assets.
+
 UE materials are node graphs that compile to HLSL shaders. The central
 workflow idea is **parameters + instances**: one parameterized base material,
 cheap asset variants (constant instances), and runtime-tweakable copies

@@ -105,7 +105,7 @@ Source: `Engine/Plugins/Interchange/Runtime/Source/Pipelines/Public/InterchangeG
 |---|---|---|
 | `bImportTextures` | true | Master toggle |
 | `bDetectNormalMapTexture` | true | Auto-sets sRGB=false, Compression=Normalmap if texture looks like a normal map |
-| `bFlipNormalMapGreenChannel` | false | Invert G channel for DirectX-convention normal maps |
+| `bFlipNormalMapGreenChannel` | false | Invert G when converting OpenGL +Y to UE's usual DirectX -Y tangent-normal convention; match custom shader decoding explicitly |
 | `bImportUDIMs` | true | Import sequences named `_1001`, `_1002`, … as UDIM textures |
 | `FileExtensionsToImportAsLongLatCubemap` | `{"hdr"}` | Treat `.hdr` as a long-lat cube map |
 | `bPreferCompressedSourceData` | false | Ask translator for compressed source; smaller asset, slower build |

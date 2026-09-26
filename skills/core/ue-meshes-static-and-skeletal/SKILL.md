@@ -16,6 +16,10 @@ metadata:
 
 # Static & skeletal meshes
 
+After mesh/LOD reimport, a correct component material does not prove every section
+uses it. See [LOD section mapping and organic-normal repair](../ue-importing-content/references/organic-surfaces-and-material-sections.md)
+for the missing-slot failure and a repair that preserves mesh positions and UVs.
+
 Static meshes are rigid geometry rendered via `UStaticMeshComponent`. Skeletal meshes
 deform through a bone hierarchy driven by `USkeletalMeshComponent`. Choosing the right
 mesh/component type and the right collision, LOD, and instancing strategy drives both

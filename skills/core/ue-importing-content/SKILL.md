@@ -17,6 +17,10 @@ metadata:
 
 # Importing content
 
+For generated organic surfaces, persistent shading seams or gray/default meshes
+after LOD reimport, read [organic surfaces and material sections](references/organic-surfaces-and-material-sections.md).
+It covers the section-to-slot mapping that component overrides alone cannot prove.
+
 Most "it looks wrong in Unreal" problems are import-settings problems. Know the Interchange
 framework's data flow, the settings that change geometry and shading, and how assets store
 their import provenance so reimport stays predictable.
@@ -110,7 +114,7 @@ full mesh and texture settings reference with source-verified property names.
 |---|---|---|
 | **sRGB** | ON for color/albedo; OFF for data maps | Data maps (normal, roughness, metallic, masks) with sRGB ON look wrong in lighting |
 | **Compression** | `Default` (BC1/BC3) for color; `Normalmap` (BC5) for normals; `Masks`; `HDR` for EXR/HDR | Wrong compression costs memory or quality |
-| **Flip Normal Map Green Channel** | Match DCC convention (on for Maya/DirectX, off for Blender/OpenGL-style) | Specular highlight in wrong direction |
+| **Flip Normal Map Green Channel** | Match source and shader convention: OpenGL +Y maps generally need inversion for UE tangent space; DirectX -Y generally do not | Specular highlight in wrong direction |
 | **Detect Normal Map Texture** | ON (default) | Leave on; it sets sRGB=false and compression=Normalmap automatically |
 | **UDIM** (`bImportUDIMs`) | ON for assets with UDIM naming (`_1001`, `_1002`, …) | Multi-tile textures import as separate unrelated assets |
 

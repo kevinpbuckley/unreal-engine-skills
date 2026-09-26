@@ -1,9 +1,3 @@
-# Unreal Engine Skills
-
-A comprehensive library of [Agent Skills](https://agentskills.io) that give AI coding
-agents the domain knowledge to do real **Unreal Engine** work: writing C++, working with
-Blueprints, assets, and the editor, and cross-referencing the engine source.
-
 Each skill is a self-contained folder following the
 [Agent Skills specification](https://agentskills.io/specification): a `SKILL.md` with YAML
 frontmatter (`name`, `description`) plus Markdown instructions, optionally accompanied by
