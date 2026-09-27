@@ -86,6 +86,8 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `ue-importing-content` — meshes/textures/audio, Interchange, FBX/glTF
 - ✅ `ue-meshes-static-and-skeletal` — static & skeletal mesh setup
 - ✅ `ue-materials-and-shaders` — material graph, instances, parameters, material C++
+- ✅ `ue-material-graph-effects` — UV motion, vertex animation, dissolve, glow, and interactive parameters
+- ✅ `ue-master-material-authoring` — reusable PBR graphs, instances, switches, and packed texture channels
 - ✅ `ue-data-driven-design` — DataTables, DataAssets, curves, config-driven systems
 
 ### Animation
@@ -96,11 +98,18 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 ### World building
 - ✅ `ue-levels-and-world-partition` — levels, World Partition, data layers, streaming
 - ✅ `ue-landscape-and-foliage` — landscape, foliage, PCG
+- ✅ `ue-auto-landscape-materials` — painted and generated terrain layers, slope and height masks, projection
+- ✅ `ue-landscape-rvt-and-grass` — runtime virtual textures, ground blending, and material-driven grass
 - ✅ `ue-lighting-and-lumen` — lighting, Lumen GI/reflections
 - ✅ `ue-nanite-and-rendering` — Nanite, rendering features, post process
 
 ### VFX & audio
 - ✅ `ue-niagara-vfx` — Niagara systems, emitters, modules
+- ✅ `ue-niagara-flamethrower` — sustained muzzle flame with layered emitters, runtime controls, and separate damage detection
+- ✅ `ue-niagara-renderers-and-materials` — sprites, mesh particles, ribbons, SubUV, and particle-driven materials
+- ✅ `ue-niagara-sequenced-effects` — timed portals, impacts, beams, projectiles, and attacks
+- ✅ `ue-niagara-custom-modules` — scratch-pad modules, attribute readers, events, and environmental effects
+- ✅ `ue-niagara-mesh-disintegration` — mesh sampling, detached particles, and synchronized dissolve materials
 - ✅ `ue-audio-and-metasounds` — MetaSounds, audio components, attenuation
 
 ### UI

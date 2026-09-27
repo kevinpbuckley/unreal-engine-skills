@@ -17,6 +17,8 @@ metadata:
 
 # Niagara VFX
 
+For effect-specific design, use `ue-niagara-flamethrower` for sustained flame jets, `ue-niagara-renderers-and-materials` for visible particle geometry, `ue-niagara-sequenced-effects` for timed multi-emitter effects, `ue-niagara-custom-modules` for custom particle logic and events, or `ue-niagara-mesh-disintegration` for mesh-sampled dissolution.
+
 Niagara is Unreal's visual-effects system. It replaced **Cascade** (legacy — avoid for new work;
 a converter plugin exists). Effects are authored in the Niagara Editor as **Systems** composed of
 **Emitters** built from **Modules**, then spawned and parameterized from gameplay C++. Your role

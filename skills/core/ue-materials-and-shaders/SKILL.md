@@ -18,6 +18,8 @@ metadata:
 
 # Materials & shaders
 
+For graph-specific effects, use `ue-material-graph-effects`. For reusable PBR graph structure and texture contracts, use `ue-master-material-authoring`. For terrain shading, use `ue-auto-landscape-materials` or `ue-landscape-rvt-and-grass` as appropriate.
+
 For generated tissue or other large organic surfaces, see
 [organic surface projection and seam diagnosis](../ue-importing-content/references/organic-surfaces-and-material-sections.md).
 Distinguish UV seams, image-border wrapping and split mesh normals before changing

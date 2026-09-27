@@ -16,6 +16,8 @@ metadata:
 
 # Landscape & foliage
 
+For automatic terrain shading, use `ue-auto-landscape-materials`. For runtime virtual textures and material-driven grass, use `ue-landscape-rvt-and-grass`.
+
 Three complementary systems cover terrain and environment population:
 
 | System | Actor / Component | Purpose |
