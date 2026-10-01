@@ -1,6 +1,7 @@
 ---
 name: ue-project-structure
-description: Navigate and configure an Unreal Engine project — the .uproject descriptor
+description: >
+  Navigate and configure an Unreal Engine project — the .uproject descriptor
   (FProjectDescriptor: FileVersion, EngineAssociation, Modules, Plugins), the standard
   folder layout (Config/ with Default*.ini files, Content/, Source/ with the primary
   game module, Plugins/, and the generated Binaries/Intermediate/DerivedDataCache/Saved/

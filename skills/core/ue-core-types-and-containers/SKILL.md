@@ -1,6 +1,7 @@
 ---
 name: ue-core-types-and-containers
-description: Use Unreal's core C++ types instead of the standard library — containers
+description: >
+  Use Unreal's core C++ types instead of the standard library — containers
   (TArray, TMap, TSet, TQueue, TArrayView), string types (FString, FName, FText,
   TStringBuilder) with conversion patterns and localization rules, math types (FVector,
   FRotator, FQuat, FTransform) with Large World Coordinates (LWC/double precision), and
