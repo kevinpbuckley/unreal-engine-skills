@@ -93,6 +93,7 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 ### Animation
 - ✅ `ue-animation-system` — skeletal meshes, AnimInstance/AnimBP, state machines, montages, notifies
 - ✅ `ue-control-rig-and-ik` — Control Rig, IK Rig/Retargeter
+- ✅ `ue-skin-weights` — read, repair, transfer, and bind skeletal mesh skin weights (weight painting) via `USkinWeightModifier` and GeometryScript
 - ✅ `ue-sequencer-and-cinematics` — Sequencer, cameras, cinematics
 
 ### MetaHuman (`skills/metahuman/`)
