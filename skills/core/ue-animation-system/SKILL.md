@@ -337,3 +337,7 @@ Deep-dive references:
   state machine internals, sync groups, inertialization, layered blending.
 - [references/motion-matching-and-warping.md](references/motion-matching-and-warping.md) —
   Pose Search / Motion Matching setup, Motion Warping integration.
+
+Related: [ue-animation-authoring](../ue-animation-authoring/SKILL.md) — creating and
+editing AnimSequence assets from code (IAnimationDataController, animation-only FBX
+import, numeric pose verification).
