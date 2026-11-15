@@ -1,6 +1,6 @@
 ---
 name: ue-metahuman-live-link
-description: Streams real-time facial animation onto a MetaHuman in Unreal Engine 5.8 through
+description: Streams real-time facial animation onto a MetaHuman in Unreal Engine 5.8 and 5.9 through
   Live Link — the MetaHuman Live Link plugin's three sources (MetaHuman Video from a webcam,
   MetaHuman Audio from a microphone, Live Link Face from an iPhone in MetaHuman Animator or
   ARKit mode), programmatic source/subject creation (ILiveLinkClient::AddSource,
@@ -13,7 +13,8 @@ description: Streams real-time facial animation onto a MetaHuman in Unreal Engin
   MetaHuman face, debugging a subject with no data or the wrong role (Basic vs Animation
   Role), tuning latency/smoothing, or recording a live take to an AnimSequence.
 metadata:
-  engine-version: "5.8"
+  aliases: "MetaHuman Live Link, Live Link Face, live facial capture, webcam face tracking"
+  engine-version: "5.9"
   category: metahuman
 ---
 
@@ -371,7 +372,7 @@ disk after recording is covered in [references/recording-and-runtime.md](referen
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Source/`):
+Engine source (UE 5.9, `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Source/`):
 - `MetaHumanLiveLinkSource/Public/MetaHumanLiveLinkSubjectSettings.h`:15 — `UMetaHumanLiveLinkSubjectSettings` (calibration `Properties`/`Alpha`/`NeutralFrame`, smoothing `Parameters`, `CaptureNeutrals()`, head neutrals).
 - `MetaHumanLiveLinkSource/Public/MetaHumanLiveLinkSubjectSettings.h`:141 — `EMetaHumanLiveLinkHeadPoseMode`.
 - `MetaHumanLiveLinkSource/Public/MetaHumanSmoothingPreProcessor.h`:12 — `UMetaHumanSmoothingPreProcessor` (`ULiveLinkFramePreProcessor` variant).
@@ -396,7 +397,7 @@ Engine source (UE 5.8, `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Source/`):
 - `LiveLinkFaceSource/Private/LiveLinkFaceSource.cpp`:300 — Basic Role subject creation; :484 static layout.
 - `LiveLinkFaceDiscovery/Public/LiveLinkFaceDiscovery.h`:20 — `FLiveLinkFaceDiscovery` (`FServer`, `OnServersUpdated`).
 
-Engine source (UE 5.8, `Engine/Source/Runtime/LiveLinkInterface/Public/`):
+Engine source (UE 5.9, `Engine/Source/Runtime/LiveLinkInterface/Public/`):
 - `ILiveLinkClient.h`:60 — `ILiveLinkClient` (`AddSource` :70, `GetSubjects` :174, `GetSubjectState` :226, `GetSubjectSettings` :252, `EvaluateFrame_AnyThread` :282).
 - `ILiveLinkSource.h`:15 — `ILiveLinkSource`; :77 `FLiveLinkSourceHandle`.
 - `LiveLinkSourceFactory.h`:27 — `ULiveLinkSourceFactory::CreateSource`.
@@ -407,7 +408,7 @@ Engine source (UE 5.8, `Engine/Source/Runtime/LiveLinkInterface/Public/`):
 - `Roles/LiveLinkBasicRole.h`:20 — `ULiveLinkBasicRole`.
 - `LiveLinkPresetTypes.h`:18 — `FLiveLinkSourcePreset`; :35 `FLiveLinkSubjectPreset`.
 
-Engine source (UE 5.8, `Engine/Plugins/Animation/LiveLink/Source/`):
+Engine source (UE 5.9, `Engine/Plugins/Animation/LiveLink/Source/`):
 - `LiveLink/Public/LiveLinkBlueprintLibrary.h`:29 — `ULiveLinkBlueprintLibrary`.
 - `LiveLink/Public/LiveLinkPreset.h`:15 — `ULiveLinkPreset` (`AddToClient`, `ApplyToClientLatent`, `BuildFromClient`).
 - `LiveLink/Public/LiveLinkHubSubjectSettings.h`:16 — `ULiveLinkHubSubjectSettings`.
@@ -416,7 +417,7 @@ Engine source (UE 5.8, `Engine/Plugins/Animation/LiveLink/Source/`):
 - `LiveLinkComponents/Public/LiveLinkControllerBase.h`:20 — `ULiveLinkControllerBase`.
 - `LiveLinkSequencer/Private/TakeRecorderSource/TakeRecorderLiveLinkSource.h`:48 — `UTakeRecorderLiveLinkSource`.
 
-Engine source (UE 5.8, other):
+Engine source (UE 5.9, other):
 - `Engine/Source/Runtime/LiveLinkAnimationCore/Public/AnimNode_LiveLinkPose.h`:23 — `FAnimNode_LiveLinkPose`.
 - `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/MetaHumanCoreTech/Public/MetaHumanRealtimeSmoothing.h`:45 — `UMetaHumanRealtimeSmoothingParams`.
 - `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/MetaHumanPipelineCore/Public/Nodes/HyprsenseRealtimeNode.h`:59 — `FMonocularAnimationPipelineModels`.
@@ -439,3 +440,5 @@ Deep-dive references in this skill:
   modes and buffering, Message Bus / UDP settings, packaged-game behaviour.
 
 Related skills: `ue-metahuman-animator`, `ue-animation-system`, `ue-sequencer-and-cinematics`.
+Shipping without live solving (baked lip sync, never-cooking the ~318 MB realtime solver models,
+the ARKit face-tracking listener in Shipping builds): `ue-metahuman-runtime`.

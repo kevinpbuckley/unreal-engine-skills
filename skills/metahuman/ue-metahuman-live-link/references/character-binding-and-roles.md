@@ -221,7 +221,7 @@ governs the reverse direction.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 `Engine/Source/Runtime/LiveLinkInterface/Public/`:
 - `LiveLinkRole.h`:17 — `ULiveLinkRole`; :35 `FLiveLinkSubjectRepresentation`.

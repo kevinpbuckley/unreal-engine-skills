@@ -14,7 +14,8 @@ description: Facial performance to animation with MetaHuman Animator in Unreal E
   UCaptureManagerIngestBlueprintLibrary, UMetaHumanBatchOperation,
   FAudioDrivenAnimationSolveOverrides, EAudioDrivenAnimationMood.
 metadata:
-  engine-version: "5.8"
+  aliases: "MetaHuman Animator, facial animation, face capture, lip sync from audio, Performance asset"
+  engine-version: "5.9"
   category: metahuman
 ---
 
@@ -55,10 +56,10 @@ Four asset types carry the pipeline:
 
 | Asset | Class | Role |
 |---|---|---|
-| Capture Data (Footage) | `UFootageCaptureData` (`CaptureData.h`:214) | Image sequences, depth sequences, audio tracks, camera calibrations, metadata (frame rate, device class), excluded frames |
-| Capture Data (Mesh) | `UMeshCaptureData` (`CaptureData.h`:90) | A static/skeletal mesh scan used as an Identity pose |
-| MetaHuman Identity | `UMetaHumanIdentity` (`MetaHumanIdentity.h`:66) | The performer's digital double: a conformed template mesh + auto-rigged face skeletal mesh + trained predictive solvers |
-| MetaHuman Performance | `UMetaHumanPerformance` (`MetaHumanPerformance.h`:81) | One take: input type, sources, solver settings, processing range, per-frame results, export |
+| Capture Data (Footage) | `UFootageCaptureData` (`CaptureData.h`:217) | Image sequences, depth sequences, audio tracks, camera calibrations, metadata (frame rate, device class), excluded frames |
+| Capture Data (Mesh) | `UMeshCaptureData` (`CaptureData.h`:93) | A static/skeletal mesh scan used as an Identity pose |
+| MetaHuman Identity | `UMetaHumanIdentity` (`MetaHumanIdentity.h`:67) | The performer's digital double: a conformed template mesh + auto-rigged face skeletal mesh + trained predictive solvers |
+| MetaHuman Performance | `UMetaHumanPerformance` (`MetaHumanPerformance.h`:82) | One take: input type, sources, solver settings, processing range, per-frame results, export |
 
 ### The three input routes
 
@@ -76,18 +77,18 @@ Two facts the editor hides from you:
 
 - **Depth generation is stereo-only.** `UMetaHumanDepthGenerator::Process` refuses footage
   with fewer than two image sequences and requires a two-camera `UCameraCalibration`
-  (`MetaHumanDepthGenerator.cpp`:686-711). A single webcam video can never become
+  (`MetaHumanDepthGenerationService.cpp`:581-594, 641-644 in 5.9). A single webcam video can never become
   `DepthFootage`; process it as `MonoFootage`.
 - **Processing is asynchronous unless you ask otherwise.** `StartPipeline` returns
   immediately and the pipeline runs with `PushAsyncNodes`; `SetBlockingProcessing(true)`
   switches it to `PushSyncNodes` and blocks the game thread until done
-  (`MetaHumanPerformance.cpp`:2086-2104). Scripts must block or bind
-  `OnProcessingFinishedDynamic` (`MetaHumanPerformance.h`:107).
+  (`MetaHumanPerformance.cpp`:2157-2175). Scripts must block or bind
+  `OnProcessingFinishedDynamic` (`MetaHumanPerformance.h`:108).
 
-### What `CanProcess()` checks (`MetaHumanPerformance.cpp`:2464)
+### What `CanProcess()` checks (`MetaHumanPerformance.cpp`:2535)
 
 In order: not already processing; no *other* Performance is processing (only one at a
-time — `CurrentlyProcessedPerformance`, `MetaHumanPerformance.h`:710); then per route:
+time — `CurrentlyProcessedPerformance`, `MetaHumanPerformance.h`:752); then per route:
 
 - `Audio`: `GetAudioForProcessing()` non-null. Nothing else — audio runs on the CPU ORT
   runtime and skips the RHI check.
@@ -103,7 +104,7 @@ time — `CurrentlyProcessedPerformance`, `MetaHumanPerformance.h`:710); then pe
   MetaHuman authoring content to be present (`FMetaHumanAuthoringObjects::ArePresent`).
 - Finally the processing limit range must be non-empty.
 
-`GetCannotProcessTooltipText()` (`MetaHumanPerformance.h`:608) mirrors the same ladder and
+`GetCannotProcessTooltipText()` (`MetaHumanPerformance.h`:650) mirrors the same ladder and
 is the fastest way to learn *why* processing is disabled.
 
 ## Core workflow
@@ -114,7 +115,7 @@ is the fastest way to learn *why* processing is disabled.
    unreal.MetaHumanPerformance, unreal.MetaHumanPerformanceFactoryNew())`; C++: `IAssetTools::CreateAsset` with a null
    factory, or `NewObject` for a transient one).
 2. `SetInputType(EDataInputType::Audio)` then `SetAudio(SoundWave)`
-   (`MetaHumanPerformance.h`:503, 507). Use the setters — they reset stale state and recompute
+   (`MetaHumanPerformance.h`:521, 525). Use the setters — they reset stale state and recompute
    the frame range; raw property writes do not.
 3. Optional: `AudioDrivenAnimationSolveOverrides.Mood/MoodIntensity` (`:425`),
    `AudioDrivenAnimationOutputControls` FullFace/MouthOnly (`:376`), `bGenerateBlinks`
@@ -137,7 +138,7 @@ is the fastest way to learn *why* processing is disabled.
    `ILiveLinkDeviceCapability_Ingest` (`UpdateTakeList`, `GetTakeIdentifiers`,
    `GetTakeInformation`, `CreateIngestProcess`/`RunIngestProcess`), or from script call
    `UCaptureManagerIngestBlueprintLibrary::IngestLiveLinkFaceSync(TakeDir, Params, OutError)`
-   / `IngestTakeArchiveSync` for `.cptake` archives (`CaptureManagerIngestBlueprintLibrary.h`:242, 119).
+   / `IngestTakeArchiveSync` for `.cptake` archives (`CaptureManagerIngestBlueprintLibrary.h`:259, 136).
    Assets land under `UCaptureManagerEditorSettings::ImportDirectory`.
 3. Build or reuse a `UMetaHumanIdentity` of the same performer (section D) and make sure it
    is auto-rigged and prepared for performance.
@@ -149,7 +150,7 @@ is the fastest way to learn *why* processing is disabled.
 ### C. Monocular video (webcam / DSLR)
 
 1. `IngestMonoVideoSync(VideoPath, OptionalAudioPath, Slate, TakeNumber, Params, OutError)`
-   (`CaptureManagerIngestBlueprintLibrary.h`:153) → `UFootageCaptureData` with one image
+   (`CaptureManagerIngestBlueprintLibrary.h`:170) → `UFootageCaptureData` with one image
    sequence (+ audio). `.mp4`/`.mov` only.
 2. Performance: `SetInputType(MonoFootage)`, `SetFootageCaptureData(CD)`. No Identity.
    Tune `bFaceTracking` (`:314`), `bBodyTracking` (`:324`, needs the body tracker plugin),
@@ -163,7 +164,7 @@ is the fastest way to learn *why* processing is disabled.
 ### D. Identity (Mesh to MetaHuman)
 
 1. Create `UMetaHumanIdentity`; `GetOrCreatePartOfClass(UMetaHumanIdentityFace)`
-   (`MetaHumanIdentity.h`:98). Optional parts: `UMetaHumanIdentityBody`
+   (`MetaHumanIdentity.h`:99). Optional parts: `UMetaHumanIdentityBody`
    (`Height`, `BodyTypeIndex`), Hands, Outfit, Prop (`MetaHumanIdentityParts.h`:550-643).
 2. Add a Neutral pose: `NewObject<UMetaHumanIdentityPose>(Face)`,
    `Face->AddPoseOfType(EIdentityPoseType::Neutral, Pose)`, `Pose->SetCaptureData(CD)`
@@ -174,12 +175,12 @@ is the fastest way to learn *why* processing is disabled.
    `MetaHumanIdentityPromotedFrames.h`:197-204, 109). Track it with
    `UPromotedFrameUtils::InitializeContourDataForFootageFrame` and
    `UMetaHumanIdentity::StartFrameTrackingPipeline(...)` under `SetBlockingProcessing(true)`
-   (`PromotedFrameUtils.h`:31; `MetaHumanIdentity.h`:135, 139).
+   (`PromotedFrameUtils.h`:31; `MetaHumanIdentity.h`:136, 140).
 4. `Face->Conform()` → `EIdentityErrorCode`; `UMetaHumanIdentity::HandleError(Code, bLogOnly)`
-   returns true when it is not an error (`MetaHumanIdentityParts.h`:138; `MetaHumanIdentity.h`:188).
+   returns true when it is not an error (`MetaHumanIdentityParts.h`:138; `MetaHumanIdentity.h`:192).
 5. Auto-rig (cloud): `IsLoggedInToService()` / `LogInToAutoRigService()`, bind
    `OnAutoRigServiceFinishedDynamicDelegate`, call `CreateDNAForIdentity(bLogOnly)`
-   (`MetaHumanIdentity.h`:145-155, 87). Offline alternative:
+   (`MetaHumanIdentity.h`:146-156, 88). Offline alternative:
    `ImportDNAFile(DnaPath, EDNADataLayer::All, BrowsJsonPath)` (`:123`);
    `ExportDNADataToFiles` writes them back out (`:127`).
 6. **Prepare for Performance** = `Face->RunPredictiveSolverTraining()`
@@ -189,14 +190,14 @@ is the fastest way to learn *why* processing is disabled.
    `UMetaHumanCharacterEditorSubsystem::ImportFromIdentity(Character, Identity,
    FImportFromIdentityParams)` → `EImportErrorCode` (`IdentityNotConformed` if step 4 was
    skipped), inside `TryAddObjectToEdit`/`RemoveObjectToEdit`
-   (`MetaHumanCharacterEditorSubsystem.h`:1437, 392, 38, 529, 541).
+   (`MetaHumanCharacterEditorSubsystem.h`:1442, 397, 38, 534, 546).
 
 ## UMetaHumanPerformance API cheat sheet
 
 | Member | Line | Notes |
 |---|---|---|
 | `InputType`, `FootageCaptureData`, `Audio`, `Identity` | 180, 185, 189, 214 | All have `BlueprintSetter`s — use `SetInputType`/`SetFootageCaptureData`/`SetAudio`/`SetIdentity` (499-511) |
-| `Camera`, `TimecodeAlignment` | 206, 210 | View name in multi-camera footage; `ETimecodeAlignment` None/Absolute/Relative (`CaptureData.h`:193) |
+| `Camera`, `TimecodeAlignment` | 206, 210 | View name in multi-camera footage; `ETimecodeAlignment` None/Absolute/Relative (`CaptureData.h`:196) |
 | `ControlRigAssetReference`, `VisualizationObject` | 226, 234 | Face board rig used for preview/baking (defaults to `Face_ControlBoard_CtrlRig`); preview skel mesh or MetaHuman BP |
 | `HeadMovementMode` | 247 | `EPerformanceHeadMovementMode` TransformTrack / ControlRig / Disabled (`:52`) |
 | `StartFrameToProcess`, `EndFrameToProcess`, `SetProcessingRange` | 287, 291, 520 | End is exclusive; negatives clamp to 0; held until source data loads |
@@ -259,13 +260,13 @@ UAnimSequence* SolveSpeechToAnim(USoundWave* Wave, const FString& PackagePath, U
 `GetExportAnimationSequenceSettings` returns the mutable CDO pre-filled with the
 performance's folder, `AS_<name>`, `ProcessingRange`, head movement if available, and a
 `Face_Archetype_Skeleton` found under the Content Browser's current save path
-(`MetaHumanPerformanceExportUtils.cpp`:797-842) — always set `TargetSkeletonOrSkeletalMesh`
+(`MetaHumanPerformanceExportUtils.cpp`:804-849) — always set `TargetSkeletonOrSkeletalMesh`
 explicitly in scripts.
 
 ## Worked example — scripted audio-only batch (Python, editor)
 
 Every call below is `BlueprintCallable` or a reflected `UPROPERTY` in the headers cited
-(`MetaHumanPerformance.h`:486-531, 365-425; `MetaHumanPerformanceExportUtils.h`:66-135,
+(`MetaHumanPerformance.h`:504-555, 372-432; `MetaHumanPerformanceExportUtils.h`:66-135,
 302-310). Epic ships the same shape in
 `Engine/Plugins/MetaHuman/MetaHumanAnimator/Content/Python/process_audio_performance.py`,
 `process_performance.py` and `export_performance.py`.
@@ -342,7 +343,7 @@ the detail-panel payloads behind the Content Browser "Speech to Anim/Level Seque
 - The exported `UAnimSequence` holds **curves**, not bone tracks (face only): one curve per
   face-board control (`CTRL_expressions_*`, plus `CTRL_*` GUI controls) and, when head
   movement is enabled, `HeadYaw`, `HeadPitch`, `HeadRoll`, `HeadTranslationX/Y/Z`
-  (`MetaHumanPerformanceExportUtils.cpp`:100-105). Its skeleton is whatever you passed as
+  (`MetaHumanPerformanceExportUtils.cpp`:101-106). Its skeleton is whatever you passed as
   `TargetSkeletonOrSkeletalMesh` — the MetaHuman `Face_Archetype_Skeleton` or the Face
   skeletal mesh of an assembled character.
 - On an assembled MetaHuman the Face component's post-process AnimBP
@@ -361,14 +362,14 @@ the detail-panel payloads behind the Content Browser "Speech to Anim/Level Seque
 
 - **"Prepared for performance" is a real state.** A `DepthFootage` Performance needs an
   Identity whose face has `RigComponent`, `bIsAutoRigged == true` and trained predictive
-  solvers (`MetaHumanPerformance.cpp`:2535-2552; `MetaHumanIdentityParts.h`:348-356, 184).
+  solvers (`MetaHumanPerformance.cpp`:2606-2623; `MetaHumanIdentityParts.h`:348-356, 184).
   Auto-rigging is a cloud call (`CreateDNAForIdentity`) that needs an Epic login
   (`LogInToAutoRigService`) and finishes asynchronously on
   `OnAutoRigServiceFinishedDynamicDelegate`; run `RunPredictiveSolverTraining()` *after* it.
 - **Async by default.** Without `SetBlockingProcessing(true)` the pipeline runs on worker
   threads and `StartPipeline` returns at once; your script's next line sees zero frames.
   In blocking mode depth-footage processing also loads trackers synchronously
-  (`MetaHumanPerformance.cpp`:1280-1286).
+  (`MetaHumanPerformance.cpp`:1350-1356).
 - **Only one Performance processes at a time** (`CurrentlyProcessedPerformance`); a second
   `CanProcess()` returns false until the first finishes or is cancelled.
 - **GPU/RHI.** Footage routes require D3D12/Vulkan/Metal and the NNE runtimes the plugin
@@ -376,22 +377,22 @@ the detail-panel payloads behind the Content Browser "Speech to Anim/Level Seque
   `NNERuntimeORTDml`, speech-to-face uses `NNERuntimeORTCpu` (`Speech2FaceInternal.cpp`:60).
   A `-nullrhi` commandlet cannot process footage; audio-only can.
 - **Depth range.** `MinDistance`/`MaxDistance` (cm, default 10–25) clip depth for stereo
-  generation and HMC ingest (`MetaHumanPerformance.h`:429-433,
+  generation and HMC ingest (`MetaHumanPerformance.h`:436-440,
   `MetaHumanGenerateDepthWindowOptions.h`:51-61). A performer 40 cm from an HMC rig loses
   depth entirely; iPhone depth is already metric and ignores these.
 - **Frame rate and timecode.** `SetFootageCaptureData` rejects footage whose frame rate is
   invalid (`:497`). Image and depth tracks at different but compatible rates are
-  rate-matched by dropping frames (`MetaHumanPerformance.cpp`:1108-1129). `TimecodeAlignment`
+  rate-matched by dropping frames (`MetaHumanPerformance.cpp`:1178-1199). `TimecodeAlignment`
   Relative aligns tracks by their first frame; Absolute uses embedded timecode and will
   produce an empty range when sources have no timecode. Audio-only performances run at
-  30 fps when there is no footage (`MetaHumanPerformance.cpp`:1010); Speech2Face solves at
+  30 fps when there is no footage (`MetaHumanPerformance.cpp`:1039); Speech2Face solves at
   50 fps and resamples nearest-neighbour (`Speech2Face.h`:72).
 - **Live Link Face capture mode matters.** Only *MetaHuman Animator* mode records depth;
   ARKit mode gives video + blendshape CSVs and can only go the `MonoFootage` route. Since
   5.6 the app writes `.cptake` archives; `IngestLiveLinkFaceSync` accepts both formats.
 - **Mono head rotation limits.** Frames past `HeadAllowedRotationLeftRight` (45°) /
   `UpDown` (30°) are unsolved; `HeadRotationHandler` chooses gap vs neutral pose
-  (`MetaHumanPerformance.h`:399-413). Changing them requires reprocessing.
+  (`MetaHumanPerformance.h`:406-420). Changing them requires reprocessing.
 - **Export defaults depend on editor state.** The default target skeleton is looked up
   relative to the Content Browser's initial save path; headless runs must set
   `TargetSkeletonOrSkeletalMesh`. `bShowExportDialog` defaults to true — set it false.
@@ -418,24 +419,24 @@ the detail-panel payloads behind the Content Browser "Speech to Anim/Level Seque
 
 ## References & source material
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`):
+Engine source (UE 5.9 — all paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`):
 - `MetaHumanPerformance/Public/MetaHumanPerformance.h`:35 — `EDataInputType`.
 - `MetaHumanPerformance/Public/MetaHumanPerformance.h`:52 — `EPerformanceHeadMovementMode`.
 - `MetaHumanPerformance/Public/MetaHumanPerformance.h`:65 — `EStartPipelineErrorType`.
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:81 — `UMetaHumanPerformance`.
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:107 — `OnProcessingFinishedDynamic`.
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:180 — `InputType`, `FootageCaptureData`, `Audio`, `Identity` (180-214).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:486 — `StartPipeline`, `CancelPipeline`, `IsProcessing`, `CanProcess` (486-495).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:499 — `SetFootageCaptureData`, `SetInputType`, `SetAudio`, `SetIdentity`, `SetProcessingRange`, `SetBlockingProcessing` (499-531).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:560 — `GetAnimationData`, `GetNumberOfProcessedFrames`.
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:82 — `UMetaHumanPerformance`.
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:108 — `OnProcessingFinishedDynamic`.
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:181 — `InputType`, `FootageCaptureData`, `Audio`, `Identity` (181-215).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:504 — `StartPipeline`, `CancelPipeline`, `IsProcessing`, `CanProcess` (504-513).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:517 — `SetFootageCaptureData`, `SetInputType`, `SetAudio`, `SetIdentity`, `SetProcessingRange`, `SetBlockingProcessing` (517-555).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:602 — `GetAnimationData`, `GetNumberOfProcessedFrames`.
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:20 — `EPerformanceExportRange`, `EPerformanceExportSkeleton`.
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:48 — `UMetaHumanPerformanceExportAnimationSettings`.
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:173 — `UMetaHumanPerformanceExportLevelSequenceSettings`.
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:293 — `UMetaHumanPerformanceExportUtils`, `ExportAnimationSequence` (310), `ExportLevelSequence` (314).
-- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1075 — `StartPipeline` implementation; `CanProcess` (2464).
-- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:100 — head movement curve names; `GetExportAnimationSequenceSettings` (797).
+- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1104 — `StartPipeline` implementation; `CanProcess` (2535).
+- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:101 — head movement curve names; `GetExportAnimationSequenceSettings` (804).
 - `MetaHumanPerformance/Private/MetaHumanPerformanceFactoryNew.h`:14 — `UMetaHumanPerformanceFactoryNew`.
-- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:66 — `UMetaHumanIdentity`; auto-rig API (145-155); `ImportDNAFile` (123); `StartFrameTrackingPipeline` (135).
+- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:67 — `UMetaHumanIdentity`; auto-rig API (146-156); `ImportDNAFile` (124); `StartFrameTrackingPipeline` (136).
 - `MetaHumanIdentity/Public/MetaHumanIdentityParts.h`:106 — `UMetaHumanIdentityFace`; `Conform` (138); `RunPredictiveSolverTraining` (184); `bIsAutoRigged` (356).
 - `MetaHumanIdentity/Public/MetaHumanIdentityPose.h`:20 — `EIdentityPoseType`; `UMetaHumanIdentityPose` (38).
 - `MetaHumanIdentity/Public/MetaHumanIdentityPromotedFrames.h`:18 — `UMetaHumanIdentityPromotedFrame`; `UMetaHumanIdentityFootageFrame` (197).
@@ -447,7 +448,7 @@ Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanAni
 - `MetaHumanBatchProcessor/Public/MetaHumanSpeechProcessingSettings.h`:101 — `UMetaHumanSpeechToPerformance`, `UMetaHumanSpeechToAnimSequenceProcessingSettings` (132), `UMetaHumanSpeechToLevelSequenceSettings` (158).
 - `MetaHumanDepthGenerator/Private/MetaHumanDepthGenerator.h`:15 — `UMetaHumanDepthGenerator`.
 - `MetaHumanDepthGenerator/Private/Widgets/MetaHumanGenerateDepthWindowOptions.h`:13 — `UMetaHumanGenerateDepthWindowOptions`.
-- `MetaHumanDepthGenerator/Private/MetaHumanDepthGenerator.cpp`:686 — two-image-sequence and calibration requirements.
+- `MetaHumanDepthGenerator/Private/DepthGeneration/MetaHumanDepthGenerationService.cpp`:581 — two-image-sequence and calibration requirements (`ValidateFootage`, `GenerateDepth`; moved out of `MetaHumanDepthGenerator.cpp` in 5.9).
 - `MetaHumanCaptureSource/Public/MetaHumanCaptureSource.h`:97 — `UMetaHumanCaptureSource` (deprecated 5.7).
 - `MetaHumanCaptureSource/Public/MetaHumanCaptureSourceSync.h`:18 — `UMetaHumanCaptureSourceSync` (deprecated 5.7).
 - `MetaHumanCaptureSource/Public/MetaHumanTakeData.h`:27 — `FMetaHumanTakeInfo`, `FMetaHumanTake` (115).
@@ -459,28 +460,28 @@ Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanAni
 - `MetaHumanFaceContourTracker/Public/MetaHumanFaceContourTrackerAsset.h`:23 — `UMetaHumanFaceContourTrackerAsset`.
 - `MetaHumanConfig/Public/MetaHumanConfig.h` — `UMetaHumanConfig`, `EMetaHumanConfigType`.
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/`):
+Engine source (UE 5.9 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/`):
 - `MetaHumanCoreTech/Public/FrameAnimationData.h`:44 — `FFrameAnimationData`; `EFrameAnimationDataType` (33).
 - `MetaHumanCoreTech/Public/MetaHumanCommonDataUtils.h`:48 — `GetAnimatorPluginFaceControlRigPath`, `GetDefaultControlRigFromRegistry` (34).
 - `MetaHumanPipelineCore/Public/Nodes/HyprsenseRealtimeNode.h`:42 — `EFaceUnsolvedFrameBehavior`; `FMonocularAnimationPipelineModels` (59).
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`):
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:38 — `EImportErrorCode`; `FImportFromIdentityParams` (392); `UMetaHumanCharacterEditorSubsystem` (491); `TryAddObjectToEdit` (529); `ImportFromIdentity` (1437).
+Engine source (UE 5.9 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`):
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:38 — `EImportErrorCode`; `FImportFromIdentityParams` (397); `UMetaHumanCharacterEditorSubsystem` (496); `TryAddObjectToEdit` (534); `ImportFromIdentity` (1442).
 - `MetaHumanCharacterEditor/Private/MetaHumanCharacterEditorActor.cpp`:74 — face post-process AnimBP (`ABP_Face_PostProcess`).
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/VirtualProduction/`):
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:40 — `UCaptureData`; `UMeshCaptureData` (90); `EFootageDeviceClass` (111); `FFootageCaptureMetadata` (123); `ETimecodeAlignment` (193); `UFootageCaptureData` (214).
+Engine source (UE 5.9 — all paths under `Engine/Plugins/VirtualProduction/`):
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:43 — `UCaptureData`; `UMeshCaptureData` (93); `EFootageDeviceClass` (114); `FFootageCaptureMetadata` (126); `ETimecodeAlignment` (196); `UFootageCaptureData` (217).
 - `CaptureData/Source/CaptureDataEditor/Public/CaptureDataFactory.h`:30 — `UFootageCaptureDataFactory`.
 - `CaptureData/Source/CaptureDataUtils/Public/ImageSequenceTimecodeUtils.h`:13 — `UImageSequenceTimecodeUtils`.
-- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Private/CaptureManagerIngestBlueprintLibrary.h`:105 — `UCaptureManagerIngestBlueprintLibrary`; `IngestMonoVideoSync` (153); `IngestLiveLinkFaceSync` (242); `IngestTakeArchiveSync` (119).
+- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Internal/CaptureManagerIngestBlueprintLibrary.h`:122 — `UCaptureManagerIngestBlueprintLibrary`; `IngestMonoVideoSync` (170); `IngestLiveLinkFaceSync` (259); `IngestTakeArchiveSync` (136). (`Private/` in 5.8.)
 - `CaptureManager/CaptureManagerEditor/Source/CaptureManagerEditorSettings/Public/Settings/CaptureManagerEditorSettings.h`:23 — `UCaptureManagerEditorSettings`; `ImportDirectory` (82).
 - `CaptureManager/CaptureManagerDevices/Source/CPSLiveLinkDevice/Public/LiveLinkFaceDevice.h`:50 — `ULiveLinkFaceDevice`; `ULiveLinkFaceDeviceSettings` (27).
 - `CaptureManager/CaptureManagerApp/Source/LiveLinkCapabilities/Public/Ingest/LiveLinkDeviceCapability_Ingest.h`:38 — `ILiveLinkDeviceCapability_Ingest`.
 - `CaptureManager/CaptureManagerCore/Source/CaptureMetadataExtraction/Internal/LiveLinkFaceMetadata.cpp`:47 — Live Link Face take file names; MHA vs ARKit file sets (224, 234).
 
-Other engine source (UE 5.8):
+Other engine source (UE 5.9):
 - `Engine/Plugins/Animation/AudioDrivenAnimation/StreamingADA/Source/SpeechAnimationSolver/Public/SpeechAnimationSolverTypes.h`:13 — `EAudioDrivenAnimationMood`.
-- `Engine/Source/Developer/AssetTools/Public/IAssetTools.h`:349 — `CreateAsset` (null factory allowed).
+- `Engine/Source/Developer/AssetTools/Public/IAssetTools.h`:381 — `CreateAsset` (null factory allowed).
 
 Shipped Python examples (UE 5.8): `Engine/Plugins/MetaHuman/MetaHumanAnimator/Content/Python/`
 (`process_audio_performance.py`, `process_performance.py`, `process_monocular_performance.py`,
@@ -494,3 +495,5 @@ Deep-dive references in this skill:
 - [references/audio-driven-animation.md](references/audio-driven-animation.md) — Speech2Face internals, moods, output controls, realtime vs offline audio solve, batch processor, speech-to-animation settings objects.
 
 Related skills: `ue-control-rig-and-ik`, `ue-animation-system`, `ue-sequencer-and-cinematics`.
+Playing the exported face clips in a packaged game (face AnimBP with a Slot, head snap, blinks,
+cook size): `ue-metahuman-runtime`.

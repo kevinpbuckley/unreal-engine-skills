@@ -11,7 +11,7 @@ Performance applies. Grounded in UE 5.8 (`Engine/Plugins/VirtualProduction/Captu
 
 ## UCaptureData family
 
-`UCaptureData` (`CaptureData.h`:40) is abstract with one virtual,
+`UCaptureData` (`CaptureData.h`:43) is abstract with one virtual,
 `IsInitialized(ECaptureDataInitializedCheck)`. The flags (`:23`) are
 `ImageSequences`, `DepthSequences`, `Calibrations`, `Metadata`, with `Full` and
 `ImageSequencesOnly` presets; the Performance uses them to decide what a route needs
@@ -19,13 +19,13 @@ Performance applies. Grounded in UE 5.8 (`Engine/Plugins/VirtualProduction/Captu
 separately). `OnCaptureDataInternalsChanged()` fires when any of the arrays change; the
 Performance and Identity poses subscribe to it to recompute their frame ranges.
 
-### UMeshCaptureData (`CaptureData.h`:90)
+### UMeshCaptureData (`CaptureData.h`:93)
 
 - `TargetMesh` (`:104`) — a `UStaticMesh` or `USkeletalMesh` scan of a neutral face. Used only
   by the Identity (a Mesh pose); `GetDataForConforming()` flattens it for the face fitter.
 - Created with `UMeshCaptureDataFactory` (`CaptureDataFactory.h`:14).
 
-### UFootageCaptureData (`CaptureData.h`:214)
+### UFootageCaptureData (`CaptureData.h`:217)
 
 | Property | Line | Meaning |
 |---|---|---|
@@ -97,25 +97,25 @@ names (`CaptureDataAssetName`, `ImageSequenceAssetName`, `DepthSequenceAssetName
 
 ### Scripted ingest: UCaptureManagerIngestBlueprintLibrary
 
-`CaptureManagerIngestBlueprintLibrary.h` (private header, reflected class) exposes blocking
-and async variants of every ingest. The blocking ones return the `UFootageCaptureData`
+`CaptureManagerIngestBlueprintLibrary.h` (an `Internal/` header in 5.9, `Private/` in 5.8; reflected class) exposes blocking,
+async and (new in 5.9) `*WithProgress` variants of every ingest. The blocking ones return the `UFootageCaptureData`
 directly:
 
 | Function | Line | Input |
 |---|---|---|
-| `IngestTakeArchiveSync(TakeArchivePath, Params, OutError)` | 119 | directory or `.cptake` file |
-| `IngestMonoVideoSync(VideoFilePath, AudioFilePath, Slate, TakeNumber, Params, OutError)` | 153 | `.mp4`/`.mov`, optional separate audio |
-| `IngestStereoVideoSync(VideoPathA, VideoPathB, AudioFilePath, CalibrationFilePath, Slate, TakeNumber, Params, OutError)` | 197 | two videos or two image-sequence folders + calibration JSON |
-| `IngestLiveLinkFaceSync(TakeDirectoryPath, Params, OutError)` | 242 | Live Link Face take folder (`.cptake` or pre-5.6 layout) |
-| `IngestCalibrationSync(CalibrationFilePath, CalibrationName, OutError)` | 274 | standalone calibration JSON → capture data with only `CameraCalibrations[0]` |
-| `FindTakeDirectories(SearchDirectory, bRecursive)` | 325 | inventory (`FCaptureManagerTakeDirectoryInfo`, `:68`: `bIsTakeArchive`, `bIsLiveLinkFace`, `VideoFiles`, `ImageSeqDirs`, `AudioFiles`, `CalibrationFiles`) |
+| `IngestTakeArchiveSync(TakeArchivePath, Params, OutError)` | 136 | directory or `.cptake` file |
+| `IngestMonoVideoSync(VideoFilePath, AudioFilePath, Slate, TakeNumber, Params, OutError)` | 170 | `.mp4`/`.mov`, optional separate audio |
+| `IngestStereoVideoSync(VideoPathA, VideoPathB, AudioFilePath, CalibrationFilePath, Slate, TakeNumber, Params, OutError)` | 214 | two videos or two image-sequence folders + calibration JSON |
+| `IngestLiveLinkFaceSync(TakeDirectoryPath, Params, OutError)` | 259 | Live Link Face take folder (`.cptake` or pre-5.6 layout) |
+| `IngestCalibrationSync(CalibrationFilePath, CalibrationName, OutError)` | 291 | standalone calibration JSON → capture data with only `CameraCalibrations[0]` |
+| `FindTakeDirectories(SearchDirectory, bRecursive)` | 398 | inventory (`FCaptureManagerTakeDirectoryInfo`, `:71`: `bIsTakeArchive`, `bIsLiveLinkFace`, `VideoFiles`, `ImageSeqDirs`, `AudioFiles`, `CalibrationFiles`) |
 
-The async versions (`IngestMonoVideo`, `IngestLiveLinkFace`, ... `:135-289`) return an
+The async versions (`IngestMonoVideo`, `IngestLiveLinkFace`, ... `:152-306`; `IngestMonoVideoWithProgress` etc. `:317-361`) return an
 `IngestId` and call `FCaptureManagerIngestSuccess(IngestId, ECaptureManagerIngestType, UFootageCaptureData*)`
-or `FCaptureManagerIngestFailed(IngestId, Type, FText)` on the game thread (`:101-102`);
-`CancelIngest(IngestId)` (`:308`) aborts.
+or `FCaptureManagerIngestFailed(IngestId, Type, FText)` on the game thread (`:104-105`);
+`CancelIngest(IngestId)` (`:381`) aborts.
 
-`FCaptureManagerConversionParams` (`:36`): `ImageFormat` PNG/JPG, `AudioFormat` WAV, file
+`FCaptureManagerConversionParams` (`:39`): `ImageFormat` PNG/JPG, `AudioFormat` WAV, file
 prefixes, `PixelFormat` (`ECaptureManagerPixelFormat::U8_BGRA` default), `Rotation`
 (`ECaptureManagerRotation::Auto` — phone footage is usually portrait and gets rotated here).
 
@@ -133,7 +133,7 @@ if cd is None:
 
 Settings must be valid before ingesting: the library calls
 `GetValidatedSettings` and fails with an error text if `ImportDirectory` is unset
-(`CaptureManagerIngestBlueprintLibrary.cpp`:264-269).
+(`CaptureManagerIngestBlueprintLibrary.cpp`:266, helper at :75).
 
 ---
 
@@ -212,8 +212,12 @@ ok = unreal.MetaHumanDepthGenerator().process(capture_data, opts)
 
 `UMetaHumanDepthGenerator::Process(FootageCaptureData, Options)` (`MetaHumanDepthGenerator.h`:24,
 `BlueprintCallable`) refuses footage with fewer than two `ImageSequences`
-("Expecting 2 image sequences", `MetaHumanDepthGenerator.cpp`:686-692), null sequences,
-a missing calibration (`:706-711`) or a calibration with fewer than two cameras (`:729`).
+("Generating depth images requires two image sequences."), null sequences, and a missing
+calibration or one with fewer than two cameras ("A valid stereo camera calibration is
+required."). In 5.9 these checks moved from `MetaHumanDepthGenerator.cpp` into
+`ValidateFootage` / `GenerateDepth` in `DepthGeneration/MetaHumanDepthGenerationService.cpp`
+(:581-594, :640-644), which also reject a disabled Depth Processing plugin and empty output
+paths (`ValidateRequest`, :596-619).
 It writes depth EXRs under `ImageSequenceRootPath`, creates `UImgMediaSource` depth assets
 and a `_Generated` calibration, and appends them to the capture data's `DepthSequences`.
 The one-argument overload opens the modal options window (`:634-660`). Options
@@ -224,8 +228,8 @@ The one-argument overload opens the modal options window (`:634-660`). Options
 
 A `DepthFootage` Performance can also generate depth on the fly: `CanProcess` admits
 footage with no depth but ≥2 RGB views and a calibration
-(`MetaHumanPerformance.cpp`:2515-2528), `NeedsCalibrationForDepthGeneration()`
-(`MetaHumanPerformance.h`:616) tells you a calibration is missing, and `MinDistance`/
+(`MetaHumanPerformance.cpp`:2586-2599), `NeedsCalibrationForDepthGeneration()`
+(`MetaHumanPerformance.h`:658) tells you a calibration is missing, and `MinDistance`/
 `MaxDistance` under "Processing Parameters | Depth Generation" (`:429-433`) apply.
 
 Monocular footage has none of this. There is no mono depth estimator in 5.8; a webcam clip
@@ -236,16 +240,16 @@ is `MonoFootage`, full stop.
 ## Frame rate, timecode and excluded frames
 
 - `FFootageCaptureMetadata::FrameRate` must be valid; `UMetaHumanPerformance::SetFootageCaptureData`
-  rejects footage with an invalid rate and nulls the property (`MetaHumanPerformance.h`:497).
+  rejects footage with an invalid rate and nulls the property (`MetaHumanPerformance.h`:515).
   `UMetaHumanPerformance::GetFrameRate()` returns `ImageSequences[0]->FrameRateOverride`,
-  or 30 fps with no footage (`MetaHumanPerformance.cpp`:1002-1012).
-- `ETimecodeAlignment` (`CaptureData.h`:193): `None` (tracks start at frame 0 together),
+  or 30 fps with no footage (`MetaHumanPerformance.cpp`:1031-1041).
+- `ETimecodeAlignment` (`CaptureData.h`:196): `None` (tracks start at frame 0 together),
   `Absolute` (place each track at its embedded timecode), `Relative` (default — align by the
   earliest timecode, so tracks keep their relative offset). Both the Performance (`:210`) and
   each Identity pose (`MetaHumanIdentityPose.h`:214) carry their own setting.
 - When image and depth sequences have different but compatible rates (e.g. 60 fps video,
   30 fps depth), `StartPipeline` computes rate-matching drop frames and excludes them with
-  a warning in `LogMetaHumanPerformance` (`MetaHumanPerformance.cpp`:1104-1129).
+  a warning in `LogMetaHumanPerformance` (`MetaHumanPerformance.cpp`:1174-1199).
 - Exclusions come from three places and are merged into independent processing runs:
   `UserExcludedFrames`, rate-matching drops, and the footage's `CaptureExcludedFrames`
   offset by the media start frame (`:1138-1155`). A single excluded frame is skipped; a run of
@@ -254,15 +258,15 @@ is `MonoFootage`, full stop.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/VirtualProduction/`:
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:23 — `ECaptureDataInitializedCheck`.
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:40 — `UCaptureData`.
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:90 — `UMeshCaptureData`, `TargetMesh` (104).
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:111 — `EFootageDeviceClass`; `FFootageCaptureMetadata` (123); `SetDeviceClass` (146).
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:193 — `ETimecodeAlignment`.
-- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:214 — `UFootageCaptureData`; arrays (236-266); `GetFrameRanges` (276); `VerifyData` (292).
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:26 — `ECaptureDataInitializedCheck`.
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:43 — `UCaptureData`.
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:93 — `UMeshCaptureData`, `TargetMesh` (107).
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:114 — `EFootageDeviceClass`; `FFootageCaptureMetadata` (126); `SetDeviceClass` (149).
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:196 — `ETimecodeAlignment`.
+- `CaptureData/Source/CaptureDataCore/Public/CaptureData.h`:217 — `UFootageCaptureData`; arrays (242-272); `GetFrameRanges` (282); `VerifyData` (338).
 - `CaptureData/Source/CaptureDataEditor/Public/CaptureDataFactory.h`:14 — `UMeshCaptureDataFactory`; `UFootageCaptureDataFactory` (30).
 - `CaptureData/Source/CaptureDataUtils/Public/ImageSequenceTimecodeUtils.h`:13 — `UImageSequenceTimecodeUtils`; `SetTimecodeInfo` (24).
 - `CaptureManager/CaptureManagerApp/Source/IngestLiveLinkDevice/Public/BaseIngestLiveLinkDevice.h`:18 — `UBaseIngestLiveLinkDevice`.
@@ -274,8 +278,8 @@ All paths under `Engine/Plugins/VirtualProduction/`:
 - `CaptureManager/CaptureManagerDevices/Source/TakeArchiveIngestDevice/Private/TakeArchiveIngestDevice.h`:38 — `UTakeArchiveIngestDevice`.
 - `CaptureManager/CaptureManagerCore/Source/DataIngestCore/Public/IngestCaptureData.h`:11 — `FIngestCaptureData` (`.cptake`).
 - `CaptureManager/CaptureManagerCore/Source/CaptureMetadataExtraction/Internal/LiveLinkFaceMetadata.cpp`:47 — `FLiveLinkFaceStaticFileNames`; `GetMHAFileNames` (224); `GetARKitFileNames` (234).
-- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Private/CaptureManagerIngestBlueprintLibrary.h`:36 — `FCaptureManagerConversionParams`; `FCaptureManagerTakeDirectoryInfo` (68); `UCaptureManagerIngestBlueprintLibrary` (105).
-- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Private/CaptureManagerIngestBlueprintLibrary.cpp`:246 — `IngestMonoVideo_Internal`; `IngestLiveLinkFace_Internal` (431).
+- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Internal/CaptureManagerIngestBlueprintLibrary.h`:39 — `FCaptureManagerConversionParams`; `FCaptureManagerTakeDirectoryInfo` (71); `UCaptureManagerIngestBlueprintLibrary` (122). (Moved from `Private/` in 5.8.)
+- `CaptureManager/CaptureManagerEditor/Source/CaptureManagerIngestBlueprint/Private/CaptureManagerIngestBlueprintLibrary.cpp`:247 — `IngestMonoVideo_Internal`; `IngestLiveLinkFace_Internal` (434).
 - `CaptureManager/CaptureManagerEditor/Source/CaptureManagerEditorSettings/Public/Settings/CaptureManagerEditorSettings.h`:23 — `UCaptureManagerEditorSettings`; `MediaDirectory` (76); `ImportDirectory` (82).
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
@@ -283,8 +287,9 @@ All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanCaptureSource/Public/MetaHumanCaptureSourceSync.h`:18 — `UMetaHumanCaptureSourceSync`; `Startup` (41); `Refresh` (45); `SetTargetPath` (49); `GetTakes` (74).
 - `MetaHumanCaptureSource/Public/MetaHumanTakeData.h`:27 — `FMetaHumanTakeInfo`; `FMetaHumanTakeView` (84); `FMetaHumanTake` (115).
 - `MetaHumanDepthGenerator/Private/MetaHumanDepthGenerator.h`:15 — `UMetaHumanDepthGenerator`; `Process` (24).
-- `MetaHumanDepthGenerator/Private/MetaHumanDepthGenerator.cpp`:634 — modal overload; validation (686-729).
+- `MetaHumanDepthGenerator/Private/MetaHumanDepthGenerator.cpp`:47 — modal overload; options overload (73).
+- `MetaHumanDepthGenerator/Private/DepthGeneration/MetaHumanDepthGenerationService.cpp`:581 — `ValidateFootage`; `ValidateRequest` (596); `GenerateDepth` (622), calibration check (641-644).
 - `MetaHumanDepthGenerator/Private/Widgets/MetaHumanGenerateDepthWindowOptions.h`:13 — `UMetaHumanGenerateDepthWindowOptions`.
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:206 — `Camera`; `TimecodeAlignment` (210); depth generation distances (429-433); `SetFootageCaptureData` (497-499); `NeedsCalibrationForDepthGeneration` (616).
-- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1002 — `GetFrameRate`; rate matching (1104-1129); exclusion merging (1138-1155).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:207 — `Camera`; `TimecodeAlignment` (211); depth generation distances (436-440); `SetFootageCaptureData` (515-517); `NeedsCalibrationForDepthGeneration` (658).
+- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1031 — `GetFrameRate`; rate matching (1174-1199); exclusion merging (1208-1225).
 - `MetaHumanConfig/Public/MetaHumanConfig.h` — `FMetaHumanConfig::GetInfo`, `UMetaHumanConfig`.

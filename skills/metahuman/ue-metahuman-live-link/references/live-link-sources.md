@@ -300,7 +300,7 @@ sources; it does not understand the MHA control protocol.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Source/` unless noted:
 - `MetaHumanLiveLinkSource/Public/MetaHumanLiveLinkSubjectSettings.h`:15 — `UMetaHumanLiveLinkSubjectSettings`; :128 `PreProcess`; :141 `EMetaHumanLiveLinkHeadPoseMode`.
@@ -323,7 +323,7 @@ All paths under `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Source/` unless note
 - `MetaHumanLocalLiveLinkSource/Public/MetaHumanMediaSourceCreateParams.h`:10 — `FMetaHumanMediaSourceCreateParams`.
 - `MetaHumanLocalLiveLinkSource/Private/MetaHumanVideoLiveLinkSourceFactory.h`:12 — `UMetaHumanVideoLiveLinkSourceFactory`.
 - `MetaHumanLocalLiveLinkSource/Private/MetaHumanAudioLiveLinkSourceFactory.h`:12 — `UMetaHumanAudioLiveLinkSourceFactory`.
-- `MetaHumanLocalLiveLinkSource/Private/MetaHumanVideoLiveLinkSource.h`:9 — `FMetaHumanVideoLiveLinkSource`.
+- `MetaHumanLocalLiveLinkSource/Public/MetaHumanVideoLiveLinkSource.h`:8 — `FMetaHumanVideoLiveLinkSource` (moved from `Private/` in 5.8; now exported with `METAHUMANLOCALLIVELINKSOURCE_API`).
 - `MetaHumanLocalLiveLinkSource/Private/MetaHumanAudioLiveLinkSource.h`:9 — `FMetaHumanAudioLiveLinkSource`.
 - `MetaHumanLocalLiveLinkSource/Private/MetaHumanLocalLiveLinkSubject.cpp`:198 — static layout; :228 frame layout; :236 head pose.
 - `MetaHumanLocalLiveLinkSource/Private/MetaHumanLocalLiveLinkSourceBlueprint.cpp`:471 — `CreateVideoSource`; :489 `CreateVideoSubject`.

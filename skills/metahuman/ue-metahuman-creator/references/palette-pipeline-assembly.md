@@ -240,12 +240,12 @@ Content-side dependencies the Blueprint will reference: `Face_Archetype_Skeleton
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 Under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPalette/Public/`:
-- `MetaHumanCharacterPalette.h`:77 — `UMetaHumanCharacterPalette`; 94 — `TryAddItemFromWardrobeItem`.
-- `MetaHumanCollection.h`:17 — `EMetaHumanCharacterUnpackPathMode`; 47 — `FMetaHumanCollectionBuiltData`; 70 — `UMetaHumanCollection`; 299 — `Pipeline`; 303 — `DefaultInstance`.
-- `MetaHumanInstance.h`:133 — `UMetaHumanInstance`; 144 — `Assemble`; 157 — `GetAssemblyOutput`; 220 — `SetSingleSlotSelection`; 225 — `TryAddSlotSelection`; 330 — `OverrideInstanceParameters`.
+- `MetaHumanCharacterPalette.h`:77 — `UMetaHumanCharacterPalette`; 93 — `TryAddItemFromWardrobeItem`.
+- `MetaHumanCollection.h`:19 — `EMetaHumanCharacterUnpackPathMode`; 48 — `FMetaHumanCollectionBuiltData`; 71 — `UMetaHumanCollection`; 375 — `Pipeline`; 379 — `DefaultInstance`.
+- `MetaHumanInstance.h`:133 — `UMetaHumanInstance`; 144 — `Assemble`; 157 — `GetAssemblyOutput`; 243 — `SetSingleSlotSelection`; 263 — `TryAddSlotSelection`; 386 — `OverrideInstanceParameters`.
 - `MetaHumanWardrobeItem.h`:14 — `UMetaHumanWardrobeItem`.
 - `MetaHumanPaletteItemKey.h`:15 — `FMetaHumanPaletteItemKey`.
 - `MetaHumanPaletteItemPath.h` — `FMetaHumanPaletteItemPath`.
@@ -256,7 +256,7 @@ Under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPale
 - `MetaHumanItemPipeline.h`:19 — `UMetaHumanItemPipeline`.
 - `MetaHumanCharacterEditorPipeline.h`:25 — `EMetaHumanBuildStatus`; 32 — `EMetaHumanWardrobeItemCompatibility`; 57 — `UMetaHumanCharacterEditorPipeline`.
 - `MetaHumanCollectionEditorPipeline.h`:43 — `UMetaHumanCollectionEditorPipeline`; 218 — `FWriteBlueprintSettings`; 224 — `WriteActorBlueprint`.
-- `MetaHumanCollectionBlueprintLibrary.h`:30 — key library; 59 — item-path library; 103 — `FMetaHumanCharacterInstanceParameter`; 141 — parameter library; 223 — slot-selection library; 250 — `UMetaHumanCollectionBlueprintLibrary`; 315 — `UMetaHumanCharacterInstanceBlueprintLibrary`.
+- `MetaHumanCollectionBlueprintLibrary.h`:32 — key library; 128 — item-path library; 210 — `FMetaHumanCharacterInstanceParameter`; 255 — parameter library; 337 — slot-selection library; 372 — `UMetaHumanCollectionBlueprintLibrary`; 437 — `UMetaHumanCharacterInstanceBlueprintLibrary`.
 - `MetaHumanCharacterActorInterface.h`:24 — `IMetaHumanCharacterActorInterface`.
 - `MetaHumanCharacterPaletteProjectSettings.h`:13 — `UMetaHumanCharacterPaletteProjectSettings`.
 - `MetaHumanCharacterPipelineSpecification.h`:178 — `UMetaHumanCharacterPipelineSpecification`; 118 — `FMetaHumanCharacterPipelineSlot`.

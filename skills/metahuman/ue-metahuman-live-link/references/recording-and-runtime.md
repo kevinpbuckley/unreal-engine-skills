@@ -217,7 +217,7 @@ phone's IP; the stream itself is unicast.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 `Engine/Plugins/Animation/LiveLink/Source/`:
 - `LiveLinkSequencer/Private/TakeRecorderSource/TakeRecorderLiveLinkSource.h`:11 — `FLiveLinkSubjectProperty`; :48 `UTakeRecorderLiveLinkSource`; :58 `bReduceKeys`; :62 `SubjectName`; :66 `bSaveSubjectSettings`; :73 `bUseSourceTimecode`; :77 `bDiscardSamplesBeforeStart`.

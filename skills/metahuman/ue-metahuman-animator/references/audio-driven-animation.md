@@ -94,13 +94,13 @@ Properties active when `InputType == EDataInputType::Audio` (`MetaHumanPerforman
 | `HeadMovementMode` | 247 | `ControlRig` or `TransformTrack` to keep the solver's head motion, `Disabled` to drop it |
 | `VisualizationObject` | 234 | Preview mesh or MetaHuman BP; purely visual for audio |
 
-Frame rate: with no footage `GetFrameRate()` returns 30 fps (`MetaHumanPerformance.cpp`:1010),
+Frame rate: with no footage `GetFrameRate()` returns 30 fps (`MetaHumanPerformance.cpp`:1039),
 so an audio performance yields 30 animation frames per second and the AnimSequence is
 exported at that rate. The processing range spans the wave's duration; `SetProcessingRange`
 trims it.
 
 `CanProcess()` for audio only requires `GetAudioForProcessing() != nullptr`
-(`MetaHumanPerformance.cpp`:2478-2483) plus a non-empty range; no Identity, footage, RHI or
+(`MetaHumanPerformance.cpp`:2549-2554) plus a non-empty range; no Identity, footage, RHI or
 authoring-content check. Processing of audio starts the pipeline stage immediately even in
 non-blocking mode (`:1276-1279`); use `SetBlockingProcessing(true)` in scripts.
 
@@ -224,7 +224,7 @@ at a time. Save with `unreal.EditorAssetLibrary.save_loaded_asset(anim)` if you 
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanSpeech2Face/Public/Speech2Face.h`:20 — `FSpeech2Face`; `FAudioParams` (23); `AudioEncoderOutputFps` (38); `Create` (49, 57); `SetMood` (62); `SetMoodIntensity` (67); `GenerateFaceAnimation` (81); `UE::MetaHuman` helpers (96-107).
@@ -233,15 +233,15 @@ All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanPipeline/Public/Nodes/SpeechToAnimNode.h`:15 — `FSpeechToAnimNode`; fields (35-42); `ErrorCode` (44).
 - `MetaHumanBatchProcessor/Public/MetaHumanBatchOperation.h`:19 — `EBatchOperationStepsFlags`; `FMetaHumanBatchOperationContext` (31); `UMetaHumanBatchOperation` (76); `RunProcess` (83).
 - `MetaHumanBatchProcessor/Public/MetaHumanSpeechProcessingSettings.h`:13 — `FMetaHumanSpeechProcessingSettings`; `FExportAnimSequenceSettings` (43); `FExportLevelSequenceSettings` (66); `UMetaHumanSpeechToPerformance` (101); `UMetaHumanExportAnimSequenceSettings` (120); `UMetaHumanSpeechToAnimSequenceProcessingSettings` (132); `UMetaHumanExportLevelSequenceSettings` (147); `UMetaHumanSpeechToLevelSequenceSettings` (158).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:189 — `Audio`; audio parameters (361-380, 425, 437-445); `SetAudio` (507).
-- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1010 — 30 fps default; audio `CanProcess` branch (2478-2483); immediate stage start (1276-1279).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:190 — `Audio`; audio parameters (368-387, 432, 444-452); `SetAudio` (525).
+- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1039 — 30 fps default; audio `CanProcess` branch (2549-2554); immediate stage start (1346-1349).
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/`:
 - `MetaHumanCoreTech/Public/AudioDrivenAnimationMood.h`:18 — `SAudioDrivenAnimationMood` (mood picker widget; includes the enum header).
 - `MetaHumanCoreTech/Public/FrameAnimationData.h`:24 — `EAudioProcessingMode`; `FFrameAnimationData` (44).
 - `MetaHumanPipelineCore/Public/Nodes/RealtimeSpeechToAnimNode.h` — `FRealtimeSpeechToAnimNode` (realtime solver).
 
-Other engine source (UE 5.8):
+Other engine source (UE 5.9):
 - `Engine/Plugins/Animation/AudioDrivenAnimation/StreamingADA/Source/SpeechAnimationSolver/Public/SpeechAnimationSolverTypes.h`:13 — `EAudioDrivenAnimationMood`.
 
 Shipped Python: `Engine/Plugins/MetaHuman/MetaHumanAnimator/Content/Python/process_audio_performance.py`.

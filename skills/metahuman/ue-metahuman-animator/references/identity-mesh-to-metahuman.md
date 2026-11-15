@@ -11,7 +11,7 @@ into a MetaHuman Character. Grounded in UE 5.8
 
 ## What an Identity is
 
-`UMetaHumanIdentity` (`MetaHumanIdentity.h`:66) is the performer's digital double. Its class
+`UMetaHumanIdentity` (`MetaHumanIdentity.h`:67) is the performer's digital double. Its class
 comment spells out the pipeline: track facial features on capture data, fit a template mesh
 with MetaHuman topology to the tracked curves, send the mesh to the MetaHuman service, get
 back an auto-rigged face `USkeletalMesh`. That rig, plus trained predictive solvers, is
@@ -24,7 +24,7 @@ State flags that matter downstream (on the face part, `MetaHumanIdentityParts.h`
 - `RigComponent` (`:348`) — the `USkeletalMeshComponent` holding the rigged face mesh.
 - `HasDNABuffer()` / `HasPredictiveSolvers()` (`:247`, `:250`).
 
-`EIdentityInvalidationState` (`MetaHumanIdentity.h`:26: `Solve`, `AR`, `FitTeeth`,
+`EIdentityInvalidationState` (`MetaHumanIdentity.h`:27: `Solve`, `AR`, `FitTeeth`,
 `PrepareForPerformance`, `Valid`, `None`) names the stages the editor toolkit invalidates
 when an upstream input changes; it is deprecated as a stored property but documents the order
 of operations.
@@ -33,11 +33,11 @@ of operations.
 
 ## Parts
 
-`Parts` (`MetaHumanIdentity.h`:164) is `TArray<TObjectPtr<UMetaHumanIdentityPart>>`.
+`Parts` (`MetaHumanIdentity.h`:168) is `TArray<TObjectPtr<UMetaHumanIdentityPart>>`.
 `UMetaHumanIdentityPart` (`MetaHumanIdentityParts.h`:56) is abstract with `Initialize()` and
 `DiagnosticsIndicatesProcessingIssue(OutText)`. Access with
 `FindPartOfClass(Class)` / templated `FindPartOfClass<T>()` / `GetOrCreatePartOfClass(Class)`
-(`MetaHumanIdentity.h`:94-109) and `CanAddPartOfClass` (`:113`).
+(`MetaHumanIdentity.h`:95-110) and `CanAddPartOfClass` (`:113`).
 
 | Part | Line | Purpose |
 |---|---|---|
@@ -108,7 +108,7 @@ pixels, not an asset:
    `GetPromotedFrameAsPixelArrayFromDisk(ImagePath, OutSize, OutBGRA)` (`:35`).
 3. `UMetaHumanIdentity::SetBlockingProcessing(true)` then
    `StartFrameTrackingPipeline(Pixels, W, H, DepthPath, Pose, Frame, bShowProgress)`
-   (`MetaHumanIdentity.h`:139, 135); `IsFrameTrackingPipelineProcessing()` (`:142`) for the
+   (`MetaHumanIdentity.h`:140, 136); `IsFrameTrackingPipelineProcessing()` (`:142`) for the
    non-blocking case.
 
 ```python
@@ -133,7 +133,7 @@ if unreal.PromotedFrameUtils.initialize_contour_data_for_footage_frame(pose, fra
         print("conformed")
 ```
 
-`UMetaHumanIdentity::HandleError(Code, bLogOnly)` (`MetaHumanIdentity.h`:188) returns true for
+`UMetaHumanIdentity::HandleError(Code, bLogOnly)` (`MetaHumanIdentity.h`:192) returns true for
 "no error or just a warning" and logs (or shows a dialog when `bLogOnly` is false).
 
 For a mesh scan, create a `UMeshCaptureData` with `TargetMesh` set, assign it to the Neutral
@@ -201,7 +201,7 @@ It trains the preview ("predictive") solvers from the rig's DNA and stores them 
 `PredictiveSolversBulkData` / `PredictiveWithoutTeethSolverBulkData` (`:421-424`). It takes
 minutes and needs the rig to exist first. `UMetaHumanPerformance::CanProcess` only insists on
 `RigComponent`, `bIsAutoRigged` and *no training in progress*
-(`MetaHumanPerformance.cpp`:2535-2552), but the preview pass and the global teeth solve read
+(`MetaHumanPerformance.cpp`:2606-2623), but the preview pass and the global teeth solve read
 the trained data, so an unprepared Identity gives poor or failed solves. Use the async form
 (`RunAsyncPredictiveSolverTraining`) from UI code; the sync form from scripts.
 
@@ -210,7 +210,7 @@ the trained data, so an unprepared Identity gives poor or failed solves. Use the
 ## Identity → MetaHuman Character
 
 The Character editor subsystem (`UMetaHumanCharacterEditorSubsystem`,
-`MetaHumanCharacterEditorSubsystem.h`:491) fits a Character's face state to an Identity's
+`MetaHumanCharacterEditorSubsystem.h`:496) fits a Character's face state to an Identity's
 conformed mesh:
 
 ```python
@@ -240,11 +240,11 @@ exported with `ExportDNADataToFiles`.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
-- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:26 — `EIdentityInvalidationState`.
-- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:66 — `UMetaHumanIdentity`; delegates (81-90); `FindPartOfClass`/`GetOrCreatePartOfClass` (94-98); `ImportDNAFile` (123); `ExportDNADataToFiles` (127); `StartFrameTrackingPipeline` (135); `SetBlockingProcessing` (139); auto-rig API (145-155); `HandleError` (188).
+- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:27 — `EIdentityInvalidationState`.
+- `MetaHumanIdentity/Public/MetaHumanIdentity.h`:67 — `UMetaHumanIdentity`; delegates (82-91); `FindPartOfClass`/`GetOrCreatePartOfClass` (95-99); `ImportDNAFile` (124); `ExportDNADataToFiles` (128); `StartFrameTrackingPipeline` (136); `SetBlockingProcessing` (140); auto-rig API (146-156); `HandleError` (192).
 - `MetaHumanIdentity/Public/MetaHumanIdentityParts.h`:32 — `ETargetTemplateCompatibility`; `UMetaHumanIdentityPart` (56); `EConformType` (92); `UMetaHumanIdentityFace` (106); `Conform` (138); `RunPredictiveSolverTraining` (184); pose API (234-244); `RigComponent` (348); `bIsConformed` (352); `bIsAutoRigged` (356); `UMetaHumanIdentityBody` (550); Hands/Outfit/Prop (585, 607, 628).
 - `MetaHumanIdentity/Public/MetaHumanIdentityPose.h`:20 — `EIdentityPoseType`; `UMetaHumanIdentityPose` (38); `SetCaptureData` (56); `AddNewPromotedFrame` (74); `LoadDefaultTracker` (108); `bFitEyes` (141); `Camera` (210); `TimecodeAlignment` (214).
 - `MetaHumanIdentity/Public/MetaHumanIdentityPromotedFrames.h`:18 — `UMetaHumanIdentityPromotedFrame`; `bIsFrontView` (109); `UMetaHumanIdentityCameraFrame` (134); `UMetaHumanIdentityFootageFrame` (197); `FrameNumber` (204).
@@ -252,13 +252,13 @@ All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanIdentity/Private/MetaHumanIdentityParts.cpp`:2047 — rigged mesh gets `Face_ControlBoard_CtrlRig` as default animating rig.
 - `MetaHumanIdentityEditor/Private/MetaHumanIdentityFactoryNew.h`:13 — `UMetaHumanIdentityFactoryNew`.
 - `MetaHumanFaceContourTracker/Public/MetaHumanFaceContourTrackerAsset.h`:23 — `UMetaHumanFaceContourTrackerAsset`.
-- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:2535 — Identity requirements inside `CanProcess`.
+- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:2606 — Identity requirements inside `CanProcess`.
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`:
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:38 — `EImportErrorCode`; `FImportFromIdentityParams` (392); `UMetaHumanCharacterEditorSubsystem` (491); `TryAddObjectToEdit` (529); `RemoveObjectToEdit` (541); `RequestAutoRigging` (1356); `ImportFromIdentity` (1425, 1437); `ImportFromFaceDna` (1442).
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:38 — `EImportErrorCode`; `FImportFromIdentityParams` (397); `UMetaHumanCharacterEditorSubsystem` (496); `TryAddObjectToEdit` (534); `RemoveObjectToEdit` (546); `RequestAutoRigging` (1361); `ImportFromIdentity` (1430, 1442); `ImportFromFaceDna` (1447).
 
 All paths under `Engine/Plugins/VirtualProduction/CaptureData/Source/`:
-- `CaptureDataCore/Public/CaptureData.h`:90 — `UMeshCaptureData`; `UFootageCaptureData` (214).
+- `CaptureDataCore/Public/CaptureData.h`:93 — `UMeshCaptureData`; `UFootageCaptureData` (217).
 
 Shipped Python: `Engine/Plugins/MetaHuman/MetaHumanAnimator/Content/Python/create_identity_for_performance.py`
 and `Engine/Plugins/MetaHuman/MetaHumanCharacter/Content/Python/examples/example_conform_from_identity.py`.

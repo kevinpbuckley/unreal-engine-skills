@@ -230,7 +230,7 @@ the last Assemble-tool choices: `PipelineType` (`EMetaHumanDefaultPipelineType`:
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 Under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacter/Public/`:
 - `MetaHumanCharacter.h`:29 — `EMetaHumanCharacterRigState`.
@@ -260,7 +260,7 @@ Under `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/MetaHumanCoreTechLib
 - `MetaHumanCharacterBodyIdentity.h`:31 — `EMetaHumanCharacterBodyFitOptions`; 39 — `FConformBodyParams`.
 - `MetaHumanCharacterBodyIdentity.h`:89 — `FMetaHumanCharacterBodyConstraint`.
 - `MetaHumanCharacterBodyIdentity.h`:123 — `FMetaHumanCharacterBodyIdentity::FState` (`GetBodyConstraints`, `EvaluateBodyConstraints`).
-- `MetaHumanCharacterIdentity.h`:41 — `EAlignmentOptions`; 52 — `FFitToTargetOptions`; 151 — `FMetaHumanCharacterIdentity::FState`.
+- `MetaHumanCharacterIdentity.h`:41 — `EAlignmentOptions`; 52 — `FFitToTargetOptions`; 166 — `FMetaHumanCharacterIdentity::FState`.
 
 Under `Engine/Plugins/MetaHuman/MetaHumanSDK/Source/MetaHumanSDKRuntime/Public/`:
 - `MetaHumanTypes.h`:53 — `EMetaHumanQualityLevel` (`EFaceTextureType`, `EBodyTextureType` earlier in the same file).

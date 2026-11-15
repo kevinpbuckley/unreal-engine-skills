@@ -89,7 +89,7 @@ if (Perf->CanProcess())                              // see SKILL.md for the ful
 }
 ```
 
-`StartPipeline` (`MetaHumanPerformance.cpp`:1075) resets state, returns `Disabled` if
+`StartPipeline` (`MetaHumanPerformance.cpp`:1104) resets state, returns `Disabled` if
 `CanProcess()` fails or the footage view lookups are invalid, computes rate-matching drop
 frames for depth footage, merges exclusions into one or more frame ranges (one pipeline run
 per contiguous block), resets output and then:
@@ -151,7 +151,7 @@ Also exported for C++: `BakeControlRigAnimationData` / `BakeTransformAnimationDa
 `CanExportBodyAnimation` / `CanExportHeadMovement` / `CanExportVideoTrack` /
 `CanExportDepthTrack` / `CanExportAudioTrack` / `CanExportIdentity` /
 `CanExportLensDistortion` (`:325-332`). `UMetaHumanPerformance::CanExportAnimation()`
-(`MetaHumanPerformance.h`:110) is the simple "is there anything to export" check.
+(`MetaHumanPerformance.h`:111) is the simple "is there anything to export" check.
 
 ### UMetaHumanPerformanceExportAnimationSettings (`:48`)
 
@@ -221,16 +221,16 @@ in headless `-run=pythonscript` mode.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanPerformance/Public/MetaHumanPerformance.h`:35 — `EDataInputType`; `ESolveType` (43); `EPerformanceHeadMovementMode` (52); `EStartPipelineErrorType` (65).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:81 — `UMetaHumanPerformance`; `OnProcessingFinishedDynamic` (107); `CanExportAnimation` (110); `DiagnosticsIndicatesProcessingIssue` (121); editor delegates (124-170).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:180 — data properties (180-275); depth parameters (279-357); mono parameters (314-417); audio parameters (361-445); diagnostics (448-466); exclusions (470-474).
-- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:486 — `StartPipeline`; `CancelPipeline` (489); `IsProcessing` (492); `CanProcess` (495); setters (499-534); outputs (538-563); `GetExportFrameRange` (568); `GetHeadMesh` (584); `GetAnimationCurveNames` (605); `GetCannotProcessTooltipText` (608); `EstimateFocalLength` (629); `CurrentlyProcessedPerformance` (710).
-- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1075 — `StartPipeline`; tracker loading (1276-1297); pipeline mode selection (2086-2104); `CanProcess` (2464-2587); `SetProcessingRange` (434); `LoadDefaultControlRig` (3491).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:82 — `UMetaHumanPerformance`; `OnProcessingFinishedDynamic` (108); `CanExportAnimation` (111); `DiagnosticsIndicatesProcessingIssue` (122); editor delegates (125-171).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:181 — data properties (181-276); depth parameters (280-364); mono parameters (315-424); audio parameters (368-452); diagnostics (455-473); exclusions (477-481).
+- `MetaHumanPerformance/Public/MetaHumanPerformance.h`:504 — `StartPipeline`; `CancelPipeline` (507); `IsProcessing` (510); `CanProcess` (513); setters (517-558); outputs (580-605); `GetExportFrameRange` (610); `GetHeadMesh` (626); `GetAnimationCurveNames` (647); `GetCannotProcessTooltipText` (650); `EstimateFocalLength` (671); `CurrentlyProcessedPerformance` (752).
+- `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1104 — `StartPipeline`; tracker loading (1346-1367); pipeline mode selection (2157-2175); `CanProcess` (2535-2658); `SetProcessingRange` (439); `LoadDefaultControlRig` (3572).
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:20 — `EPerformanceExportRange`; `EPerformanceExportSkeleton` (27); `EBodyUnsolvedFrameBehavior` (36); `UMetaHumanPerformanceExportAnimationSettings` (48); `UMetaHumanPerformanceExportLevelSequenceSettings` (173); `UMetaHumanPerformanceExportUtils` (293); `ExportAnimationSequence` (310); `ExportLevelSequence` (314); bake helpers (317-323); `CanExport*` (325-332).
-- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:100 — head curve names; `GetExportAnimationSequenceSettings` (797); `GetExportLevelSequenceSettings` (858); head switch baking (1154).
+- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:101 — head curve names; `GetExportAnimationSequenceSettings` (804); `GetExportLevelSequenceSettings` (865); head switch baking (1161).
 - `MetaHumanFaceAnimationSolver/Public/MetaHumanFaceAnimationSolver.h`:33 — `UMetaHumanFaceAnimationSolver`.
 - `MetaHumanFaceContourTracker/Public/MetaHumanFaceContourTrackerAsset.h`:23 — `UMetaHumanFaceContourTrackerAsset`.
 

@@ -2,18 +2,20 @@
 name: ue-metahuman-creator
 description: Creates and edits MetaHumans in-editor with the MetaHuman Creator plugin
   (MetaHumanCharacter, UE 5.6+) - the UMetaHumanCharacter asset (face/body state, skin,
-  eyes, makeup, eyelashes/teeth, body constraints, synthesized textures), the
+  eyes, makeup, body constraints, synthesized textures), the
   UMetaHumanCharacterEditorSubsystem edit session (TryAddObjectToEdit, Commit* settings,
-  face landmarks/coefficients, ImportFromTemplate/FaceDna/Identity, RequestAutoRigging,
+  landmarks, ImportFromTemplate/FaceDna/Identity, RequestAutoRigging,
   RequestTextureSources, CanBuildMetaHuman/BuildMetaHuman, SpawnMetaHumanActor), the
   palette model (UMetaHumanCollection, UMetaHumanInstance, UMetaHumanWardrobeItem,
   FMetaHumanPaletteItemKey) and the build pipelines (UMetaHumanDefaultPipeline,
-  EMetaHumanQualityLevel). Use when scripting MetaHuman creation in C++ or Python,
+  EMetaHumanQualityLevel). Use when scripting MetaHuman creation (C++, Python),
   batch-building MetaHuman Blueprints, conforming a custom head/body mesh or DNA, adding
-  grooms or clothing, migrating legacy Quixel Bridge MetaHumans, or diagnosing "Character
-  is not rigged", "missing textures", optional-content and cloud-login failures.
+  grooms or clothing, custom wardrobe items (WardrobePaths,
+  groom missing from the wardrobe, invalid item), migrating legacy Quixel Bridge MetaHumans, or diagnosing "Character
+  is not rigged", "missing textures", optional content and cloud login.
 metadata:
-  engine-version: "5.8"
+  aliases: "MetaHuman, MetaHuman Creator, digital human, character creator, groom, wardrobe"
+  engine-version: "5.9"
   category: metahuman
 ---
 
@@ -84,8 +86,10 @@ Three rules drive almost every gotcha:
    `CommitHeadModelSettings`.
 6. **Wardrobe**: `Character->GetMutableInternalCollection()->TryAddItemFromWardrobeItem(Slot, Item, OutKey)`,
    then `GetMutableDefaultInstance()->TryAddSlotSelection(FMetaHumanPipelineSlotSelection(Slot, Key))`;
-   `RunCharacterEditorPipelineForPreview` (Python `assemble_for_preview`) exposes instance
-   parameters.
+   `RunCharacterEditorPipelineForPreview` (Python `assemble_for_preview`) builds only the edit
+   session's preview collection, so query instance parameters on `GetPreviewCollection(Character)`.
+   Project grooms/clothing (`WardrobePaths`, item pipelines, template-head grooms,
+   the preview-collection trap): [references/custom-wardrobe-content.md](references/custom-wardrobe-content.md).
 7. **Cloud**: `RequestAutoRigging` (`FMetaHumanCharacterAutoRiggingRequestParams`, pick
    `EMetaHumanRigType::JointsOnly` or `JointsAndBlendShapes`) then `RequestTextureSources`
    (`FMetaHumanCharacterTextureRequestParams`). Set `bBlocking = true` in scripts.
@@ -395,7 +399,7 @@ board), `LightingEnvironments/` (`Studio`, `Split`, `Fireside`, `Moonlight`, `Tu
 
 ## References & source material
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`):
+Engine source (UE 5.9 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`):
 - `MetaHumanCharacter/Public/MetaHumanCharacter.h`:29 — `EMetaHumanCharacterRigState`.
 - `MetaHumanCharacter/Public/MetaHumanCharacter.h`:162 — `FMetaHumanCharacterHeadModelSettings`.
 - `MetaHumanCharacter/Public/MetaHumanCharacter.h`:206 — `UMetaHumanCharacter`.
@@ -407,12 +411,12 @@ Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCha
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:131 — `EMetaHumanRigType`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:138 — `FMetaHumanCharacterTextureRequestParams`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:152 — `FMetaHumanCharacterAutoRiggingRequestParams`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:491 — `UMetaHumanCharacterEditorSubsystem`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:529 — `TryAddObjectToEdit`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:777 — `CanBuildMetaHuman`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:788 — `BuildMetaHuman`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1356 — `RequestAutoRigging`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1927 — `GetBodyConstraints`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:496 — `UMetaHumanCharacterEditorSubsystem`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:534 — `TryAddObjectToEdit`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:782 — `CanBuildMetaHuman`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:793 — `BuildMetaHuman`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1361 — `RequestAutoRigging`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1932 — `GetBodyConstraints`.
 - `MetaHumanCharacterEditor/Public/Subsystem/MetaHumanCharacterBuild.h`:25 — `FMetaHumanCharacterEditorBuildParameters`.
 - `MetaHumanCharacterEditor/Public/Subsystem/MetaHumanCharacterService.h`:20 — `FMetaHumanCharacterEditorCloudRequests`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorModule.h`:15 — `IsOptionalMetaHumanContentInstalled`.
@@ -420,11 +424,11 @@ Engine source (UE 5.8 — all paths under `Engine/Plugins/MetaHuman/MetaHumanCha
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterFactoryNew.h`:10 — `UMetaHumanCharacterFactoryNew`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterExportBlueprintLibrary.h`:184 — `UMetaHumanCharacterExportBlueprintLibrary`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorActor.h`:22 — `AMetaHumanCharacterEditorActor`.
-- `MetaHumanCharacterPalette/Public/MetaHumanCollection.h`:70 — `UMetaHumanCollection`.
+- `MetaHumanCharacterPalette/Public/MetaHumanCollection.h`:71 — `UMetaHumanCollection`.
 - `MetaHumanCharacterPalette/Public/MetaHumanInstance.h`:133 — `UMetaHumanInstance`.
 - `MetaHumanCharacterPalette/Public/MetaHumanWardrobeItem.h`:14 — `UMetaHumanWardrobeItem`.
 - `MetaHumanCharacterPalette/Public/MetaHumanPaletteItemKey.h`:15 — `FMetaHumanPaletteItemKey`.
-- `MetaHumanCharacterPalette/Public/MetaHumanCollectionBlueprintLibrary.h`:250 — `UMetaHumanCollectionBlueprintLibrary`.
+- `MetaHumanCharacterPalette/Public/MetaHumanCollectionBlueprintLibrary.h`:372 — `UMetaHumanCollectionBlueprintLibrary`.
 - `MetaHumanDefaultPipeline/Public/MetaHumanDefaultPipeline.h`:20 — `UMetaHumanDefaultPipeline`.
 - `MetaHumanDefaultEditorPipeline/Public/MetaHumanDefaultEditorPipeline.h`:13 — `UMetaHumanDefaultEditorPipeline`.
 - `MetaHumanCharacterMigrationEditor/Private/MetaHumanCharacterMigrationEditorModule.h`:17 — `FMetaHumanCharacterMigrationEditorModule`.
@@ -455,5 +459,12 @@ Deep-dive references in this skill:
   project settings, build output layout.
 - [references/python-scripting.md](references/python-scripting.md) — Python naming rules,
   grooms/clothing, conforming, export, spawn, batch patterns, MetaHumanGenerator toolset.
+- [references/custom-wardrobe-content.md](references/custom-wardrobe-content.md) — project
+  wardrobe items: `WardrobePaths`, slot classes, item pipelines and validation, custom grooms
+  on `SKM_Groom_Head_Legacy02`, preview collection, groom parameters, Chaos outfit refit.
 
-Related skills: `ue-control-rig-and-ik`, `ue-animation-system`.
+After the build (packaged and web targets, face AnimBP, groom LOD holes, cook size, wardrobe for
+close-ups): `ue-metahuman-runtime`.
+
+Related skills: `ue-control-rig-and-ik`, `ue-animation-system`, `ue-hair-and-grooms` (groom
+authoring, Alembic import, bindings, custom grooms as Creator hair).

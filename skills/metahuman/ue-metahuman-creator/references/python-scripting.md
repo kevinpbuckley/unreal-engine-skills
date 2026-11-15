@@ -85,27 +85,49 @@ and `/MetaHumanCharacter/Optional/Clothing/WI_DefaultGarment`, or in your own pr
 character = unreal.load_asset("/Game/Characters/MetaHumans/MH_Pilot.MH_Pilot")
 hair_item = unreal.load_asset("/MetaHumanCharacter/Optional/Grooms/Bindings/Hair/WI_Hair_L_StraightBangs.WI_Hair_L_StraightBangs")
 
-collection = character.internal_collection                      # UMetaHumanCollection (BlueprintReadOnly)
-ok, item_key = collection.try_add_item_from_wardrobe_item("Hair", hair_item)   # -> (bool, FMetaHumanPaletteItemKey)
-if not ok:
-    raise RuntimeError("item not compatible with slot Hair")
-
-selection = unreal.MetaHumanPipelineSlotSelection(slot_name="Hair", selected_item=item_key)
-collection.default_instance.try_add_slot_selection(selection)   # or set_single_slot_selection("Hair", item_key)
-
 with MetaHumanEditSession(character) as mh:
-    mh.assemble_for_preview(character=character)                 # parameters exist only after an assembly
+    collection = mh.get_preview_collection(character)              # the session's built collection
+    ok, item_key = collection.try_add_item_from_wardrobe_item("Hair", hair_item)   # -> (bool, FMetaHumanPaletteItemKey)
+    if not ok:
+        raise RuntimeError("item not compatible with slot Hair")
+    collection.default_instance.set_single_slot_selection("Hair", item_key)   # or try_add_slot_selection(...)
+    mh.on_edit_preview_collection(character)                       # preview -> character asset
+
+    mh.assemble_for_preview(character=character)                   # builds the preview collection only
     item_path = unreal.MetaHumanPaletteItemPath(item_key=item_key)
     params = collection.default_instance.get_instance_parameters(item_path=item_path)  # UMetaHumanCharacterInstanceBlueprintLibrary ScriptMethod
     melanin = next((p for p in params if p.name == "Melanin"), None)
     if melanin:
-        melanin.set_float(value=0.5)                              # UMetaHumanCharacterInstanceParameterBlueprintLibrary ScriptMethod
+        melanin.set_float(value=0.5)                               # UMetaHumanCharacterInstanceParameterBlueprintLibrary ScriptMethod
+    mh.on_edit_preview_collection(character)
 ```
 
-Epic's `example_add_grooms.py` and `example_add_clothing.py` are this flow; the clothing one
-sets `PrimaryColorShirt` with `set_color(value=unreal.LinearColor.GREEN)`. Note that Epic
-calls `try_add_item_from_wardrobe_item` *before* opening the edit session; adding to the
-internal collection does not need a session, but `assemble_for_preview` does.
+Query and set instance parameters on the **preview collection**
+(`get_preview_collection(character).default_instance`), not on `character.internal_collection`.
+`assemble_for_preview` (`RunCharacterEditorPipelineForPreview`) builds and assembles only the
+preview collection; the internal collection's built data is cleared whenever an item is added
+and on every copy-back (`UMetaHumanCollection::CopyContentsFrom` calls `ClearBuiltData`), so
+`get_instance_parameters` on it fails with "Collection is not built". Epic's
+`example_add_grooms.py` adds the item to and queries `internal_collection`; by the 5.8 and
+5.9 source that query has no built data to read. The internal collection is also overwritten from
+the preview on the next `on_edit_preview_collection` while a session is open. Details, the
+Creator-open case and the full groom parameter list:
+[custom-wardrobe-content.md](custom-wardrobe-content.md#scripting-a-character-that-is-open-in-the-creator).
+
+**5.9: standalone Collection and Instance assets are session-only for scripts.** On a
+`UMetaHumanCollection` or `UMetaHumanInstance` that is an asset in its own right (or an editing
+session's staged copy), `try_add_item_from_wardrobe_item` and setting an instance parameter (`set_float`, ...)
+raise a script error ("... is an asset, which scripts edit only through an editing
+session"). Use `unreal.get_editor_subsystem(unreal.MetaHumanCollectionEditingSubsystem)
+.open_collection_session(collection, "my-script")`, then on the handle `add_wardrobe_item(slot,
+item)`, `build_preview()` then `get_instance_parameters(...)` for parameters (or
+`open_instance_session` for an Instance asset), and `apply_changes()` (which closes the handle). A
+character's internal collection and the Creator's preview collection are sub-objects, not
+assets, so the flow above is unaffected (`MetaHumanScriptEditPolicy.cpp`,
+`MetaHumanCollectionSessionHandle.h`; read in 5.9 source, not run).
+
+Epic's `example_add_clothing.py` sets `PrimaryColorShirt` with
+`set_color(value=unreal.LinearColor.GREEN)`.
 
 Listing what is in a palette: `unreal.MetaHumanCollectionBlueprintLibrary.get_slot_names(collection)`,
 `get_item_keys_for_slot(collection, "Hair")`, `get_item_display_name(collection, key)`;
@@ -263,31 +285,38 @@ directly; then `set_body_constraints` + `commit_body_state` and a native
 `commit_eyes_settings`). Its docstrings carry useful calibration examples: pale skin
 `[0.10, 0.45]`, medium neutral `[0.50, 0.45]`, very dark warm `[0.93, 0.75]`; light blue eyes
 `(0.1, 0.9)`, dark brown `(0.9, 0.1)`; athletic woman `masculine_feminine=0.80, fat=0.25,
-muscularity=0.70, height_cm=168`.
+muscularity=0.70, height_cm=169`.
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 Under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/`:
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:529 — `TryAddObjectToEdit`; 533 — `IsObjectAddedForEditing`; 541 — `RemoveObjectToEdit`; 572 — `RunCharacterEditorPipelineForPreview` (`ScriptName="AssembleForPreview"`).
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:685 — `SpawnMetaHumanActor`; 777 — `CanBuildMetaHuman`; 788 — `BuildMetaHuman`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1356 — `RequestAutoRigging`; 1365 — `RemoveFaceRig`; 917 — `RequestTextureSources`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1415 — `FitStateToTargetVertices`; 1437 — `ImportFromIdentity`; 1455 — `ImportFromFaceDna`; 1474 — `ImportFromTemplate`; 1811 — `ConformToTargetMeshes`.
-- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1685 — `GetMeshForBodyConformingFromTemplate`; 1723 — `GetJointsForBodyConformingFromTemplate`; 1893 — `ConformBodyToTarget`; 1897 — `SetBodyJoints`; 1901 — `SetBodyMesh`; 1908 — `ImportBodyWholeRig`; 1927 — `GetBodyConstraints`; 1938 — `SetBodyConstraints`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:534 — `TryAddObjectToEdit`; 538 — `IsObjectAddedForEditing`; 546 — `RemoveObjectToEdit`; 577 — `RunCharacterEditorPipelineForPreview` (`ScriptName="AssembleForPreview"`).
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:690 — `SpawnMetaHumanActor`; 782 — `CanBuildMetaHuman`; 793 — `BuildMetaHuman`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1361 — `RequestAutoRigging`; 1370 — `RemoveFaceRig`; 922 — `RequestTextureSources`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1420 — `FitStateToTargetVertices`; 1442 — `ImportFromIdentity`; 1460 — `ImportFromFaceDna`; 1479 — `ImportFromTemplate`; 1816 — `ConformToTargetMeshes`.
+- `MetaHumanCharacterEditor/Public/MetaHumanCharacterEditorSubsystem.h`:1690 — `GetMeshForBodyConformingFromTemplate`; 1728 — `GetJointsForBodyConformingFromTemplate`; 1898 — `ConformBodyToTarget`; 1902 — `SetBodyJoints`; 1906 — `SetBodyMesh`; 1913 — `ImportBodyWholeRig`; 1932 — `GetBodyConstraints`; 1943 — `SetBodyConstraints`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterExportBlueprintLibrary.h`:14 — `FMetaHumanDCCExportParams`; 37 — `FMetaHumanDNAExportParams`; 76 — `FMetaHumanGeometryExportParams`; 108 — `FMetaHumanPosedDNAExportParams`; 157 — `FMetaHumanMaterialsExportParams`; 184 — `UMetaHumanCharacterExportBlueprintLibrary`.
 - `MetaHumanCharacterEditor/Public/MetaHumanCharacterFactoryNew.h`:10 — `UMetaHumanCharacterFactoryNew`.
 - `MetaHumanCharacterEditor/Public/Subsystem/MetaHumanCharacterBuild.h`:25 — `FMetaHumanCharacterEditorBuildParameters` (`BlueprintReadWrite` members only are Python-visible).
-- `MetaHumanCharacterPalette/Public/MetaHumanCharacterPalette.h`:94 — `TryAddItemFromWardrobeItem`.
-- `MetaHumanCharacterPalette/Public/MetaHumanInstance.h`:220 — `SetSingleSlotSelection`; 225 — `TryAddSlotSelection`.
-- `MetaHumanCharacterPalette/Public/MetaHumanCollection.h`:303 — `DefaultInstance` (`BlueprintReadOnly`).
-- `MetaHumanCharacterPalette/Public/MetaHumanCollectionBlueprintLibrary.h`:141 — instance-parameter ScriptMethods; 232 — `MakeSlotSelection`; 334 — `GetInstanceParametersForItem` (`ScriptMethod="GetInstanceParameters"`).
+- `MetaHumanCharacterPalette/Public/MetaHumanCharacterPalette.h`:93 — `TryAddItemFromWardrobeItem`.
+- `MetaHumanCharacterPalette/Public/MetaHumanInstance.h`:243 — `SetSingleSlotSelection`; 263 — `TryAddSlotSelection`.
+- `MetaHumanCharacterPalette/Public/MetaHumanCollection.h`:379 — `DefaultInstance` (`BlueprintReadOnly`).
+- `MetaHumanCharacterPalette/Public/MetaHumanCollectionBlueprintLibrary.h`:255 — instance-parameter ScriptMethods; 346 — `MakeSlotSelection`; 456 — `GetInstanceParametersForItem` (`ScriptMethod="GetInstanceParameters"`).
 - `MetaHumanCharacter/Public/MetaHumanCharacter.h`:386–399 — `FaceEvaluationSettings`, `HeadModelSettings`, `SkinSettings`, `EyesSettings`, `MakeupSettings`; 515 — `InternalCollection` (`BlueprintReadOnly`).
 - `MetaHumanCharacter/Public/MetaHumanCharacterEyes.h`:39 — `IrisPattern` (`ScriptName="Pattern"`); 43 — `IrisRotation` (`ScriptName="Rotation"`).
 
 Under `Engine/Plugins/MetaHuman/MetaHumanCoreTechLib/Source/MetaHumanCoreTechLib/Public/`:
 - `MetaHumanCharacterIdentity.h`:40 — `EAlignmentOptions` (`ScriptName="MetaHumanAlignmentOptions"`); 52 — `FFitToTargetOptions`.
 - `MetaHumanCharacterBodyIdentity.h`:89 — `FMetaHumanCharacterBodyConstraint`.
+
+5.9 script edit policy for Collection and Instance assets:
+- `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPalette/Private/MetaHumanScriptEditPolicy.cpp`:14 — `CanScriptDirectlyEdit`.
+- `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPalette/Public/MetaHumanCharacterPalette.h`:104 — `K2_TryAddItemFromWardrobeItem` (script name `TryAddItemFromWardrobeItem`).
+- `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPaletteEditor/Public/MetaHumanCollectionEditingSubsystem.h`:38 — `OpenCollectionSession`; 42 — `OpenInstanceSession`.
+- `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPaletteEditor/Public/MetaHumanCollectionSessionHandle.h`:41 — `AddWardrobeItem`; `ApplyChanges`, `BuildPreview`.
+- `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterPaletteEditor/Public/MetaHumanSessionHandleBase.h`:122 — `GetInstanceParameters`.
 
 Epic scripts (UE 5.8, `Engine/Plugins/MetaHuman/MetaHumanCharacter/Content/Python/`):
 `examples/example_create_asset.py`, `examples/example_auto_rig.py`, `examples/example_assembly.py`,

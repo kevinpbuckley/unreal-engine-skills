@@ -253,29 +253,29 @@ and `Optional/Body` folders).
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 Under `Engine/Plugins/MetaHuman/MetaHumanCharacter/Source/MetaHumanCharacterEditor/`:
 - `Public/MetaHumanCharacterEditorSubsystem.h`:38 — `EImportErrorCode`.
 - `Public/MetaHumanCharacterEditorSubsystem.h`:56 — `FRemoveRigCommandChange`; 111 — `FAutoRigCommandChange`.
 - `Public/MetaHumanCharacterEditorSubsystem.h`:131 — `EMetaHumanRigType`.
 - `Public/MetaHumanCharacterEditorSubsystem.h`:138 — `FMetaHumanCharacterTextureRequestParams`; 152 — `FMetaHumanCharacterAutoRiggingRequestParams`; 170 — `FMetaHumanCharacterFitToVerticesParams`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:207 — `FMetaHumanCharacterEditorData`; 368 — `FMetaHumanCharacterPreviewAssets`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:392 — `FImportFromIdentityParams`; 410 — `FImportFromDNAParams`; 428 — `FImportBodyFromDNAParams`; 442 — `FImportFromTemplateParams`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:491 — `UMetaHumanCharacterEditorSubsystem`; 516 — `Get()`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:529 — `TryAddObjectToEdit`; 533 — `IsObjectAddedForEditing`; 541 — `RemoveObjectToEdit`; 559 — `GetPreviewCollection`; 568 — `OnEditPreviewCollection`; 572 — `RunCharacterEditorPipelineForPreview`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:685 — `SpawnMetaHumanActor`; 777 — `CanBuildMetaHuman`; 788 — `BuildMetaHuman`; 819 — `CreateCombinedFaceAndBodyMesh`; 829 — `IsTextureSynthesisEnabled`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:882 — `CommitHeadModelSettings`; 902 — `CommitSkinSettings`; 917 — `RequestTextureSources`; 1063 — `CommitEyesSettings`; 1089 — `CommitMakeupSettings`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1144 — `CommitFaceState` (BP); 1277 — `GetFaceLandmarks`; 1297 — `TranslateFaceLandmarks`; 1308 — `GetFaceModelCoefficients`; 1319 — `SetFaceModelCoefficients`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1356 — `RequestAutoRigging`; 1365 — `RemoveFaceRig`; 1391 — `IsAutoRiggingFace`; 1396 — `GetRiggingState`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1415 — `FitStateToTargetVertices`; 1437 — `ImportFromIdentity`; 1455 — `ImportFromFaceDna`; 1474 — `ImportFromTemplate`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1574 — `CommitBodyState` (BP); 1685 — `GetMeshForBodyConformingFromTemplate`; 1703 — `GetMeshForBodyConformingFromDNA`; 1723 — `GetJointsForBodyConformingFromTemplate`; 1741 — `GetJointsForBodyConformingFromDNA`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1757 — `FitFaceStateFromBodyWithEyesTeethTemplate`; 1784 — `FitFaceStateFromBodyWithEyesTeethDNA`; 1797 — `GetMeshDataForConforming`; 1811 — `ConformToTargetMeshes`; 1833 — `CommitPosedStateAsAPose`; 1839 — `AlignToTargetMeshes`.
-- `Public/MetaHumanCharacterEditorSubsystem.h`:1893 — `ConformBodyToTarget`; 1897 — `SetBodyJoints`; 1901 — `SetBodyMesh`; 1908 — `ImportBodyWholeRig`; 1927 — `GetBodyConstraints`; 1938 — `SetBodyConstraints`; 1948 — `SetMetaHumanBodyType`; 1953 — `IsFixedBodyType`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:207 — `FMetaHumanCharacterEditorData`; 373 — `FMetaHumanCharacterPreviewAssets`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:397 — `FImportFromIdentityParams`; 415 — `FImportFromDNAParams`; 433 — `FImportBodyFromDNAParams`; 447 — `FImportFromTemplateParams`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:496 — `UMetaHumanCharacterEditorSubsystem`; 521 — `Get()`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:534 — `TryAddObjectToEdit`; 538 — `IsObjectAddedForEditing`; 546 — `RemoveObjectToEdit`; 564 — `GetPreviewCollection`; 573 — `OnEditPreviewCollection`; 577 — `RunCharacterEditorPipelineForPreview`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:690 — `SpawnMetaHumanActor`; 782 — `CanBuildMetaHuman`; 793 — `BuildMetaHuman`; 824 — `CreateCombinedFaceAndBodyMesh`; 834 — `IsTextureSynthesisEnabled`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:887 — `CommitHeadModelSettings`; 907 — `CommitSkinSettings`; 922 — `RequestTextureSources`; 1068 — `CommitEyesSettings`; 1094 — `CommitMakeupSettings`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1149 — `CommitFaceState` (BP); 1282 — `GetFaceLandmarks`; 1302 — `TranslateFaceLandmarks`; 1313 — `GetFaceModelCoefficients`; 1324 — `SetFaceModelCoefficients`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1361 — `RequestAutoRigging`; 1370 — `RemoveFaceRig`; 1396 — `IsAutoRiggingFace`; 1401 — `GetRiggingState`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1420 — `FitStateToTargetVertices`; 1442 — `ImportFromIdentity`; 1460 — `ImportFromFaceDna`; 1479 — `ImportFromTemplate`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1579 — `CommitBodyState` (BP); 1690 — `GetMeshForBodyConformingFromTemplate`; 1708 — `GetMeshForBodyConformingFromDNA`; 1728 — `GetJointsForBodyConformingFromTemplate`; 1746 — `GetJointsForBodyConformingFromDNA`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1762 — `FitFaceStateFromBodyWithEyesTeethTemplate`; 1789 — `FitFaceStateFromBodyWithEyesTeethDNA`; 1802 — `GetMeshDataForConforming`; 1816 — `ConformToTargetMeshes`; 1838 — `CommitPosedStateAsAPose`; 1844 — `AlignToTargetMeshes`.
+- `Public/MetaHumanCharacterEditorSubsystem.h`:1898 — `ConformBodyToTarget`; 1902 — `SetBodyJoints`; 1906 — `SetBodyMesh`; 1913 — `ImportBodyWholeRig`; 1932 — `GetBodyConstraints`; 1943 — `SetBodyConstraints`; 1953 — `SetMetaHumanBodyType`; 1958 — `IsFixedBodyType`.
 - `Public/Subsystem/MetaHumanCharacterBuild.h`:25 — `FMetaHumanCharacterEditorBuildParameters`; 87 — `IMetaHumanCharacterBuildExtender`; 150 — `FMetaHumanCharacterEditorBuild`.
 - `Public/Subsystem/MetaHumanCharacterService.h`:20 — `FMetaHumanCharacterEditorCloudRequests`.
 - `Public/MetaHumanCharacterEditorActor.h`:22 — `AMetaHumanCharacterEditorActor`.
-- `Private/MetaHumanCharacterEditorSubsystem.cpp`:2238 — `CanBuildMetaHuman` checks; 3533 — `OnAutoRigFaceRequestFailed`; 4204 — `OnHighResolutionTexturesRequestFailed`.
+- `Private/MetaHumanCharacterEditorSubsystem.cpp`:2407 — `CanBuildMetaHuman` checks; 3715 — `OnAutoRigFaceRequestFailed`; 4386 — `OnHighResolutionTexturesRequestFailed`.
 
 Under `Engine/Plugins/MetaHuman/MetaHumanSDK/Source/MetaHumanSDKEditor/Public/`:
 - `Cloud/MetaHumanServiceRequest.h`:20 — `EMetaHumanServiceRequestResult`; 63 — `ServiceAuthentication` namespace; 99 — `FMetaHumanServiceRequestBase`.
