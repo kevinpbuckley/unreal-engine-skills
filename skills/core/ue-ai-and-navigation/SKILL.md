@@ -9,7 +9,8 @@ description: Build AI in Unreal — AIController-driven pawns, Behavior Trees an
   queries for cover/flanking/positions, sensing the player, or replacing Behavior Trees
   with StateTree.
 metadata:
-  engine-version: "5.8"
+  aliases: "AI, NPC, enemy AI, behavior tree, BT, blackboard, EQS, navmesh, pathfinding, MoveTo, perception"
+  engine-version: "5.9"
   category: systems
 ---
 
@@ -259,6 +260,11 @@ projects, StateTree can be adopted incrementally — the two systems coexist.
 See [references/perception-and-statetree.md](references/perception-and-statetree.md) for
 StateTree C++ task authoring, schema setup, and the BT-vs-StateTree decision guide.
 
+StateTree outside AI (game flow, UI and cutscene sequencing on `UStateTreeComponent`), C++
+tasks with delegates and `FinishTask`, the 5.9 state-selection rules, Python authoring traps
+(`set_state_tree` on a Blueprint template crashes the editor) and testing a tree in code: load
+the **`ue-statetree`** skill.
+
 ## Gotchas
 
 - **No `NavMeshBoundsVolume` or unbuilt navmesh** — `MoveTo` fails silently; check nav
@@ -292,7 +298,7 @@ StateTree C++ task authoring, schema setup, and the BT-vs-StateTree decision gui
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/`):
 - `AIModule/Classes/AIController.h` — `AAIController`:87, `MoveToActor`:172,
   `MoveToLocation`:187, `OnMoveCompleted`:230, `ReceiveMoveCompleted`:240,
   `RunBehaviorTree`:262, `OnPossess`:351, `GetBlackboardComponent`:451.
@@ -317,10 +323,10 @@ Engine source (UE 5.8, under `Engine/Source/Runtime/`):
   `SightRadius`:28, `LoseSightRadius`:32, `PeripheralVisionAngleDegrees`:37.
 - `AIModule/Classes/Navigation/PathFollowingComponent.h` — `UPathFollowingComponent`:216,
   `RequestMove`:248.
-- `NavigationSystem/Public/NavigationSystem.h` — `UNavigationSystemV1`:291,
-  `GetNavigationSystem`:502, `FindPathToLocationSynchronously`:535,
-  `FindPathToActorSynchronously`:541.
-- `NavigationSystem/Public/NavMesh/RecastNavMesh.h` — `ARecastNavMesh`:571.
+- `NavigationSystem/Public/NavigationSystem.h` — `UNavigationSystemV1`:292,
+  `GetNavigationSystem`:507, `FindPathToLocationSynchronously`:540,
+  `FindPathToActorSynchronously`:546.
+- `NavigationSystem/Public/NavMesh/RecastNavMesh.h` — `ARecastNavMesh`:651.
 
 Plugins (UE 5.8, under `Engine/Plugins/Runtime/`):
 - `StateTree/Source/StateTreeModule/Public/StateTree.h` — `UStateTree` asset.

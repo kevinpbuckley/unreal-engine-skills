@@ -96,7 +96,7 @@ bool IsPaused() const;
 
 ### Playback params
 
-`FMovieSceneSequencePlaybackParams` (`MovieSceneSequencePlayer.h`:92) can address a position
+`FMovieSceneSequencePlaybackParams` (`MovieSceneSequencePlayer.h`:93) can address a position
 by frame number, seconds, marked-frame name, or SMPTE timecode:
 
 ```cpp

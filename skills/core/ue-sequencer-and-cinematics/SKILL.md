@@ -9,9 +9,11 @@ description: Create and drive Unreal Engine cinematics from C++ — ULevelSequen
   high-quality offline output. Use when triggering or controlling a cutscene at runtime,
   overriding sequence bindings for dynamic actors, reacting to sequence-end events,
   animating a film-style camera, firing gameplay callbacks from an event track, or
-  rendering frames with the Movie Render Pipeline.
+  rendering frames with the Movie Render Pipeline. For authoring sequences from editor
+  Python (Level Sequence / MovieScene scripting) load ue-sequencer-python.
 metadata:
-  engine-version: "5.8"
+  aliases: "Sequencer, Level Sequence, LevelSequence, MovieScene, cutscene, cinematic, camera cut, Movie Render Queue, MRQ"
+  engine-version: "5.9"
   category: animation
 ---
 
@@ -110,8 +112,8 @@ Key player methods (all on `UMovieSceneSequencePlayer`, base of `ULevelSequenceP
 | `SetPlayRate(float)` | Negative for reverse |
 | `GetCurrentTime()` | Returns `FQualifiedFrameTime` |
 
-Source: `Runtime/MovieScene/Public/MovieSceneSequencePlayer.h` — `Play`:193, `PlayLooping`:208,
-`Stop`:220, `Pause`:212, `SetPlaybackPosition`:344, `OnFinished`:426.
+Source: `Runtime/MovieScene/Public/MovieSceneSequencePlayer.h` — `Play`:194, `PlayLooping`:209,
+`Stop`:221, `Pause`:213, `SetPlaybackPosition`:345, `OnFinished`:427.
 
 ## Bindings — possessables vs spawnables
 
@@ -195,6 +197,14 @@ Plugin headers live in:
 
 Full MRQ setup and scripting: [references/movie-render-queue.md](references/movie-render-queue.md).
 
+## Python authoring → `ue-sequencer-python`
+
+Building or editing a Level Sequence from editor Python (bindings, camera cuts, section ranges,
+animation play rate, easing, marked frames, audio sections, scrubbing a player) is covered by
+the **`ue-sequencer-python`** skill. The Python names differ from the C++ ones above: binding
+proxies vs `MovieSceneObjectBindingID`, `MovieSceneTimeWarpVariant` play rates, 5.9 mark ranges,
+and `sequence_player` / `current_focal_length` as properties rather than getter/setter calls.
+
 ## Gameplay vs cinematic control
 
 - Disable player input with `APlayerController::SetInputMode` / `DisableInput` during non-
@@ -235,7 +245,7 @@ Full MRQ setup and scripting: [references/movie-render-queue.md](references/movi
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/`):
 - `LevelSequence/Public/LevelSequence.h` — `ULevelSequence`, `MovieScene`, `DirectorClass`.
 - `LevelSequence/Public/LevelSequenceActor.h` — `ALevelSequenceActor`, `GetSequencePlayer`:153,
   `SetBinding`:178, `SetBindingByTag`:190, `FindNamedBinding`:244, `bReplicatePlayback`:117.
@@ -243,15 +253,15 @@ Engine source (UE 5.8, under `Engine/Source/Runtime/`):
   `CreateLevelSequencePlayer`:106, `OnCameraCut`:110, `GetActiveCameraComponent`:114.
 - `LevelSequence/Public/LevelSequenceDirector.h` — `ULevelSequenceDirector`, `Player`:131,
   `GetBoundObjects`:65, `GetBoundActor`:95.
-- `MovieScene/Public/MovieSceneSequencePlayer.h` — `Play`:193, `PlayLooping`:208, `Stop`:220,
-  `Pause`:212, `SetPlaybackPosition`:344, `OnFinished`:426, `OnStop`:418, `OnPlay`:410.
+- `MovieScene/Public/MovieSceneSequencePlayer.h` — `Play`:194, `PlayLooping`:209, `Stop`:221,
+  `Pause`:213, `SetPlaybackPosition`:345, `OnFinished`:427, `OnStop`:419, `OnPlay`:411.
 - `MovieScene/Public/MovieSceneSequencePlaybackSettings.h` — `FMovieSceneSequencePlaybackSettings`.
 - `MovieScene/Public/MovieScene.h` — `UMovieScene` (tracks/sections/bindings model).
 - `CinematicCamera/Public/CineCameraComponent.h` — `UCineCameraComponent`, `CurrentFocalLength`:66,
   `CurrentAperture`:70, `Filmback`:38, `FocusSettings`:52.
 - `CinematicCamera/Public/CineCameraActor.h` — `ACineCameraActor`, `GetCineCameraComponent`:90.
 
-Plugin source (UE 5.8):
+Plugin source (UE 5.9):
 - `Engine/Plugins/MovieScene/MovieRenderPipeline/Source/MovieRenderPipelineCore/Public/MoviePipelineQueue.h`
 
 Official docs (UE 5.8, verified):

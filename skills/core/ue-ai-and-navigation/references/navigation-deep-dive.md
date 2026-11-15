@@ -7,8 +7,8 @@ and World Partition navigation mesh. Grounded in UE 5.8
 
 ## NavMesh generation fundamentals
 
-`UNavigationSystemV1` (declared at `NavigationSystem.h`:291) manages all navigation data in
-a world. It generates `ARecastNavMesh` (`NavMesh/RecastNavMesh.h`:571) from collision
+`UNavigationSystemV1` (declared at `NavigationSystem.h`:292) manages all navigation data in
+a world. It generates `ARecastNavMesh` (`NavMesh/RecastNavMesh.h`:651) from collision
 geometry by voxelizing the level and converting traversable regions into convex polygons.
 
 **Generation modes** (set in Project Settings → Navigation Mesh → Generation Mode):
@@ -62,8 +62,8 @@ Key signals:
 
 **Partial paths:** If no full path exists, `ARecastNavMesh` can return a partial path to the
 closest reachable point. Check `IsPartialPath()` on the `UNavigationPath` to detect this.
-`UNavigationSystemV1::FindPathToLocationSynchronously` (line 535) and
-`FindPathToActorSynchronously` (line 541) return a `UNavigationPath*` for manual path
+`UNavigationSystemV1::FindPathToLocationSynchronously` (line 540) and
+`FindPathToActorSynchronously` (line 546) return a `UNavigationPath*` for manual path
 inspection without issuing a `MoveTo`.
 
 ## Avoidance
