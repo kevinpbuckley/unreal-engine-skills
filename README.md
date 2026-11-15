@@ -13,19 +13,26 @@ The consumer is an **autonomous agent**, not a human clicking through the editor
 
 Skills are pure **UE domain knowledge**: correct classes, real API signatures, the right
 patterns, the gotchas, and references into the engine source — not click-by-click UI
-tutorials, and not tool/automation instructions. The agent brings its own tooling (e.g. an
-MCP bridge to a live editor) and has separate skills for that; these skills tell it *what is
-correct in Unreal*, not *which tool to operate*.
+tutorials. That includes the engine's own scripting and agent surfaces: the editor's `unreal`
+Python API (names, return shapes, error messages) and, from 5.9, Epic's AI toolsets and
+in-engine skills, because most agent work on a 5.9 project goes through them. Third-party
+tools (and how to configure an MCP client) stay out: these skills tell the agent *what is
+correct in Unreal*, not which third-party tool to operate.
 
 ## Target environment
 
 | Item | Value |
 |---|---|
-| Primary engine version | **UE 5.8** (`E:\Program Files\Epic Games\UE_5.8`) |
-| Engine source for cross-ref | 5.8 (binary install incl. source); 5.7 install kept for version diffing |
-| Engine source root (5.8) | `E:\Program Files\Epic Games\UE_5.8\Engine\Source` |
+| Primary engine version | **UE 5.9** (default install `C:\Program Files\Epic Games\UE_5.9`) |
+| Engine source for cross-ref | 5.9 (binary install incl. source); a 5.8 install kept for version diffing |
+| Engine source root (5.9) | `C:\Program Files\Epic Games\UE_5.9\Engine\Source` |
 
-Skills target 5.8 APIs. Where an API moved or changed between 5.x versions, the skill notes it.
+Skills target 5.9 APIs. Where an API moved or changed between 5.x versions, the skill notes it.
+The library was written against 5.8 and moved to 5.9 in 2026-11: every cited path exists in
+5.9 (`check-citations.mjs`), line numbers were re-mapped from 5.8 to 5.9, and the skills
+added for 5.9 (Wasm, AI toolsets, editor Python, PIE, Sequencer Python, StateTree, MetaHumans
+at run time) were checked against 5.9 headers. Older text written for 5.8 was not re-reviewed
+line by line for behaviour changes; version notes say where a difference is known.
 
 ## Repository layout
 
@@ -37,7 +44,9 @@ unreal-engine-skills/
 ├── evals/                     # golden tasks measuring skill effectiveness (see evals/README.md)
 │   └── tasks/
 ├── scripts/
-│   └── check-citations.mjs    # verifies every cited Engine/Source path exists on disk
+│   ├── check-citations.mjs    # verifies every cited Engine/Source path (and line range) exists on disk
+│   ├── install-engine-skills.mjs  # installs the library as a UE 5.9 in-engine skill root
+│   └── check-hosted-catalog.mjs   # compares the hosted MCP server's catalog with this repo
 └── skills/
     ├── <category>/            # core, metahuman, ultra-dynamic-sky, ultra-dynamic-weather
     │   ├── category.md        # category description
@@ -57,6 +66,7 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `ue-gameplay-architecture-planning` — brainstorm systems, compare trade-offs, map ownership/communication/data, and produce implementation plans
 - ✅ `ue-navigating-engine-source` — locate and cite exact APIs in the on-disk engine source
 - ✅ `ue-coding-standards` — Epic C++ coding standard, naming prefixes, conventions
+- ✅ `ue-ai-toolsets` — the 5.9 AI toolset system: ToolsetRegistry, the editor's MCP server, writing `AICallable` toolsets in C++ or Python, in-engine agent skills (`SKILL.md` roots, `ListSkills` / `GetSkills`)
 
 ### C++ foundations
 - ✅ `ue-cpp-fundamentals` — UObject, UCLASS/USTRUCT/UENUM, UPROPERTY/UFUNCTION, reflection, GC
@@ -71,6 +81,7 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `ue-gameplay-framework` — GameInstance, GameMode/GameState, PlayerController, Pawn/Character, PlayerState, HUD
 - ✅ `ue-actors-and-components` — `AActor` lifecycle, components, attachment, spawning
 - ✅ `ue-character-and-movement` — `ACharacter`, `UCharacterMovementComponent`
+- ✅ `ue-mover-movement-system` — the Mover plugin: movement modes, layered moves, rollback networking backends
 - ✅ `ue-enhanced-input` — Enhanced Input actions, mapping contexts, bindings
 - ✅ `ue-subsystems` — Engine/GameInstance/World/LocalPlayer subsystems
 - ✅ `ue-timers-and-async` — `FTimerManager`, async tasks, latent actions
@@ -85,6 +96,7 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `ue-asset-management` — `AssetRegistry`, soft/hard refs, async loading, `FObjectFinder`
 - ✅ `ue-importing-content` — meshes/textures/audio, Interchange, FBX/glTF
 - ✅ `ue-meshes-static-and-skeletal` — static & skeletal mesh setup
+- ✅ `ue-hair-and-grooms` — Hair Strands grooms, Alembic groom import, bindings, groom components, cards to strands, groom LODs and the cards-only cvars, custom MetaHuman hair
 - ✅ `ue-materials-and-shaders` — material graph, instances, parameters, material C++
 - ✅ `ue-material-graph-effects` — UV motion, vertex animation, dissolve, glow, and interactive parameters
 - ✅ `ue-master-material-authoring` — reusable PBR graphs, instances, switches, and packed texture channels
@@ -93,12 +105,15 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 ### Animation
 - ✅ `ue-animation-system` — skeletal meshes, AnimInstance/AnimBP, state machines, montages, notifies
 - ✅ `ue-control-rig-and-ik` — Control Rig, IK Rig/Retargeter
+- ✅ `ue-animation-authoring` — create and edit AnimSequences from code (`IAnimationDataController`), animation-only FBX import, numeric pose verification
 - ✅ `ue-skin-weights` — read, repair, transfer, and bind skeletal mesh skin weights (weight painting) via `USkinWeightModifier` and GeometryScript
 - ✅ `ue-sequencer-and-cinematics` — Sequencer, cameras, cinematics
+- ✅ `ue-sequencer-python` — Level Sequences from editor Python (5.9): binding proxies vs binding IDs, time units, play rate (`MovieSceneTimeWarpVariant`), marked-frame ranges, camera cuts, audio sections, runtime scrubbing
 
 ### MetaHuman (`skills/metahuman/`)
 - ✅ `ue-metahuman-creator` — MetaHuman Character asset, editor subsystem API (body/face/skin/eyes/makeup), wardrobe palette, cloud auto-rig and texture sources, build/assembly, Python scripting
 - ✅ `ue-metahuman-animator` — capture data ingest (mono video, Live Link Face takes, archives), Identity (Mesh to MetaHuman), Performance processing (depth, mono, audio), AnimSequence/LevelSequence export
+- ✅ `ue-metahuman-runtime` — MetaHumans in a shipped game and on low-end / web targets: face AnimBP that plays baked clips, offline lip-sync bake, blinks, groom LOD holes, cook size, mobile-path teeth and skin, wardrobe and accessories
 - ✅ `ue-metahuman-live-link` — MetaHuman Video/Audio and Live Link Face sources, subject calibration and smoothing, binding to the assembled MetaHuman face AnimBP, Take Recorder, runtime notes
 
 ### World building
@@ -125,15 +140,18 @@ Status: ✅ built · 🟡 planned. (Planned skills are tracked as tasks and buil
 - ✅ `ue-networking-and-replication` — replication, RPCs, replicated properties, multiplayer
 - ✅ `ue-physics-and-chaos` — collision, physics, Chaos
 - ✅ `ue-ai-and-navigation` — behavior trees, blackboard, EQS, navmesh
+- ✅ `ue-statetree` — StateTree for game flow and logic beyond AI: schemas, tasks, conditions, transitions, events, property binding, editing trees from Python
 - ✅ `ue-save-and-load` — `USaveGame`, serialization
 
 ### Tooling, pipeline, quality
-- ✅ `ue-editor-scripting-and-python` — editor utilities, Python, Blutility
+- ✅ `ue-editor-scripting-and-python` — editor utilities, Python, Blutility; the 5.9 `execute_python` contract and Python wrapper traps
+- ✅ `ue-pie-python` — editor Python against a running PIE game: world, subsystems, live widgets, presses vs real clicks, captures, automation tests
 - ✅ `ue-plugins-and-modules` — creating and structuring plugins
 - ✅ `ue-automation-and-testing` — automation specs, functional tests
 - ✅ `ue-profiling-and-optimization` — Unreal Insights, `stat` commands, memory
 - ✅ `ue-game-thread-performance` — game-thread budgets, FPS impact, optimization levers
 - ✅ `ue-packaging-and-deployment` — cooking, packaging, platforms
+- ✅ `ue-web-wasm-webgpu` — UE 5.9 browser builds (Wasm, WebGPU): plugins kept out of the cook, never/always-cook rules, download size, audio click-to-start, no-Lumen look, cross-origin isolation and itch.io hosting
 - ✅ `ue-debugging-techniques` — debugger, Gameplay Debugger, Visual Logger
 
 ### Marketplace asset pack skills
@@ -163,6 +181,59 @@ pseudocode for packs that have no public C++ API.
 - ✅ `ue-udw-particles-lightning-wind-sounds` — rain/snow/dust particles, collision modes, lightning (incl. strikable actor interface), wind systems, sounds, environment sounds (5.1 metasound)
 - ✅ `ue-udw-material-and-screen-effects` — Surface Weather Effects, DLWE V3, Glass Rain Drips, Foliage Wind, Water Ripples, screen droplets/frost/distortion, Puddle Fluid Volume, drip splines, breath, icicles
 
+## Using the library with agents
+
+An agent only benefits from a skill it loads. In one 48-hour UE 5.9 project built by agents,
+the hosted server was connected the whole time and never called: the project's instructions
+called the engine's own agent skills "skills", most work was editor Python, and the client
+listed the tool only by name. Give agents the library in at least one of these ways, and tell
+them when to use it.
+
+1. **Hosted MCP server** at `https://www.unrealengineskills.com/api/mcp`: one tool,
+   `unreal-engine-skills-manager` (`search`, `load`, `categories`).
+2. **Inside the editor (UE 5.9).** 5.9 serves Markdown skills to every agent on the editor's
+   MCP server through `ToolsetRegistry.AgentSkillToolset` (`ListSkills`, `GetSkills`), from
+   `<Project>/Skills/` among other roots (see `ue-ai-toolsets`). Install a copy there:
+
+   ```
+   node scripts/install-engine-skills.mjs --out "<Project>/Skills/UnrealEngineSkills"
+   node scripts/install-engine-skills.mjs --out "<Project>/Skills/UnrealEngineSkills" --max-description 400
+   ```
+
+   Keys become `/Skills/Project/UnrealEngineSkills/<skill-id>`. The script rewrites each
+   frontmatter to one-line `name` / `description` (the engine's reader does not understand
+   wrapped YAML), copies `references/` alongside, and refuses to overwrite a folder it did not
+   create. `--max-description` keeps `ListSkills` short; `--only a,b` installs a subset;
+   `--check` validates without writing. Re-run it after pulling this repo. Whether to commit the
+   copy is the project's choice (it is plain Markdown, about 3 MB).
+3. **As Agent Skills files** for clients that load `SKILL.md` folders directly: copy
+   `skills/<category>/<skill-id>/` folders into the client's skills directory.
+
+### Paste-in paragraph for a project's `AGENTS.md` / `CLAUDE.md`
+
+```markdown
+## Unreal Engine knowledge: the Unreal Engine Skills library
+Before writing or changing anything that uses an Unreal API (C++, Blueprint logic, editor
+Python run through execute_python, Sequencer, UMG, cook/packaging/web build config, MetaHumans),
+search the Unreal Engine Skills library and load the best match: MCP tool
+`unreal-engine-skills-manager` with {action: "search", query: "<keywords or the error text>"},
+then {action: "load", skill: "<id>"}; or, inside the editor, AgentSkillToolset `ListSkills` and
+`GetSkills` on `/Skills/Project/UnrealEngineSkills/<id>`. Do this again after any
+`'unreal' has no attribute ...`, "Failed to find property", "Cannot nativize", cook or packaging
+error, before guessing a second time. Then confirm names in the engine source or with the
+editor's own symbol tools. The library is different from the engine's own toolset skills
+(listed by the same ListSkills call) and from third-party plugins' skills: use all of them.
+```
+
+To reach every agent that connects to the editor, the same text (on one line) can go in the
+project's MCP instructions, which the 5.9 MCP server sends to clients on connect:
+
+```ini
+; Config/DefaultGame.ini
+[/Script/ModelContextProtocol.ModelContextProtocolProjectSettings]
+Instructions=Before guessing an Unreal API, search the Unreal Engine Skills library (MCP tool unreal-engine-skills-manager, or AgentSkillToolset ListSkills under /Skills/Project/UnrealEngineSkills) and load the matching skill.
+```
+
 ## Updating existing installations
 
 Skill names and folders now use the `ue-` prefix so they are easier to identify
@@ -182,8 +253,11 @@ See [`docs/skill-authoring-guide.md`](docs/skill-authoring-guide.md). In short:
 - `name`: lowercase letters/digits/hyphens, ≤64 chars, no leading/trailing/double hyphens.
 - `description`: ≤1024 chars, states **what it does and when to use it**, with searchable keywords.
 - Keep `SKILL.md` under ~500 lines; push deep detail into `references/`.
-- Ground claims in real 5.8 source paths; cite `Engine/Source/...` locations.
-- Prefer C++ that compiles against 5.8; flag version-specific behavior.
+- Ground claims in real 5.9 source paths; cite `Engine/Source/...` locations.
+- Prefer C++ that compiles against 5.9 and editor Python checked against the 5.9 Python plugin;
+  flag version-specific behavior.
+- Put the words an agent would search for (synonyms, error strings) in the description and in
+  `metadata.aliases`.
 
 ## Validation
 
@@ -202,7 +276,22 @@ node scripts/check-citations.mjs            # all skills
 node scripts/check-citations.mjs core/ue-gameplay-tags   # one skill
 ```
 
-Set `UE_ENGINE_ROOT` if your engine install is not at the default path.
+Set `UE_ENGINE_ROOT` if your engine install is not at the default path
+(`C:\Program Files\Epic Games\UE_5.9`). The checker also fails a line number written after a
+full path (`Engine/.../File.h:123`) that is past the end of the file.
+
+Check that every skill installs cleanly as a UE 5.9 in-engine skill (one-line frontmatter the
+engine reads, relative links that resolve):
+
+```
+node scripts/install-engine-skills.mjs --check
+```
+
+After deploying the hosted server, check that it serves exactly the repo's skills:
+
+```
+node scripts/check-hosted-catalog.mjs          # add --load to also load each skill by id
+```
 
 ## Evals
 
