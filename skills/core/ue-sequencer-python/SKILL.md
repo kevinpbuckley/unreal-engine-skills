@@ -59,7 +59,7 @@ C++ runtime playback is in `ue-sequencer-and-cinematics`; the general Python rul
 
 | Error | Cause and what to write instead |
 |---|---|
-| `'MovieSceneObjectBindingID' object has no attribute 'guid'`, `Cannot nativize 'MovieSceneObjectBindingID' as 'Guid'` | Make an ID with `seq.get_binding_id(proxy)` or `root.get_portable_binding_id(dest_seq, proxy)`; turn one back with `root.resolve_binding_id(bid)` -> proxy, then `proxy.get_id()`. |
+| `'MovieSceneObjectBindingID' object has no attribute 'guid'`, `Cannot nativize 'MovieSceneObjectBindingID' as 'Guid'` | Make an ID with `seq.get_binding_id(proxy)` or `root.get_portable_binding_id(dest_seq, proxy)`; turn one back with `root.resolve_binding_id(bid)` -> proxy, then `proxy.get_id()`. To read just the guid, `bid.get_editor_property("guid")` works (`Guid` is `EditAnywhere`, not Blueprint-visible). |
 | `MovieSceneBindingProxy: Cannot find the requested movie scene binding` | The proxy points at nothing: a lookup missed (`find_binding_by_name` matches the internal name, not the display name), or the binding was converted (`convert_to_custom_binding`, `convert_to_spawnable`, `convert_to_possessable` return a NEW proxy) or the sequence was recreated. Re-read `seq.get_bindings()` after any structural change. |
 | `Cannot nativize 'float' as 'MovieSceneTimeWarpVariant'`, `must be real number, not MovieSceneTimeWarpVariant` | A skeletal animation section's `params.play_rate` is a `MovieSceneTimeWarpVariant` in 5.9. See *Animation sections*. |
 | `MovieSceneEasingSettings: Failed to find property 'manual_ease_in_duration'` | The easing struct's members are plain `UPROPERTY()`, not script-visible. Use `section.set_ease_in_duration(ticks)` / `set_ease_out_duration(ticks)` (tick-resolution frames). |
@@ -166,7 +166,9 @@ lse.save_default_spawnable_state(cam_b)
   `post_process_blend_weight`. As keyed property tracks on the camera **component** binding the
   paths are `CurrentFocalLength`, `CurrentAperture`, `FocusSettings.ManualFocusDistance`.
 - A property track needs `track.set_property_name_and_path(label, path)` or its keys drive nothing.
-- Struct and array properties come back as copies: modify the copy and `set_editor_property` it back.
+- Write struct and array values back with `set_editor_property` (as above). An element read out of
+  an array is a copy, and a field written in place on a struct property sends no change
+  notification, so the component may not react to it.
 
 ### Animation sections
 
@@ -184,8 +186,8 @@ sec.set_editor_property("params", p)
 ```
 
 - `params.play_rate` is a `MovieSceneTimeWarpVariant`; it has no `.value`.
-  `MovieSceneTimeWarpExtensions` also declares `set_section_play_rate(section, rate)` /
-  `get_section_play_rate(section)` (new in 5.9; see *Unverified*).
+  5.9 also has `unreal.MovieSceneTimeWarpExtensions.set_section_play_rate(section, rate)` /
+  `get_section_play_rate(section)` (class functions, not methods on the section).
 - To start a looping clip partway in: `p.first_loop_start_frame_offset = unreal.FrameNumber(ticks)`
   (tick-resolution frames), then write `params` back.
 - Easing: `sec.set_ease_in_duration(ticks)` / `set_ease_out_duration(ticks)` set the manual
@@ -275,22 +277,39 @@ existing = some_level_sequence_actor.get_editor_property("sequence_player")
   (`sec.get_start_frame()`, `[(k.get_time(U).frame_number.value, k.get_value()) for k in ch.get_keys()]`).
 - Camera-cut blending ("Can Blend") is off by default; with it off overlapping cuts and ease
   durations on cut sections do nothing. Epic's in-editor Sequencer camera skill says it cannot be set
-  from script; 5.9 does declare `MovieSceneTrackExtensions.set_camera_cut_can_blend` (unverified).
+  from script; in 5.9 `unreal.MovieSceneTrackExtensions.set_camera_cut_can_blend(track, True)` exists
+  and is accepted (the call ran; the resulting blend was not looked at).
 - Epic ships in-editor Sequencer guidance as agent skills (`SequencerCoreSkill`,
   `SequencerBindingsSkill`, `SequencerCameraSkill`, `SequencerKeyframingSkill`, ...) in
   `Engine/Plugins/Experimental/Toolsets/AnimationAssistantToolset/Content/Python/animation_toolset/skills/`
   (`sequencer_core.py` and siblings, the `_INSTRUCTIONS` string). Read them for which editor tool
   does what; this skill covers the Python names and the runtime side.
 
-## Unverified (read in the 5.9 headers, not run in the jam)
+## Verification status
 
-- `section.set_ease_in_duration` / `set_ease_out_duration`, `seq.resolve_binding_id(bid)`,
-  `proxy.is_valid()`, `proxy.get_id()`, `seq.set_marked_frame_comment`, and a single-frame mark made
-  through `add_marked_frame_range_to_sequence` with start == end.
-- `unreal.MovieSceneSectionExtensions.set_camera_cut_binding(section, binding_proxy, root_sequence)`,
-  `unreal.MovieSceneTrackExtensions.set_camera_cut_can_blend(track, True)` and
-  `unreal.MovieSceneTimeWarpExtensions.set_section_play_rate(section, rate)` are declared
-  `PythonCallable` in 5.9; their exact Python spelling was not tested.
+Run in a headless UE 5.9 editor (2026-11, a script without Sequencer open; calls returned and
+values read back, no picture was looked at): the *Core workflow* setters, `get_display_rate` /
+`get_tick_resolution`, every marked-frame call above including a single-frame mark with
+start == end (reads back `is_range() == False`) and the legacy `frame_number` fallback,
+`add_possessable`, `get_binding_id`, `get_portable_binding_id`, `resolve_binding_id`,
+`proxy.is_valid()`, `proxy.get_id()`, `tag_binding`, the camera-cut section, the CineCamera
+property writes, the animation-section `play_rate` round trip, `set_ease_in_duration` /
+`set_ease_out_duration`, `add_key` with read-back, and these class-function spellings:
+`unreal.MovieSceneSectionExtensions.set_camera_cut_binding(section, binding_proxy, None)`,
+`unreal.MovieSceneTrackExtensions.set_camera_cut_can_blend(track, True)`,
+`unreal.MovieSceneTimeWarpExtensions.set_section_play_rate(section, rate)`. Reproduced there
+from the error table: the `guid`, `comment`, `get_sequence_player`, `set_current_focal_length`,
+`get_display_rate` and `get_duration` AttributeErrors, `Cannot find the requested movie scene
+binding`, `Cannot nativize 'float' as 'MovieSceneTimeWarpVariant'`, `Failed to find property
+'manual_ease_in_duration'` and the read-only `frame_number`. The other rows come from the jam's
+logs and the source.
+
+## Unverified
+
+- The `LevelSequenceEditorSubsystem` calls (`create_camera`, `add_spawnable_from_class`,
+  `convert_to_custom_binding`, `save_default_spawnable_state`) and runtime playback
+  (`create_level_sequence_player`, `set_binding_by_tag`, `set_playback_position`) ran in the jam
+  project; in the headless check only their existence was confirmed.
 - Whether `sound_volume` set on an audio section takes effect (the jam set it inside a try/except
   and never checked); key the volume channel instead.
 - How to persist `AlwaysTickPoseAndRefreshBones` from Python on placed actors; the Blueprint

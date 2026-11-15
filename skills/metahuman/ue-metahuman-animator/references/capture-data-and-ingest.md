@@ -29,12 +29,12 @@ Performance and Identity poses subscribe to it to recompute their frame ranges.
 
 | Property | Line | Meaning |
 |---|---|---|
-| `ImageSequences` | 236 | `TArray<UImgMediaSource*>`, one per RGB camera/view. Index order defines view index; `Camera` on the Performance/Pose picks by name (`GetViewIndexByCameraName`, 308). |
-| `DepthSequences` | 239 | One `UImgMediaSource` per view, EXR depth. Empty for mono footage. |
-| `AudioTracks` | 242 | `TArray<USoundWave*>`; the Performance uses the first unless `Audio` is overridden. |
-| `CameraCalibrations` | 260 | `TArray<UCameraCalibration*>`; required for depth processing and stereo depth generation. |
+| `ImageSequences` | 242 | `TArray<UImgMediaSource*>`, one per RGB camera/view. Index order defines view index; `Camera` on the Performance/Pose picks by name (`GetViewIndexByCameraName`, 308). |
+| `DepthSequences` | 245 | One `UImgMediaSource` per view, EXR depth. Empty for mono footage. |
+| `AudioTracks` | 248 | `TArray<USoundWave*>`; the Performance uses the first unless `Audio` is overridden. |
+| `CameraCalibrations` | 266 | `TArray<UCameraCalibration*>`; required for depth processing and stereo depth generation. |
 | `Metadata` | 263 | `FFootageCaptureMetadata` (`:123`): `FrameRate`, `DeviceClass` (`EFootageDeviceClass`, `:111`), `DeviceModelName`. `SetDeviceClass(ModelString)` (`:146`) maps e.g. `iPhone15,2` → `iPhone14OrLater`. |
-| `CaptureExcludedFrames` | 266 | `TArray<FFrameRange>` of frames the capture itself marked bad (dropped frames); merged into the Performance's exclusion list. |
+| `CaptureExcludedFrames` | 272 | `TArray<FFrameRange>` of frames the capture itself marked bad (dropped frames); merged into the Performance's exclusion list. |
 
 `EFootageDeviceClass` values: `Unspecified`, `iPhone11OrEarlier`, `iPhone12`, `iPhone13`,
 `iPhone14OrLater`, `OtheriOSDevice`, `StereoHMC`. The device class selects the

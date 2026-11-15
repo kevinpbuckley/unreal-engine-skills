@@ -324,7 +324,7 @@ Engine source (UE 5.9, `Engine/Plugins/Runtime/GameplayAbilities/Source/Gameplay
   `GAMEPLAYATTRIBUTE_PROPERTY_GETTER`:428, `GAMEPLAYATTRIBUTE_VALUE_GETTER`:435.
 - `Abilities/GameplayAbility.h` — `UGameplayAbility`:91, `ActivateAbility`:574,
   `CommitAbility`:336, `EndAbility`:604, `CanActivateAbility`:263, `CancelAbility`:299,
-  `EGameplayAbilityInstancingPolicy`:37, `EGameplayAbilityNetExecutionPolicy`:59
+  `EGameplayAbilityInstancingPolicy`:38, `EGameplayAbilityNetExecutionPolicy`:60
   (in `Abilities/GameplayAbilityTypes.h`).
 - `GameplayAbilitySpec.h` — `FGameplayAbilitySpec`:168 (class, level, InputID, handle).
 - `GameplayEffect.h` — `UGameplayEffect`, `EGameplayEffectDurationType`:686

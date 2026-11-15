@@ -116,7 +116,7 @@ ws    = unreal.get_world_subsystem(world, unreal.MyWorldSubsystem)       # 5.9+
 gm    = unreal.GameplayStatics.get_game_mode(world)
 pc    = unreal.GameplayStatics.get_player_controller(world, 0)
 doors = unreal.GameplayStatics.get_all_actors_of_class(world, unreal.MyDoor)
-tagged = unreal.GameplayStatics.get_all_actors_with_tag(world, "Suspect")
+tagged = unreal.GameplayStatics.get_all_actors_with_tag(world, "Enemy")
 ```
 
 - `USubsystemBlueprintLibrary` is not in Python (all `BlueprintInternalUseOnly`), and

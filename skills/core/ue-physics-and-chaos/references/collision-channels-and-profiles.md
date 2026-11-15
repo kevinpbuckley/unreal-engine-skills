@@ -101,12 +101,12 @@ All on `UPrimitiveComponent` (`PrimitiveComponent.h`):
 
 | Method | Line | Purpose |
 |---|---|---|
-| `SetCollisionEnabled(Type)` | 2026 | Enable/disable query/physics participation |
-| `SetCollisionObjectType(Channel)` | 2047 | What this component is |
-| `SetCollisionProfileName(Name)` | 2036 | Apply a named preset |
-| `SetCollisionResponseToChannel(Ch, Resp)` | 2944 | Set one channel's response |
-| `SetCollisionResponseToAllChannels(Resp)` | 2952 | Set all channels at once |
-| `SetCollisionResponseToChannels(Container)` | 2959 | Bulk-set from a container |
+| `SetCollisionEnabled(Type)` | 2034 | Enable/disable query/physics participation |
+| `SetCollisionObjectType(Channel)` | 2055 | What this component is |
+| `SetCollisionProfileName(Name)` | 2044 | Apply a named preset |
+| `SetCollisionResponseToChannel(Ch, Resp)` | 2952 | Set one channel's response |
+| `SetCollisionResponseToAllChannels(Resp)` | 2960 | Set all channels at once |
+| `SetCollisionResponseToChannels(Container)` | 2967 | Bulk-set from a container |
 | `SetGenerateOverlapEvents(bool)` | 418 | Enable/disable overlap callbacks |
 
 ## Interaction rules (summarized)

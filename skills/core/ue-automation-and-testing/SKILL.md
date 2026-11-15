@@ -280,8 +280,8 @@ indicates test failures when `-unattended` is set.
 Engine source (UE 5.9):
 - `Runtime/Core/Public/Misc/AutomationTest.h` — `EAutomationTestFlags`:89,
   `FAutomationTestBase`:1733, `RunTest`:2792, `TestEqual`:2124, `TestFalse`:2506,
-  `TestNull`:2669, `TestTrue`:2742, `FAutomationSpecBase`:3123, `Describe`:2981,
-  `BeforeEach`:3045, `It`:2789, `IAutomationLatentCommand`:591,
+  `TestNull`:2669, `TestTrue`:2742, `FAutomationSpecBase`:3123, `Describe`:3615,
+  `BeforeEach`:3835, `It`:3660, `IAutomationLatentCommand`:591,
   `DEFINE_LATENT_AUTOMATION_COMMAND`:4270, `ADD_LATENT_AUTOMATION_COMMAND`:4561,
   `IMPLEMENT_SIMPLE_AUTOMATION_TEST`:4773, `DEFINE_SPEC`:4815, `BEGIN_DEFINE_SPEC`:4822.
 - `Developer/FunctionalTesting/Classes/FunctionalTest.h` — `AFunctionalTest`:249,

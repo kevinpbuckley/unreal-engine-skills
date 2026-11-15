@@ -201,12 +201,12 @@ is the fastest way to learn *why* processing is disabled.
 | `ControlRigAssetReference`, `VisualizationObject` | 226, 234 | Face board rig used for preview/baking (defaults to `Face_ControlBoard_CtrlRig`); preview skel mesh or MetaHuman BP |
 | `HeadMovementMode` | 247 | `EPerformanceHeadMovementMode` TransformTrack / ControlRig / Disabled (`:52`) |
 | `StartFrameToProcess`, `EndFrameToProcess`, `SetProcessingRange` | 287, 291, 520 | End is exclusive; negatives clamp to 0; held until source data loads |
-| `bSkipDiagnostics`, `MinimumDepthMapFaceCoverage`, `MinimumDepthMapFaceWidth` | 450-458 | Depth diagnostics; results in `DepthMapDiagnosticResults` (538), `DiagnosticsIndicatesProcessingIssue` (121) |
+| `bSkipDiagnostics`, `MinimumDepthMapFaceCoverage`, `MinimumDepthMapFaceWidth` | 457-465 | Depth diagnostics; results in `DepthMapDiagnosticResults` (538), `DiagnosticsIndicatesProcessingIssue` (121) |
 | `UserExcludedFrames`, `ProcessingExcludedFrames` | 470, 474 | Ranges skipped / flagged bad |
-| `StartPipeline(bIsScriptedProcessing=true)`, `CancelPipeline`, `IsProcessing`, `CanProcess` | 486-495 | |
+| `StartPipeline(bIsScriptedProcessing=true)`, `CancelPipeline`, `IsProcessing`, `CanProcess` | 504-513 | |
 | `SetBlockingProcessing`, `SetDepthDistanceRange`, `SetBodyTracking` | 531, 528, 534 | |
-| `OnProcessingFinishedDynamic` | 107 | `BlueprintAssignable`; fire-and-forget scripts bind this |
-| `ContainsAnimationDataType`, `GetAnimationData(Start, End)`, `GetNumberOfProcessedFrames` | 555-563 | `FFrameAnimationData` per frame (`FrameAnimationData.h`:44): `Pose` head transform, `AnimationData` control→value map, `BodyAnimationData` |
+| `OnProcessingFinishedDynamic` | 108 | `BlueprintAssignable`; fire-and-forget scripts bind this |
+| `ContainsAnimationDataType`, `GetAnimationData(Start, End)`, `GetNumberOfProcessedFrames` | 597-605 | `FFrameAnimationData` per frame (`FrameAnimationData.h`:44): `Pose` head transform, `AnimationData` control→value map, `BodyAnimationData` |
 | `GetAnimationCurveNames`, `GetHeadMesh`, `GetExportFrameRange` | 605, 584, 568 | |
 
 ## C++ pattern — audio → AnimSequence (editor module)

@@ -163,7 +163,7 @@ void FMyFeatureModule::ShutdownModule()
 - `IMPLEMENT_MODULE` is in `Runtime/Core/Public/Modules/ModuleManager.h`:960. It registers
   the module with the `FModuleManager` and installs UE's memory allocator overrides
   (`PER_MODULE_BOILERPLATE`). Every plugin module must have exactly one call.
-- `IModuleInterface::StartupModule()`:49 / `ShutdownModule()`:79 in
+- `IModuleInterface::StartupModule()`:50 / `ShutdownModule()`:80 in
   `Runtime/Core/Public/Modules/ModuleInterface.h`.
 - Use `FDefaultModuleImpl` (no startup logic) or `FDefaultGameModuleImpl` (gameplay module)
   when you don't need custom init. See `ue-module-and-build-system` for these helpers.
@@ -247,7 +247,7 @@ Key `IPluginManager` methods (all pure virtual, `IPluginManager.h`):
 
 | Method | Line | Notes |
 |---|---|---|
-| `Get()` | 667 | Singleton accessor |
+| `Get()` | 683 | Singleton accessor |
 | `FindPlugin(Name)` | 393 | Find by name; returns null if not discovered |
 | `FindEnabledPlugin(Name)` | 404 | Returns null if not enabled |
 | `GetEnabledPlugins()` | 428 | All enabled plugins |

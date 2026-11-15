@@ -168,9 +168,9 @@ Key macros (all in `AutomationTest.h`):
 
 `Runtime/Core/Public/Misc/AutomationTest.h`:
 - `FAutomationSpecBase`:3123 — spec base class.
-- `Describe`:2981, `xDescribe`:2975 — scope definition.
-- `BeforeEach`:3045, `AfterEach`:3050 — setup/teardown.
-- `It`:2789, `LatentIt` (overload at :3417, :3426, :3435).
+- `Describe`:3615, `xDescribe`:3571 — scope definition.
+- `BeforeEach`:3835, `AfterEach`:3912 — setup/teardown.
+- `It`:3660, `LatentIt` (overloads at :3687, :3696, :3705).
 - `IAutomationLatentCommand`:591 — latent command base.
 - `DEFINE_LATENT_AUTOMATION_COMMAND`:4270.
 - `ADD_LATENT_AUTOMATION_COMMAND`:4561.

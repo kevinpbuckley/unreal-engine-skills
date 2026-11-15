@@ -305,7 +305,10 @@ Method, measured numbers and the accessory table:
 ## Unverified
 
 - Exporting face clips **without** head movement (`bEnableHeadMovement` false) instead of zeroing
-  `HeadControlSwitch`: the export option exists; the jam zeroed the curve instead and did not try it.
+  `HeadControlSwitch`: not tried in the jam. The 5.9 toolset header documents the option as "the
+  head curves are still written but the head-movement switch curve is keyed 0"
+  (`FPerformanceAnimationExportOptions`, `MetaHumanAnimatorExportTools.h`), which is the same
+  result as the Modify Curve node in section 1 if it behaves as documented.
 - Per-character phase offsets for the looping blink: not built.
 - Whether marketplace garment packs leak 4K textures into a cook through their Skeleton or
   Physics Asset preview references: flagged in the jam's notes, no result recorded.

@@ -83,13 +83,13 @@ Properties active when `InputType == EDataInputType::Audio` (`MetaHumanPerforman
 | Property | Line | Notes |
 |---|---|---|
 | `Audio` | 189 | `USoundWave`; set through `SetAudio` (`:507`) |
-| `bRealtimeAudio` | 361 | Use the realtime solver (`FRealtimeSpeechToAnimNode`, streaming ADA) instead of offline Speech2Face |
-| `bDownmixChannels` | 365 | Offline only; mix all channels before solving |
-| `AudioChannelIndex` | 369 | 0..64; used when not downmixing |
-| `bGenerateBlinks` | 373 | Offline only |
-| `AudioDrivenAnimationOutputControls` ("Process Mask") | 376 | Offline only |
-| `AudioDrivenAnimationModels` ("Models", advanced) | 380 | Override encoder/decoder `UNNEModelData` |
-| `AudioDrivenAnimationSolveOverrides` ("Solve Overrides") | 425 | Offline mood + intensity |
+| `bRealtimeAudio` | 368 | Use the realtime solver (`FRealtimeSpeechToAnimNode`, streaming ADA) instead of offline Speech2Face |
+| `bDownmixChannels` | 372 | Offline only; mix all channels before solving |
+| `AudioChannelIndex` | 376 | 0..64; used when not downmixing |
+| `bGenerateBlinks` | 380 | Offline only |
+| `AudioDrivenAnimationOutputControls` ("Process Mask") | 383 | Offline only |
+| `AudioDrivenAnimationModels` ("Models", advanced) | 387 | Override encoder/decoder `UNNEModelData` |
+| `AudioDrivenAnimationSolveOverrides` ("Solve Overrides") | 432 | Offline mood + intensity |
 | `RealtimeAudioMood`, `RealtimeAudioMoodIntensity`, `RealtimeAudioLookahead` | 437, 441, 445 | Realtime only; lookahead 80-240 ms trades quality for latency |
 | `HeadMovementMode` | 247 | `ControlRig` or `TransformTrack` to keep the solver's head motion, `Disabled` to drop it |
 | `VisualizationObject` | 234 | Preview mesh or MetaHuman BP; purely visual for audio |

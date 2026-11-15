@@ -193,10 +193,10 @@ module (`Runtime/Core/Public/Modules/ModuleInterface.h`):
 
 | Hook | Line | When called |
 |---|---|---|
-| `StartupModule()` | 49 | Module DLL loaded and module object constructed |
-| `ShutdownModule()` | 79 | Module about to be destroyed (reverse startup order) |
-| `SupportsDynamicReloading()` | 88 | Return `false` to prevent hot-reload of this module |
-| `PostLoadCallback()` | 68 | After a hot-reload of this module |
+| `StartupModule()` | 50 | Module DLL loaded and module object constructed |
+| `ShutdownModule()` | 80 | Module about to be destroyed (reverse startup order) |
+| `SupportsDynamicReloading()` | 89 | Return `false` to prevent hot-reload of this module |
+| `PostLoadCallback()` | 69 | After a hot-reload of this module |
 
 Plugin modules are loaded per the `LoadingPhase` in their `.uplugin` descriptor. The order
 within the same phase is not guaranteed between modules from different plugins. Use

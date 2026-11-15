@@ -35,16 +35,16 @@ alternatives to `UWorld::SpawnActor` etc. that also notify the editor selection/
 
 | Method | Line | What it does |
 |---|---|---|
-| `GetAllLevelActors()` | 166 | All non-pending-kill actors in the editor level |
-| `GetSelectedLevelActors()` | 181 | Currently selected actors |
-| `SetSelectedLevelActors(Arr)` | 188 | Replace the selection set |
-| `ClearActorSelectionSet()` | 192 | Deselect everything |
-| `SetActorSelectionState(A, bool)` | 200 | Toggle one actor's selection state |
-| `SpawnActorFromObject(Obj, Loc)` | 218 | Place from asset, archetype, or Blueprint |
-| `SpawnActorFromClass(Class, Loc)` | 228 | Place from a C++ class or BP class |
-| `DestroyActor(Actor)` | 236 | Remove actor and notify editor |
-| `DuplicateActor(Actor, World, Offset)` | 111 | Duplicate an actor (editor-notified) |
-| `GetActorReference(Path)` | 208 | Find actor by path string (e.g. `"PersistentLevel.MyActor"`) |
+| `GetAllLevelActors()` | 168 | All non-pending-kill actors in the editor level |
+| `GetSelectedLevelActors()` | 183 | Currently selected actors |
+| `SetSelectedLevelActors(Arr)` | 190 | Replace the selection set |
+| `ClearActorSelectionSet()` | 194 | Deselect everything |
+| `SetActorSelectionState(A, bool)` | 202 | Toggle one actor's selection state |
+| `SpawnActorFromObject(Obj, Loc)` | 220 | Place from asset, archetype, or Blueprint |
+| `SpawnActorFromClass(Class, Loc)` | 230 | Place from a C++ class or BP class |
+| `DestroyActor(Actor)` | 238 | Remove actor and notify editor |
+| `DuplicateActor(Actor, World, Offset)` | 113 | Duplicate an actor (editor-notified) |
+| `GetActorReference(Path)` | 210 | Find actor by path string (e.g. `"PersistentLevel.MyActor"`) |
 
 **Key delegates** (`BlueprintAssignable`) exposed by this subsystem:
 `OnNewActorsDropped`, `OnNewActorsPlaced`, `OnActorLabelChanged`,
@@ -80,10 +80,10 @@ lifecycle of content-browser assets.
 | `LoadBlueprintClass(Path)` | 62 | Load Blueprint and return its generated class |
 | `DoesAssetExist(Path)` | 87 | Query Asset Registry without loading |
 | `FindAssetData(Path)` | 79 | Retrieve `FAssetData` for registry queries |
-| `SaveAsset(Path, bOnlyIfDirty)` | 296 | Save one asset |
-| `DuplicateAsset(Src, Dst)` | 185 | Duplicate, fixing up references |
-| `RenameAsset(Src, Dst)` | 215 | Rename (creates redirector) |
-| `DeleteAsset(Path)` | 155 | Delete and remove from registry |
+| `SaveAsset(Path, bOnlyIfDirty)` | 308 | Save one asset |
+| `DuplicateAsset(Src, Dst)` | 197 | Duplicate, fixing up references |
+| `RenameAsset(Src, Dst)` | 227 | Rename (creates redirector) |
+| `DeleteAsset(Path)` | 167 | Delete and remove from registry |
 | `FindPackageReferencersForAsset(Path)` | 108 | Soft/hard dependency referencers |
 
 ```python
@@ -114,17 +114,17 @@ shipping builds (they are editor-only in intent even within this module).
 
 | Method | Line | What it does |
 |---|---|---|
-| `NewLevel(Path, bPartitioned)` | 147 | Create and load a blank (or partitioned) level |
-| `NewLevelFromTemplate(Path, Tpl)` | 158 | Create level from a template |
-| `LoadLevel(Path)` | 167 | Close current level and open another |
-| `SaveCurrentLevel()` | 174 | Save the currently open persistent level |
-| `SaveAllDirtyLevels()` | 181 | Save all dirty sublevels |
-| `EditorPlaySimulate()` | 63 | Start Simulate mode |
-| `EditorRequestBeginPlay()` | 78 | Request PIE start |
-| `EditorRequestEndPlay()` | 81 | Request PIE stop |
-| `IsInPlayInEditor()` | 84 | True while in PIE |
-| `PilotLevelActor(Actor)` | 49 | Lock viewport to actor |
-| `EditorSetGameView(bool)` | 72 | Toggle game view in the active viewport |
+| `NewLevel(Path, bPartitioned)` | 187 | Create and load a blank (or partitioned) level |
+| `NewLevelFromTemplate(Path, Tpl)` | 198 | Create level from a template |
+| `LoadLevel(Path, UnsavedChangesPolicy)` | 210 | Open another level; with the default policy `Fail` it refuses while a map has unsaved changes (5.9) |
+| `SaveCurrentLevel()` | 217 | Save the currently open persistent level |
+| `SaveAllDirtyLevels()` | 224 | Save all dirty sublevels |
+| `EditorPlaySimulate()` | 86 | Start Simulate mode |
+| `EditorRequestBeginPlay()` | 101 | Request PIE start |
+| `EditorRequestEndPlay()` | 121 | Request PIE stop |
+| `IsInPlayInEditor()` | 124 | True while in PIE |
+| `PilotLevelActor(Actor)` | 72 | Lock viewport to actor |
+| `EditorSetGameView(bool)` | 95 | Toggle game view in the active viewport |
 
 ```python
 import unreal

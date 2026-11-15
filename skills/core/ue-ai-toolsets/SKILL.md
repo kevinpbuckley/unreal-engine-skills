@@ -229,6 +229,7 @@ Two kinds, both listed by `ToolsetRegistry.AgentSkillToolset.ListSkills` (`{path
 | `<Plugin>/Skills/...` of every **enabled** plugin | `/Skills/<PluginName>/<sub folders>` |
 | `Engine/Platforms/<Platform>/Skills/...` | `/Skills/Platforms/<Platform>/<sub folders>` |
 | `Engine/Extras/AgentTools/Skills/<name>` | `/Skills/Engine/<name>` |
+| any other `SKILL.md` under `Engine/Extras/AgentTools/` | `/Skills/Engine/AgentTools/<sub folders>` |
 | `<Project>/Skills/...` | `/Skills/Project/<sub folders>` |
 | a folder added with `MarkdownSkills::AddSearchRoot(Dir, Prefix)` | `/Skills/<Prefix>/<sub folders>` |
 

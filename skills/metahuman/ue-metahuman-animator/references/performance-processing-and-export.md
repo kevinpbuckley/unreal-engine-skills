@@ -13,9 +13,9 @@ UE 5.8 (`Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/MetaHumanPerformance/
 | Property | Line | Route | Notes |
 |---|---|---|---|
 | `InputType` | 180 | all | `EDataInputType` (`:35`): `DepthFootage`, `Audio`, `MonoFootage`. `BlueprintSetter = SetInputType` (`:503`) clears stale state and may null footage with a bad frame rate |
-| `FootageCaptureData` | 185 | footage | `BlueprintSetter = SetFootageCaptureData` (`:499`) |
+| `FootageCaptureData` | 186 | footage | `BlueprintSetter = SetFootageCaptureData` (`:499`) |
 | `Audio` | 189 | audio | `BlueprintSetter = SetAudio` (`:507`); `GetAudioForProcessing()` (`:192`) returns this or the footage's first audio track |
-| `CaptureDataConfig` | 202 | depth | Transient display name of the resolved `UMetaHumanConfig`; empty means the device class could not be matched |
+| `CaptureDataConfig` | 203 | depth | Transient display name of the resolved `UMetaHumanConfig`; empty means the device class could not be matched |
 | `Camera` | 206 | footage | RGB view name for multi-camera footage |
 | `TimecodeAlignment` | 210 | all | `ETimecodeAlignment` None/Absolute/Relative |
 | `Identity` | 214 | depth | `BlueprintSetter = SetIdentity` (`:511`); resets processed output |
@@ -35,12 +35,12 @@ UE 5.8 (`Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/MetaHumanPerformance/
 | `DefaultSolver` | 283 | `UMetaHumanFaceAnimationSolver` — can override `DeviceConfig`, depth-map influence, eye smoothness, teeth mode (`MetaHumanFaceAnimationSolver.h`:51-75) |
 | `SolveType` | 295 | `ESolveType` (`:43`): `Preview`, `Standard`, `AdditionalTweakers` (default), `AdditionalTweakersPlusChinCompress` |
 | `bEasyToEditControlCurves` | 299 | Produce combined, animator-friendly curves |
-| `bSkipPreview` ("Run Preview Pass") | 304 | Predictive-solver preview pass before the full solve |
-| `bSkipFiltering` ("Filter Animation") | 309 | Post-filter stage |
-| `bSkipTongueSolve` ("Solve Tongue") | 319 | Also mono; audio-driven tongue solve |
-| `bSkipPerVertexSolve` ("Run Per Vertex Solve") | 357 | Slow, slightly better |
+| `bSkipPreview` ("Run Preview Pass") | 305 | Predictive-solver preview pass before the full solve |
+| `bSkipFiltering` ("Filter Animation") | 310 | Post-filter stage |
+| `bSkipTongueSolve` ("Solve Tongue") | 320 | Also mono; audio-driven tongue solve |
+| `bSkipPerVertexSolve` ("Run Per Vertex Solve") | 364 | Slow, slightly better |
 | `MinDistance`, `MaxDistance` | 429, 433 | Only when stereo depth generation applies (`ShouldShowDepthParameters`, `:618`) |
-| Diagnostics: `bSkipDiagnostics` ("Compute Diagnostics"), `MinimumDepthMapFaceCoverage` 80 %, `MinimumDepthMapFaceWidth` 120 px, `MaximumStereoBaselineDifferenceFromIdentity` 10 %, `MaximumScaleDifferenceFromIdentity` 7.5 % | 450-466 | Results in `DepthMapDiagnosticResults` (`:538`) and `ScaleEstimate` (`:541`); `DiagnosticsIndicatesProcessingIssue(OutText)` (`:121`) summarises |
+| Diagnostics: `bSkipDiagnostics` ("Compute Diagnostics"), `MinimumDepthMapFaceCoverage` 80 %, `MinimumDepthMapFaceWidth` 120 px, `MaximumStereoBaselineDifferenceFromIdentity` 10 %, `MaximumScaleDifferenceFromIdentity` 7.5 % | 457-473 | Results in `DepthMapDiagnosticResults` (`:538`) and `ScaleEstimate` (`:541`); `DiagnosticsIndicatesProcessingIssue(OutText)` (`:121`) summarises |
 
 Note the inverted names: `bSkipPreview = false` means the preview pass *runs*; the display
 names ("Run Preview Pass", "Filter Animation", "Compute Diagnostics") are the truthful ones.
@@ -49,17 +49,17 @@ names ("Run Preview Pass", "Filter Animation", "Compute Diagnostics") are the tr
 
 | Property | Line | Notes |
 |---|---|---|
-| `bFaceTracking` | 314 | `BlueprintReadWrite`; face solve on/off |
-| `bBodyTracking` | 324 | `BlueprintSetter = SetBodyTracking` (`:534`); needs the body tracker modular feature (`IMetaHumanBodyTrackerInterface`) |
+| `bFaceTracking` | 315 | `BlueprintReadWrite`; face solve on/off |
+| `bBodyTracking` | 325 | `BlueprintSetter = SetBodyTracking` (`:534`); needs the body tracker modular feature (`IMetaHumanBodyTrackerInterface`) |
 | `bAutoBodyHeight`, `BodyHeight` | 329, 333 | cm; 145-190 recommended |
 | `BodyDetectionConfidence`, `BodyTrackingConfidence` | 340, 347 | Acquire / keep thresholds |
-| `bEnableFootLocking` | 352 | |
-| `MonocularAnimationPipelineModels` ("Facial Models") | 384 | `FMonocularAnimationPipelineModels` (`HyprsenseRealtimeNode.h`:59): `NNEBackend`, `FaceDetector`, `FaceHeadPoseTracker`, `FaceSolver` (NNE model data) |
+| `bEnableFootLocking` | 353 | |
+| `MonocularAnimationPipelineModels` ("Facial Models") | 391 | `FMonocularAnimationPipelineModels` (`HyprsenseRealtimeNode.h`:59): `NNEBackend`, `FaceDetector`, `FaceHeadPoseTracker`, `FaceSolver` (NNE model data) |
 | `FocalLength`, `EstimateFocalLength(OutError)` | 388, 629 | -1 until estimated; the estimate runs a short pipeline |
-| `bHeadStabilization` | 392 | |
+| `bHeadStabilization` | 399 | |
 | `HeadAllowedRotationLeftRight` 45°, `HeadAllowedRotationUpDown` 30° | 399, 406 | Frames beyond are unsolved |
-| `HeadRotationHandler` | 413 | `EFaceUnsolvedFrameBehavior` (`HyprsenseRealtimeNode.h`:42): `None` (gap, curves interpolate) or `NeutralPose` |
-| `MonoSmoothingParams` | 417 | `UMetaHumanRealtimeSmoothingParams` |
+| `HeadRotationHandler` | 420 | `EFaceUnsolvedFrameBehavior` (`HyprsenseRealtimeNode.h`:42): `None` (gap, curves interpolate) or `NeutralPose` |
+| `MonoSmoothingParams` | 424 | `UMetaHumanRealtimeSmoothingParams` |
 
 ### Audio (`Audio`) — see [audio-driven-animation.md](audio-driven-animation.md)
 
@@ -230,7 +230,7 @@ All paths under `Engine/Plugins/MetaHuman/MetaHumanAnimator/Source/`:
 - `MetaHumanPerformance/Public/MetaHumanPerformance.h`:504 — `StartPipeline`; `CancelPipeline` (507); `IsProcessing` (510); `CanProcess` (513); setters (517-558); outputs (580-605); `GetExportFrameRange` (610); `GetHeadMesh` (626); `GetAnimationCurveNames` (647); `GetCannotProcessTooltipText` (650); `EstimateFocalLength` (671); `CurrentlyProcessedPerformance` (752).
 - `MetaHumanPerformance/Private/MetaHumanPerformance.cpp`:1104 — `StartPipeline`; tracker loading (1346-1367); pipeline mode selection (2157-2175); `CanProcess` (2535-2658); `SetProcessingRange` (439); `LoadDefaultControlRig` (3572).
 - `MetaHumanPerformance/Public/MetaHumanPerformanceExportUtils.h`:20 — `EPerformanceExportRange`; `EPerformanceExportSkeleton` (27); `EBodyUnsolvedFrameBehavior` (36); `UMetaHumanPerformanceExportAnimationSettings` (48); `UMetaHumanPerformanceExportLevelSequenceSettings` (173); `UMetaHumanPerformanceExportUtils` (293); `ExportAnimationSequence` (310); `ExportLevelSequence` (314); bake helpers (317-323); `CanExport*` (325-332).
-- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:101 — head curve names; `GetExportAnimationSequenceSettings` (804); `GetExportLevelSequenceSettings` (865); head switch baking (1161).
+- `MetaHumanPerformance/Private/MetaHumanPerformanceExportUtils.cpp`:101 — head curve names; `GetExportAnimationSequenceSettings` (804); `GetExportLevelSequenceSettings` (853); head switch baking (1161).
 - `MetaHumanFaceAnimationSolver/Public/MetaHumanFaceAnimationSolver.h`:33 — `UMetaHumanFaceAnimationSolver`.
 - `MetaHumanFaceContourTracker/Public/MetaHumanFaceContourTrackerAsset.h`:23 — `UMetaHumanFaceContourTrackerAsset`.
 

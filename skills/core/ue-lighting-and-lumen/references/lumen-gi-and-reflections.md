@@ -59,29 +59,29 @@ the editor's checkbox does this automatically.
 
 | Field | Line | Default | Purpose |
 |---|---|---|---|
-| `LumenSceneLightingQuality` | 1783 | 1.0 | Fidelity of the Lumen scene cache; larger → better quality at higher GPU cost |
-| `LumenSceneDetail` | 1787 | 1.0 | Minimum instance size represented in Lumen scene; increase for small props |
-| `LumenSceneViewDistance` | 1791 | — | Max distance Lumen maintains for GI/sky shadowing |
-| `LumenSceneLightingUpdateSpeed` | 1795 | 1.0 | Propagation speed of lighting changes; higher = faster but more cost |
-| `LumenFinalGatherQuality` | 1799 | 1.0 | Sample count for the final gather; higher reduces noise |
-| `LumenFinalGatherLightingUpdateSpeed` | 1803 | 1.0 | How quickly final gather tracks lighting changes |
-| `LumenFinalGatherScreenTraces` | 1807 | on | Add screen-space traces to the final gather for extra detail |
-| `LumenMaxTraceDistance` | 1811 | — | Maximum ray length; too small → GI leaks into large enclosed spaces |
-| `LumenDiffuseColorBoost` | 1815 | 1.0 | Non-physical boost to indirect; useful for dark-material scenes |
-| `LumenSkylightLeaking` | 1823 | 0.0 | Fraction of skylight to bleed indoors (artistic, non-physical) |
-| `LumenSurfaceCacheResolution` | 1835 | 1.0 | Cache resolution scale for scene captures |
+| `LumenSceneLightingQuality` | 1787 | 1.0 | Fidelity of the Lumen scene cache; larger → better quality at higher GPU cost |
+| `LumenSceneDetail` | 1791 | 1.0 | Minimum instance size represented in Lumen scene; increase for small props |
+| `LumenSceneViewDistance` | 1795 | — | Max distance Lumen maintains for GI/sky shadowing |
+| `LumenSceneLightingUpdateSpeed` | 1799 | 1.0 | Propagation speed of lighting changes; higher = faster but more cost |
+| `LumenFinalGatherQuality` | 1803 | 1.0 | Sample count for the final gather; higher reduces noise |
+| `LumenFinalGatherLightingUpdateSpeed` | 1807 | 1.0 | How quickly final gather tracks lighting changes |
+| `LumenFinalGatherScreenTraces` | 1811 | on | Add screen-space traces to the final gather for extra detail |
+| `LumenMaxTraceDistance` | 1815 | — | Maximum ray length; too small → GI leaks into large enclosed spaces |
+| `LumenDiffuseColorBoost` | 1819 | 1.0 | Non-physical boost to indirect; useful for dark-material scenes |
+| `LumenSkylightLeaking` | 1827 | 0.0 | Fraction of skylight to bleed indoors (artistic, non-physical) |
+| `LumenSurfaceCacheResolution` | 1839 | 1.0 | Cache resolution scale for scene captures |
 
 ### Reflections category
 
 | Field | Line | Default | Purpose |
 |---|---|---|---|
-| `LumenReflectionQuality` | 1846 | 1.0 | Reflection ray sample count |
-| `LumenReflectionsScreenTraces` | 1850 | on | Screen-space refinement pass for reflections |
-| `LumenFrontLayerTranslucencyReflections` | 1854 | off | Mirror reflections on front translucency layer |
-| `LumenMaxRoughnessToTraceReflections` | 1858 | — | Max roughness for dedicated reflection rays; higher = glossy on rough surfaces but costly |
-| `LumenMaxReflectionBounces` | 1862 | 1 | Recursive reflection bounces (up to 8 in PPV, up to 64 via `r.Lumen.Reflections.MaxBounces`; requires HRT hit lighting) |
-| `LumenMaxRefractionBounces` | 1866 | 0 | Refraction ray bounces through translucency; >0 requires HRT hit lighting |
-| `LumenRayLightingMode` | 1779 | SurfaceCache | `SurfaceCache` (fast) or `HitLightingForReflections` (quality, requires HRT) |
+| `LumenReflectionQuality` | 1850 | 1.0 | Reflection ray sample count |
+| `LumenReflectionsScreenTraces` | 1854 | on | Screen-space refinement pass for reflections |
+| `LumenFrontLayerTranslucencyReflections` | 1858 | off | Mirror reflections on front translucency layer |
+| `LumenMaxRoughnessToTraceReflections` | 1862 | — | Max roughness for dedicated reflection rays; higher = glossy on rough surfaces but costly |
+| `LumenMaxReflectionBounces` | 1866 | 1 | Recursive reflection bounces (up to 8 in PPV, up to 64 via `r.Lumen.Reflections.MaxBounces`; requires HRT hit lighting) |
+| `LumenMaxRefractionBounces` | 1870 | 0 | Refraction ray bounces through translucency; >0 requires HRT hit lighting |
+| `LumenRayLightingMode` | 1783 | SurfaceCache | `SurfaceCache` (fast) or `HitLightingForReflections` (quality, requires HRT) |
 
 ## Sky light integration
 

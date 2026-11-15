@@ -25,9 +25,9 @@ Declared in `SWidget.h` (verified 5.8):
 
 | Virtual | Line | Purpose |
 |---|---|---|
-| `ComputeDesiredSize(float Scale)` | :774 | Return the widget's preferred size. Called during the layout prepass. |
-| `GetChildren()` | :899 | Return `FChildren*` — all direct child slots. Slate iterates this for layout and hit-testing. |
-| `OnPaint(...)` | :1771 | Emit draw elements into `FSlateWindowElementList`. Pure virtual on `SWidget`. |
+| `ComputeDesiredSize(float Scale)` | :777 | Return the widget's preferred size. Called during the layout prepass. |
+| `GetChildren()` | :902 | Return `FChildren*` — all direct child slots. Slate iterates this for layout and hit-testing. |
+| `OnPaint(...)` | :1772 | Emit draw elements into `FSlateWindowElementList`. Pure virtual on `SWidget`. |
 | `OnArrangeChildren(...)` | (SPanel) | Compute child positions given the allotted geometry. |
 
 `OnPaint` in `SWidget.h` is the *pure virtual*; the non-virtual public `SWidget::Paint()`

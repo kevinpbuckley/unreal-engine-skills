@@ -153,7 +153,7 @@ IPluginManager::Get().MountExplicitlyLoadedPlugin_FromFileName(
 |---|---|---|
 | `MountNewlyCreatedPlugin(Name)` | 548 | Enables, mounts content, and loads modules for a newly created plugin |
 | `MountExplicitlyLoadedPlugin(Name, Phase)` | 556 | Load an explicit-load plugin up to a given phase |
-| `UnmountExplicitlyLoadedPlugin(Name, Reason)` | 588 | Unmount; does not unload compiled modules |
+| `UnmountExplicitlyLoadedPlugin(Name, Reason)` | 604 | Unmount; does not unload compiled modules |
 | `RefreshPluginsList()` | 292 | Re-scan all plugin folders |
 | `AddPluginSearchPath(Path)` | 486 | Add an additional scan directory |
 

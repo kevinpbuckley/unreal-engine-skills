@@ -26,8 +26,8 @@ Running / Succeeded / Failed), **enter conditions** gate selection, **transition
 states on completion, tick, events or delegates, and **evaluators / global tasks** feed data.
 `ue-ai-and-navigation` covers the AI use (`UStateTreeAIComponent` on an AIController). This
 skill covers the rest: a tree that sequences a game's flow, screens and cutscenes, written as
-in a 48-hour UE 5.9 game-jam project (2026-11) whose whole case flow (title, cold open, three
-investigation reels, accusation, two endings) ran on one `UStateTreeComponent`.
+in a 48-hour UE 5.9 game-jam project (2026-11) whose whole game flow (title, intro, three
+chapters, a final choice, two endings) ran on one `UStateTreeComponent`.
 
 ## When to use this skill
 
@@ -205,13 +205,13 @@ Run it with `FStateTreeExecutionContext Exec(*Owner, *Tree, InstanceData)` then 
 ```
 Flow
   Start           Start Run (resumes a loaded save)
-                    [Beat Is Reel]  -> Investigate ; [Beat Is Ending] -> Verdict ; else -> ColdOpen
-  ColdOpen        Enter Beat(ColdOpen, LS_ColdOpen)        -> Reels
-  Reels           Show Screen(WBP_HUD)                     (parent: up once for all children)
-    Reel1         Enter Beat(Reel1)                        -> Investigate
-    Investigate   Wait For Player Action
-                    [Cut Called] -> Verdict ; [Beat Is Reel2, opener pending] -> Reel2 ; else -> Investigate
-  Verdict
+                    [Beat Is Chapter] -> Play ; [Beat Is Ending] -> Ending ; else -> Intro
+  Intro           Enter Beat(Intro, LS_Intro)              -> Chapters
+  Chapters        Show Screen(WBP_HUD)                     (parent: up once for all children)
+    Chapter1      Enter Beat(Chapter1)                     -> Play
+    Play          Wait For Player Action
+                    [Final Choice Made] -> Ending ; [Beat Is Chapter2, opener pending] -> Chapter2 ; else -> Play
+  Ending
     Win    enter [Result Win]   Enter Beat(Ending, LS_Win)  -> Succeeded
     Lose   enter [Result Lose]  Enter Beat(Ending, LS_Lose) -> Failed
 ```
@@ -267,7 +267,7 @@ Flow
                 % (target_state.get_editor_property("id").to_string(),
                    unreal.GuidLibrary.new_guid().to_string()))   # not unreal.Guid(): that is all zeros
   ts = list(state.get_editor_property("transitions")); ts.append(t)
-  state.set_editor_property("transitions", ts)                  # a new list: arrays come back as copies
+  state.set_editor_property("transitions", ts)                  # write a new list back
   ```
 
   Then mark the asset modified and compile it. Transition conditions were added with a third-party
@@ -302,13 +302,16 @@ what to assert: [references/build-and-test-in-code.md](references/build-and-test
 
 ## Unverified
 
-- The exact array write-back above (`set_editor_property("transitions", ...)`) and
-  `unreal.GuidLibrary.new_guid()`: the jam notes record the `import_text` form only.
+- The array write-back above (`set_editor_property("transitions", ...)`): the jam notes record the
+  `import_text` form only. In a headless 5.9 editor that `import_text` call returned `True` and the
+  transition exported back with the trigger, target and IDs set, `unreal.GuidLibrary.new_guid()`
+  returned a non-zero guid and `unreal.Guid()` all zeros; writing the array into a real state and
+  compiling was not run.
 - Adding transition conditions from Python with engine API only (`UStateTreeState` has
   `AddEnterCondition` as a `UFUNCTION`, transitions have no equivalent; the jam used a third-party
   plugin).
-- `unreal.StateTreeEditorData.get_editor_data(tree)` from a plain script: read in the header and in
-  Epic's toolset source, not run in the jam.
+- `unreal.StateTreeEditorData.get_editor_data(tree)` from a plain script: the function exists in
+  5.9 Python (checked in a headless editor) and Epic's toolset calls it; it was not called on a tree.
 - Whether `set_state_tree()` is also fatal on a placed (non-template) component in the editor world.
 
 ## References & source material

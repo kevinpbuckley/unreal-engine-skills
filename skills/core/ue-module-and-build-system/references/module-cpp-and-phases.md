@@ -14,12 +14,12 @@ hooks:
 
 | Method | Line | When called |
 |---|---|---|
-| `StartupModule()` | 49 | Immediately after the module DLL is loaded and the module object is constructed. |
-| `PreUnloadCallback()` | 59 | Called before the module is unloaded; runs before `ShutdownModule`. |
-| `ShutdownModule()` | 79 | Just before the module object is destroyed. Guaranteed to be called in reverse startup order when modules list each other in `StartupModule`. |
-| `PostLoadCallback()` | 68 | Called after the module has been reloaded (hot-reload / Live Coding). |
-| `SupportsDynamicReloading()` | 88 | Return `false` to prevent dynamic unloading of this module. |
-| `IsGameModule()` | 108 | Return `true` if this module hosts gameplay code (set automatically by `FDefaultGameModuleImpl`). |
+| `StartupModule()` | 50 | Immediately after the module DLL is loaded and the module object is constructed. |
+| `PreUnloadCallback()` | 60 | Called before the module is unloaded; runs before `ShutdownModule`. |
+| `ShutdownModule()` | 80 | Just before the module object is destroyed. Guaranteed to be called in reverse startup order when modules list each other in `StartupModule`. |
+| `PostLoadCallback()` | 69 | Called after the module has been reloaded (hot-reload / Live Coding). |
+| `SupportsDynamicReloading()` | 89 | Return `false` to prevent dynamic unloading of this module. |
+| `IsGameModule()` | 109 | Return `true` if this module hosts gameplay code (set automatically by `FDefaultGameModuleImpl`). |
 
 All methods have empty default implementations, so you only override what you need.
 
@@ -100,8 +100,8 @@ void FMyModule::ShutdownModule()
 
 | Macro | Line | Use |
 |---|---|---|
-| `IMPLEMENT_MODULE(Impl, Name)` | 946 | Standard modules and plugin modules. |
-| `IMPLEMENT_PRIMARY_GAME_MODULE(Impl, Name, GameName)` | 1100 | The one module whose name matches the `.uproject`. Sets `GInternalProjectName` in monolithic builds. In modular builds it is equivalent to `IMPLEMENT_MODULE`. |
+| `IMPLEMENT_MODULE(Impl, Name)` | 960 | Standard modules and plugin modules. |
+| `IMPLEMENT_PRIMARY_GAME_MODULE(Impl, Name, GameName)` | 1114 | The one module whose name matches the `.uproject`. Sets `GInternalProjectName` in monolithic builds. In modular builds it is equivalent to `IMPLEMENT_MODULE`. |
 
 There must be exactly one call per module `.cpp` translation unit. Placing it in a `.h` or
 calling it twice in the same module → linker error.

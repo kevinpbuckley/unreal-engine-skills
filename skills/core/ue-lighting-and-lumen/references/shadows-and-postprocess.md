@@ -91,12 +91,12 @@ a supplement, not a replacement for standard shadow maps.
 
 | Field | Line | Notes |
 |---|---|---|
-| `AutoExposureMethod` | 1491 | `AEM_Histogram` (default), `AEM_Basic`, `AEM_Manual` |
-| `AutoExposureBias` | 1933 | EV100 offset applied on top of the metering result |
-| `AutoExposureMinBrightness` | 1994 | Clamp floor for histogram (cd/m² or EV100) |
-| `AutoExposureMaxBrightness` | 2002 | Clamp ceiling for histogram |
-| `AutoExposureLowPercent` | 1976 | % of pixels excluded from the dark side of the histogram |
-| `AutoExposureHighPercent` | 1986 | % of pixels excluded from the bright side |
+| `AutoExposureMethod` | 1495 | `AEM_Histogram` (default), `AEM_Basic`, `AEM_Manual` |
+| `AutoExposureBias` | 1937 | EV100 offset applied on top of the metering result |
+| `AutoExposureMinBrightness` | 1998 | Clamp floor for histogram (cd/m² or EV100) |
+| `AutoExposureMaxBrightness` | 2006 | Clamp ceiling for histogram |
+| `AutoExposureLowPercent` | 1980 | % of pixels excluded from the dark side of the histogram |
+| `AutoExposureHighPercent` | 1990 | % of pixels excluded from the bright side |
 
 ### Manual exposure
 

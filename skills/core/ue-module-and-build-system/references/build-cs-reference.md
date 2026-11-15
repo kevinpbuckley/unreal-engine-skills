@@ -22,8 +22,8 @@ The `Target` parameter exposes platform, configuration, and target-type queries 
 
 | Property | Line | Purpose |
 |---|---|---|
-| `PublicDependencyModuleNames` | 1259 | Types from these modules appear in your public headers. Consumers of your module inherit these includes automatically. |
-| `PrivateDependencyModuleNames` | 1270 | Used only in `.cpp`/private headers. Not inherited by consuming modules. Prefer private to keep the public API surface lean. |
+| `PublicDependencyModuleNames` | 1286 | Types from these modules appear in your public headers. Consumers of your module inherit these includes automatically. |
+| `PrivateDependencyModuleNames` | 1297 | Used only in `.cpp`/private headers. Not inherited by consuming modules. Prefer private to keep the public API surface lean. |
 | `PublicIncludePathModuleNames` | (ModuleRules.cs) | Adds include paths from another module without linking — for forward-declaration-only includes. |
 | `PrivateIncludePathModuleNames` | (ModuleRules.cs) | Same as above, private scope. |
 | `DynamicallyLoadedModuleNames` | (ModuleRules.cs) | Modules this module may load at runtime via `FModuleManager`; not linked at compile time. |

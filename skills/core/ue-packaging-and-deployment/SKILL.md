@@ -291,7 +291,7 @@ Engine source (UE 5.9):
   `Engine/Source/Programs/AutomationTool/Scripts/BuildCookRun.Automation.cs`:24.
 - IoStore container format (`EIoStoreTocVersion`, `FIoStoreTocHeader`) —
   `Engine/Source/Runtime/Core/Internal/IO/IoStore.h`:25.
-- IoStore On-Demand (`IOnDemandIoStore`:647, `FOnDemandRequest`:46) —
+- IoStore On-Demand (`IOnDemandIoStore`:678, `FOnDemandRequest`:46) —
   `Engine/Source/Runtime/Experimental/IoStore/OnDemandCore/Public/IO/IoStoreOnDemand.h`.
 - `WITH_EDITOR`, `WITH_EDITORONLY_DATA` preprocessor guards —
   `Engine/Source/Runtime/Core/Public/Misc/Build.h`:66.

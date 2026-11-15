@@ -126,10 +126,10 @@ On `UStaticMeshComponent` (`StaticMeshComponent.h`):
 
 | Field | Line | Effect |
 |---|---|---|
-| `bDisallowNanite` | :166 | Force fallback for this instance |
-| `bForceNaniteForMasked` | :162 | Allow Nanite even for masked materials when project setting disables it |
-| `WorldPositionOffsetDisableDistance` | :158 | Stop WPO evaluation beyond screen distance (0 = always on) |
-| `bEvaluateWorldPositionOffset` | :176 | Per-instance WPO toggle |
+| `bDisallowNanite` | :169 | Force fallback for this instance |
+| `bForceNaniteForMasked` | :165 | Allow Nanite even for masked materials when project setting disables it |
+| `WorldPositionOffsetDisableDistance` | :161 | Stop WPO evaluation beyond screen distance (0 = always on) |
+| `bEvaluateWorldPositionOffset` | :179 | Per-instance WPO toggle |
 
 ## Common diagnostics
 

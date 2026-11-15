@@ -38,12 +38,12 @@ You rarely override `LinkType` for game targets.
 
 | Property | Line | Notes |
 |---|---|---|
-| `Type` | 734 | `TargetType` value — set this first. |
-| `DefaultBuildSettings` | 740 | `BuildSettingsVersion` — controls which default flags UBT applies. Use `V7` for UE 5.8 projects. |
+| `Type` | 765 | `TargetType` value — set this first. |
+| `DefaultBuildSettings` | 771 | `BuildSettingsVersion` — controls which default flags UBT applies. Use `V7` for UE 5.8 projects. |
 | `IncludeOrderVersion` | 188 (`EngineIncludeOrderVersion` enum) | Sets which set of deprecated include guards to enable. Use `Latest` (= `Unreal5_8`) for new code. |
-| `ExtraModuleNames` | 2819 | Module names compiled into this target beyond the engine defaults. Add your primary game module here. |
-| `bBuildEditor` | 1179 | True for `TargetType.Editor`. Read-only; use `if (Target.bBuildEditor)` in `Build.cs`. |
-| `bCompileAgainstEditor` | 1395 | True for Editor targets; can be set for Program targets that need editor code. |
+| `ExtraModuleNames` | 2944 | Module names compiled into this target beyond the engine defaults. Add your primary game module here. |
+| `bBuildEditor` | 1230 | True for `TargetType.Editor`. Read-only; use `if (Target.bBuildEditor)` in `Build.cs`. |
+| `bCompileAgainstEditor` | 1462 | True for Editor targets; can be set for Program targets that need editor code. |
 
 ## Minimal Target.cs pair
 

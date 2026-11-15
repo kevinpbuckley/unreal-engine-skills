@@ -210,10 +210,10 @@ Content-browser asset operations (the preferred replacement for `UEditorAssetLib
 ```cpp
 UEditorAssetSubsystem* EAS = GEditor->GetEditorSubsystem<UEditorAssetSubsystem>();
 UObject* Loaded = EAS->LoadAsset("/Game/MyFolder/MyAsset"); // :54
-EAS->SaveAsset("/Game/MyFolder/MyAsset");                   // :296
-EAS->DuplicateAsset("/Game/Src", "/Game/Dst");              // :185
-EAS->RenameAsset("/Game/Src", "/Game/Dst");                 // :215
-EAS->DeleteAsset("/Game/MyFolder/MyAsset");                 // :155
+EAS->SaveAsset("/Game/MyFolder/MyAsset");                   // :308
+EAS->DuplicateAsset("/Game/Src", "/Game/Dst");              // :197
+EAS->RenameAsset("/Game/Src", "/Game/Dst");                 // :227
+EAS->DeleteAsset("/Game/MyFolder/MyAsset");                 // :167
 ```
 
 ### `ULevelEditorSubsystem` (`Editor/LevelEditor/Public/LevelEditorSubsystem.h:54`)
@@ -340,7 +340,7 @@ Engine source (UE 5.9):
 
 **Editor subsystems** (`Engine/Source/Editor/UnrealEd/Public/Subsystems/`):
 - `EditorActorSubsystem.h` — `UEditorActorSubsystem`:49, `GetAllLevelActors`:166, `SpawnActorFromClass`:228, `DestroyActor`:236
-- `EditorAssetSubsystem.h` — `UEditorAssetSubsystem`:38, `LoadAsset`:54, `SaveAsset`:296, `DuplicateAsset`:185, `RenameAsset`:215, `DeleteAsset`:155
+- `EditorAssetSubsystem.h` — `UEditorAssetSubsystem`:38, `LoadAsset`:54, `SaveAsset`:308, `DuplicateAsset`:197, `RenameAsset`:227, `DeleteAsset`:167
 - `AssetEditorSubsystem.h` — `UAssetEditorSubsystem`:112
 - `UnrealEditorSubsystem.h` — `UUnrealEditorSubsystem`:17, `GetLevelViewportCameraInfo`:32
 

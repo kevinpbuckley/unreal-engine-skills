@@ -150,15 +150,16 @@ Errors you will meet:
 |---|---|
 | `... has no attribute ...`, `Failed to find property ...` | Not reflected, not script-exposed, or a guessed name. A value may be a property, not a getter (`obj.get_editor_property("duration")`, not `obj.get_duration()`). Check `dir()` / `get_symbol`. |
 | `Property 'X' for attribute 'x' on 'Y' is protected and cannot be read` | A protected C++ property (common for `BindWidget` members and component pointers). Find a public accessor or a `BlueprintCallable` getter; you cannot reach it from Python. The editor-mode check is in `Private/PyUtil.cpp`. |
-| `Cannot set 'x' on a temporary value as the change would be lost` | You assigned a field of a struct you got out of a container or a property, which is a copy. Use the 5.9 editors below, or copy, edit and write the whole value back. |
+| `Cannot set 'x' on a temporary value as the change would be lost` | You assigned a field of a temporary struct: an element read out of an array, map or set (`arr[0].x = 1`), or the value of an optional (`Private/PyWrapperStruct.cpp`). Use the 5.9 editors below, or copy, edit and write the whole value back. A struct property read from an object does not raise: a field written on it in place reaches the object but sends no change notification (seen in a 5.9 headless run), so write the struct back with `set_editor_property` when the owner must react. |
 
 ### Editing struct and container values in place (UE 5.9)
 
 5.9 adds context-manager editors that copy a value, let you edit it, and write it back with
 the right notifications when the `with` block exits without raising
 (`Private/PyWrapperElementEditor.h`, used by `PyWrapperObject.cpp`, `PyWrapperStruct.cpp`,
-`PyWrapperArray.cpp`, `PyWrapperMap.cpp`). Read in the 5.9 source, not run by this skill's
-author:
+`PyWrapperArray.cpp`, `PyWrapperMap.cpp`). The object form (`edit_property`) was run in a
+headless 5.9 editor and the value read back; the array and map forms were read in the source,
+not run:
 
 ```python
 # a struct property of an object
@@ -196,8 +197,8 @@ nothing because the set sees no change. Build a new list, as above.
 
 ## Enums
 
-- Exposed entries are `UPPER_SNAKE_CASE`: `unreal.MyEnum.MAIN_SET`. A value prints as
-  `<MyEnum.MAIN_SET: 3>`; an entry has read-only `.name` and `.value` attributes
+- Exposed entries are `UPPER_SNAKE_CASE`: `unreal.MyEnum.MAIN_MENU`. A value prints as
+  `<MyEnum.MAIN_MENU: 3>`; an entry has read-only `.name` and `.value` attributes
   (`Private/PyWrapperEnum.cpp`).
 - **Entries marked `UMETA(Hidden)` are not exported** (`IsScriptExposedEnumEntry`,
   `Private/PyGenUtil.cpp`). Typical victims are `None`, `Invalid` and `MAX` sentinels. You
