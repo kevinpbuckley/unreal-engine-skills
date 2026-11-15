@@ -9,7 +9,7 @@ description: Manage UObject lifetime and plain C++ memory in Unreal Engine. Cove
   investigating dangling pointer or use-after-free bugs, holding UObjects from non-UObject
   classes, or picking between TSharedPtr and TUniquePtr for plain C++ objects.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -127,7 +127,7 @@ if (Pinned)
 }
 ```
 
-`IsValid` is declared in `Runtime/CoreUObject/Public/UObject/Object.h`:1886.
+`IsValid` is declared in `Runtime/CoreUObject/Public/UObject/Object.h`:1891.
 `TWeakObjectPtr` resolves to null automatically after the target is collected — unlike a raw
 pointer, which becomes a dangling address.
 
@@ -158,7 +158,7 @@ TStrongObjectPtr<UMyData> Held(NewObject<UMyData>());
 ```
 
 `FGCObject` is declared in
-`Runtime/CoreUObject/Public/UObject/GCObject.h`:127.
+`Runtime/CoreUObject/Public/UObject/GCObject.h`:128.
 `TStrongObjectPtr` is declared in
 `Runtime/Core/Public/UObject/StrongObjectPtrTemplates.h`:25.
 
@@ -167,7 +167,7 @@ inside a UObject without `UPROPERTY` creates cycles that the GC cannot collect. 
 genuinely non-UObject owners (subsystem helpers, RAII guards, test fixtures).
 
 `FGCObject` instances are **not trivially relocatable** — don't put them in `TArray` by value.
-See the `TIsTriviallyRelocatable` specialization in `GCObject.h`:226.
+See the `TIsTriviallyRelocatable` specialization in `GCObject.h`:227.
 
 ## Creating, destroying, and the root set
 
@@ -194,10 +194,10 @@ MyActor->Destroy();
 `Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h`:231, 237, 207.
 
 `NewObject` overloads are declared in
-`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:1931.
+`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:1936.
 
 `CollectGarbage` / `TryCollectGarbage` (force a GC pass) are declared in
-`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:952.
+`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:953.
 
 ## Non-UObject memory — plain C++ smart pointers
 
@@ -262,17 +262,17 @@ Full smart-pointer guide with thread-safety notes and `TSharedFromThis`:
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/CoreUObject/Public/UObject/ObjectPtr.h` — `TObjectPtr<T>` / `FObjectPtr`.
 - `Runtime/CoreUObject/Public/UObject/WeakObjectPtr.h` — `TWeakObjectPtr<T>`, `FWeakObjectPtr`.
 - `Runtime/Core/Public/UObject/StrongObjectPtrTemplates.h` — `TStrongObjectPtr<T>`:25.
-- `Runtime/CoreUObject/Public/UObject/GCObject.h` — `FGCObject`:127,
-  `AddReferencedObjects`:195, `GetReferencerName`:198.
+- `Runtime/CoreUObject/Public/UObject/GCObject.h` — `FGCObject`:128,
+  `AddReferencedObjects`:196, `GetReferencerName`:199.
 - `Runtime/CoreUObject/Public/UObject/UObjectBaseUtility.h` — `MarkAsGarbage`:207,
   `AddToRoot`:231, `RemoveFromRoot`:237.
-- `Runtime/CoreUObject/Public/UObject/Object.h` — `IsValid`:1886.
-- `Runtime/CoreUObject/Public/UObject/UObjectGlobals.h` — `NewObject`:1931,
-  `CollectGarbage`:952, `TryCollectGarbage`:962.
+- `Runtime/CoreUObject/Public/UObject/Object.h` — `IsValid`:1891.
+- `Runtime/CoreUObject/Public/UObject/UObjectGlobals.h` — `NewObject`:1936,
+  `CollectGarbage`:953, `TryCollectGarbage`:963.
 - `Runtime/CoreUObject/Public/UObject/SoftObjectPtr.h` — `TSoftObjectPtr<T>`.
 - `Runtime/CoreUObject/Public/UObject/GarbageCollection.h` — GC internals, `CollectGarbage` flags.
 - `Runtime/Core/Public/Templates/SharedPointer.h` — `TSharedPtr`/`TSharedRef`/`TWeakPtr`.

@@ -10,7 +10,7 @@ naming conventions, and the `UAsyncActionHandleSaveGame` Blueprint async node. G
 
 When you call `SaveGameToSlot`, the chain is:
 
-1. `UGameplayStatics::SaveGameToSlot` (GameplayStatics.h:1167) serializes the `USaveGame` object
+1. `UGameplayStatics::SaveGameToSlot` (GameplayStatics.h:1116) serializes the `USaveGame` object
    into a `TArray<uint8>` using tagged property serialization (FObjectAndNameAsStringProxyArchive
    is **not** used here — all non-transient UPROPERTYs are written).
 2. The byte array is handed to `ISaveGameSystem::SaveGame` (SaveGameSystem.h:52).

@@ -5,7 +5,7 @@ title: Enhanced Input move/look/jump bindings in C++
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch`, wire third-person
+In an Unreal Engine 5.9 C++ project module named `EvalScratch`, wire third-person
 character controls with Enhanced Input entirely from C++: WASD movement, mouse look,
 and jump. Input assets (actions and the mapping context) are assigned by a designer in
 the Blueprint subclass; the C++ adds the mapping context at the right moment and binds

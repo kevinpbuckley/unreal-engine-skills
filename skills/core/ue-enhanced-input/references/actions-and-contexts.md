@@ -68,7 +68,7 @@ Processing pipeline for one key press:
 5. Action-level `Triggers[]` evaluated.
 6. Resulting `FInputActionValue` and `ETriggerEvent` delivered to bound handlers.
 
-Source: `EnhancedActionKeyMapping.h`:83–90 (mapping modifiers applied before action modifiers).
+Source: `EnhancedActionKeyMapping.h`:91–98 (mapping modifiers applied before action modifiers).
 
 ## Priority and context switching
 
@@ -135,7 +135,7 @@ the `FEnhancedActionKeyMapping` (set `SettingBehavior = OverrideSettings`) or on
 `UEnhancedInputDeveloperSettings::bEnableUserSettings`) manages per-user remapping and
 persistence.
 
-Source: `EnhancedActionKeyMapping.h`:120–132; `InputAction.h`:153.
+Source: `EnhancedActionKeyMapping.h`:134–146; `InputAction.h`:153.
 
 ## FInputActionInstance
 

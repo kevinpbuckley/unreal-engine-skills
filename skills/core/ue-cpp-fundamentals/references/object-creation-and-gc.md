@@ -16,16 +16,16 @@ Three key overloads (`UObjectGlobals.h`):
 
 ```cpp
 // Simplest: auto-generated name, transient package as outer
-T* NewObject<T>(UObject* Outer = GetTransientPackageAsObject())   // line 1959
+T* NewObject<T>(UObject* Outer = GetTransientPackageAsObject())   // line 1964
 
 // Explicit class (useful when the class is chosen at runtime)
 T* NewObject<T>(UObject* Outer, const UClass* Class,
                 FName Name = NAME_None, EObjectFlags Flags = RF_NoFlags,
-                UObject* Template = nullptr, ...)                  // line 1931
+                UObject* Template = nullptr, ...)                  // line 1936
 
 // Named, with flags
 T* NewObject<T>(UObject* Outer, FName Name,
-                EObjectFlags Flags = RF_NoFlags, ...)              // line 1974
+                EObjectFlags Flags = RF_NoFlags, ...)              // line 1979
 ```
 
 **Outer**: sets the object's position in the outer chain (its logical parent/package). Use `this`
@@ -49,7 +49,7 @@ Most runtime-created objects should use `RF_NoFlags` (the default) and be kept a
 
 ## CreateDefaultSubobject — constructor-only subobjects
 
-`CreateDefaultSubobject<T>(FName)` (`Object.h`:151) is exclusively for constructors. It:
+`CreateDefaultSubobject<T>(FName)` (`Object.h`:153) is exclusively for constructors. It:
 - Creates the subobject as a default subobject of the class being constructed.
 - Registers the subobject's CDO under the outer class's CDO.
 - Ensures every spawned instance of the outer gets its own copy.
@@ -65,7 +65,7 @@ AMyActor::AMyActor()
 }
 ```
 
-Using `NewObject` inside a constructor fires the assertion at `UObjectGlobals.h`:1936. Using
+Using `NewObject` inside a constructor fires the assertion at `UObjectGlobals.h`:1941. Using
 `CreateDefaultSubobject` outside a constructor is also undefined behavior.
 
 ## Keeping UObjects alive outside UPROPERTY

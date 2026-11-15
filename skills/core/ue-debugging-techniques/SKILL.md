@@ -9,7 +9,8 @@ description: Debug Unreal C++ and gameplay code — native debugger usage (VS/Ri
   world, reproducing intermittent or AI bugs with timeline replay, stepping through a crash, or
   adding in-game debug overlays to a custom system.
 metadata:
-  engine-version: "5.8"
+  aliases: "debugging, debugger, Gameplay Debugger, Visual Logger, crash, breakpoint"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -165,9 +166,9 @@ builds). The macros short-circuit on `FVisualLogger::IsRecording()` so there is 
 when the Visual Logger is inactive. `UE_VLOG_UELOG` emits to both the Visual Logger and the
 standard output log simultaneously.
 
-Source: `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — macro block starts at line 43;
-`FVisualLogger` class at line 223; `SetIsRecording`:581, `IsRecording` (static inline):575,
-`SetIsRecordingToFile`:693, `FVisualLogger::Get()`:567.
+Source: `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — macro block starts at line 71;
+`FVisualLogger` class at line 294; `SetIsRecording`:844, `IsRecording` (static inline):838,
+`SetIsRecordingToFile`:998, `FVisualLogger::Get()`:830.
 
 Full macro catalog, redirection, and file recording:
 [references/visual-logger.md](references/visual-logger.md).
@@ -346,7 +347,7 @@ Perf regression (fps/ms)        → ue-profiling-and-optimization
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Public/DrawDebugHelpers.h` — `DrawDebugLine`:22, `DrawDebugPoint`:24,
   `DrawDebugSphere`:45, `DrawDebugBox`:28, `DrawDebugCapsule`:57, `DrawDebugString`:52,
   `DrawDebugDirectionalArrow`:26, `DrawDebugCone`:49, `DrawDebugSolidBox`:68;
@@ -354,9 +355,9 @@ Engine source (UE 5.8, under `Engine/Source/`):
 - `Runtime/Engine/Classes/Engine/Engine.h` — `AddOnScreenDebugMessage` (uint64):2197,
   `AddOnScreenDebugMessage` (int32):2200, `ClearOnScreenDebugMessages`:2206,
   `RemoveOnScreenDebugMessage`:2209.
-- `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — `UE_VLOG` macro:43,
-  `UE_VLOG_LOCATION`:55, `UE_VLOG_SEGMENT`:49, `UE_VLOG_SPHERE`:58, `UE_VLOG_UELOG`:46;
-  `FVisualLogger`:223, `SetIsRecording`:581, `IsRecording`:575, `FVisualLogger::Get()`:567.
+- `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — `UE_VLOG` macro:71,
+  `UE_VLOG_LOCATION`:104, `UE_VLOG_SEGMENT`:98, `UE_VLOG_SPHERE`:113, `UE_VLOG_UELOG`:74;
+  `FVisualLogger`:294, `SetIsRecording`:844, `IsRecording`:838, `FVisualLogger::Get()`:830.
 - `Runtime/GameplayDebugger/Public/GameplayDebugger.h` — `IGameplayDebugger`:50,
   `RegisterCategory`:78, `UnregisterCategory`:79, `NotifyCategoriesChanged`:80.
 - `Runtime/GameplayDebugger/Public/GameplayDebuggerCategory.h` — `FGameplayDebuggerCategory`:48,

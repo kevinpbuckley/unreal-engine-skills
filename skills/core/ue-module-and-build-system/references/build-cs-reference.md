@@ -1,7 +1,7 @@
 # Build.cs (ModuleRules) Reference
 
 Grounded in UE 5.8 engine source:
-`E:\Program Files\Epic Games\UE_5.8\Engine\Source\Programs\UnrealBuildTool\Configuration\Rules\ModuleRules.cs`
+`C:\Program Files\Epic Games\UE_5.9\Engine\Source\Programs\UnrealBuildTool\Configuration\Rules\ModuleRules.cs`
 
 See also: [../SKILL.md](../SKILL.md)
 
@@ -36,7 +36,7 @@ Decision rule: if you forward-declare a type in your header and only use the ful
 
 | Property | Values | Notes |
 |---|---|---|
-| `PCHUsage` | `PCHUsageMode` enum (line 195) | Controls precompiled header sharing. |
+| `PCHUsage` | `PCHUsageMode` enum (line 212) | Controls precompiled header sharing. |
 | `UseExplicitOrSharedPCHs` | (recommended) | Enables IWYU compliance. Each `.cpp` must include its matching `.h` first. A private `PrivatePCHHeaderFile` generates an explicit PCH; otherwise shares one. |
 | `UseSharedPCHs` | (legacy) | Allows monolithic-style shared PCHs. Not IWYU-safe for new code. |
 | `NoPCHs` | (rare) | Disable all PCHs for this module. Slow but guarantees isolated compilation. |
@@ -96,7 +96,7 @@ Key properties:
 ## Module type
 
 `Type = ModuleType.CPlusPlus` (default) or `ModuleType.External` (third-party without source).
-Set in `ModuleRules.cs`:110. For plugin-hosted external modules, set this in your plugin's
+Set in `ModuleRules.cs`:127. For plugin-hosted external modules, set this in your plugin's
 `Build.cs` rather than its descriptor; the descriptor's `"Type"` is the host type, not the
 module type.
 
@@ -131,14 +131,14 @@ rather than shipping separate files.
 
 ## Source references
 
-- `ModuleRules.cs`:105 — `public partial class ModuleRules`
-- `ModuleRules.cs`:110 — `public enum ModuleType`
-- `ModuleRules.cs`:195 — `public enum PCHUsageMode`
-- `ModuleRules.cs`:1259 — `PublicDependencyModuleNames`
-- `ModuleRules.cs`:1270 — `PrivateDependencyModuleNames`
+- `ModuleRules.cs`:122 — `public partial class ModuleRules`
+- `ModuleRules.cs`:127 — `public enum ModuleType`
+- `ModuleRules.cs`:212 — `public enum PCHUsageMode`
+- `ModuleRules.cs`:1286 — `PublicDependencyModuleNames`
+- `ModuleRules.cs`:1297 — `PrivateDependencyModuleNames`
 
 All paths under:
-`E:\Program Files\Epic Games\UE_5.8\Engine\Source\Programs\UnrealBuildTool\Configuration\Rules\`
+`C:\Program Files\Epic Games\UE_5.9\Engine\Source\Programs\UnrealBuildTool\Configuration\Rules\`
 
 Official docs:
 - Module Properties — <https://dev.epicgames.com/documentation/unreal-engine/module-properties-in-unreal-engine>

@@ -70,7 +70,7 @@ Configured via `InstancingPolicy` (`UPROPERTY(EditDefaultsOnly)`) on the ability
 For multiplayer abilities that need replicated variables or RPCs inside the ability, use
 `InstancedPerActor` with `ReplicationPolicy` set to replicate.
 
-`EGameplayAbilityInstancingPolicy` defined in `Abilities/GameplayAbilityTypes.h:37`.
+`EGameplayAbilityInstancingPolicy` defined in `Abilities/GameplayAbilityTypes.h:38`.
 
 ## Net execution policy
 
@@ -83,7 +83,7 @@ Configured via `NetExecutionPolicy` (`UPROPERTY(EditDefaultsOnly)`):
 | `ServerInitiated` | Server triggers, propagates to clients; client sees a delay |
 | `ServerOnly` | Runs only on server; cosmetic output replicates normally |
 
-`EGameplayAbilityNetExecutionPolicy` defined in `Abilities/GameplayAbilityTypes.h:59`.
+`EGameplayAbilityNetExecutionPolicy` defined in `Abilities/GameplayAbilityTypes.h:60`.
 
 ## Tag gating
 

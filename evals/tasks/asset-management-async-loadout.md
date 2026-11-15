@@ -5,7 +5,7 @@ title: Async-load a weapon loadout from soft references
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch`, implement a loadout
+In an Unreal Engine 5.9 C++ project module named `EvalScratch`, implement a loadout
 component that references a list of weapon definitions without keeping them in memory:
 designers assign the list in the editor, nothing loads at construction or BeginPlay,
 and `EquipWeapon(int32 Index)` asynchronously loads the entry, then spawns/attaches it

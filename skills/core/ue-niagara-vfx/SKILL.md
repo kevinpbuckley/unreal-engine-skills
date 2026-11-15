@@ -11,7 +11,8 @@ description: Create and control visual effects using Unreal's Niagara system —
   or sockets, driving an effect from gameplay parameters, choosing CPU vs GPU emitters, or
   migrating from Cascade (deprecated).
 metadata:
-  engine-version: "5.8"
+  aliases: "VFX, particles, particle system, Niagara, effects, emitter"
+  engine-version: "5.9"
   category: vfx-audio
 ---
 
@@ -226,12 +227,12 @@ for rare or once-per-level effects.
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Plugins/FX/Niagara/Source/Niagara/`):
-- `Public/NiagaraComponent.h` — `UNiagaraComponent`: `Activate`:226, `Deactivate`:227,
-  `SetFloatParameter`:72, `SetColorParameter`:74, `SetVectorParameter`:73, `SetActorParameter`:75,
-  `SetVariableFloat`:533, `SetVariableVec3`:506, `SetVariableActor`:558,
-  `SetVariableBool`:551, `SetVariableInt`:542, `OnSystemFinished`:754, `bAutoDestroy`:176,
-  `SetAsset`:295, `SetEmitterEnable`:78.
+Engine source (UE 5.9, `Engine/Plugins/FX/Niagara/Source/Niagara/`):
+- `Public/NiagaraComponent.h` — `UNiagaraComponent`: `Activate`:229, `Deactivate`:230,
+  `SetFloatParameter`:71, `SetColorParameter`:73, `SetVectorParameter`:72, `SetActorParameter`:74,
+  `SetVariableFloat`:538, `SetVariableVec3`:511, `SetVariableActor`:563,
+  `SetVariableBool`:556, `SetVariableInt`:547, `OnSystemFinished`:759, `bAutoDestroy`:179,
+  `SetAsset`:299, `SetEmitterEnable`:77.
 - `Classes/NiagaraSystem.h` — `UNiagaraSystem` (derives `UFXSystemAsset`):238,
   `GetExposedParameters`:368, `GetEmitterHandles`:313.
 - `Public/NiagaraFunctionLibrary.h` — `UNiagaraFunctionLibrary`:

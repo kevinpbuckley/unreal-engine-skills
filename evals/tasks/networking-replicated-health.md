@@ -5,7 +5,7 @@ title: Replicated health + server-authoritative damage RPC
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch`, create a pawn class with
+In an Unreal Engine 5.9 C++ project module named `EvalScratch`, create a pawn class with
 server-authoritative health for multiplayer: health replicates to all clients and drives
 a client-side `OnHealthChanged` reaction when it arrives; clients request damage through
 a validated server call; and all mutation happens only on the server.

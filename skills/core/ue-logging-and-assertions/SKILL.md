@@ -10,7 +10,7 @@ description: Add structured logging and runtime checks to Unreal C++ — UE_LOG 
   crashing and recovering on a bad assumption, printing transient values to screen during PIE,
   filtering log output by category, or debugging shipping-only crashes where ensures would help.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -213,17 +213,17 @@ this is PIE debugging only.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/Core/Public/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/Core/Public/`):
 - `Logging/LogMacros.h` — `UE_LOG`:278, `UE_CLOG`:325, `FMsg::Logf`:62,
   `FMsg::Logf_Internal`:72.
-- `Logging/LogCategory.h` — `DECLARE_LOG_CATEGORY_EXTERN`:133, `DEFINE_LOG_CATEGORY`:140,
-  `DEFINE_LOG_CATEGORY_STATIC`:150 (moved here from `LogMacros.h` in 5.8).
+- `Logging/LogCategory.h` — `DECLARE_LOG_CATEGORY_EXTERN`:134, `DEFINE_LOG_CATEGORY`:141,
+  `DEFINE_LOG_CATEGORY_STATIC`:151 (moved here from `LogMacros.h` in 5.8).
 - `Logging/LogVerbosity.h` — `ELogVerbosity::Type` enum:16 (`Fatal`:22 through
   `VeryVerbose`:52, `All`:56, `VerbosityMask`:58).
 - `Logging/LogCategory.h` — `FLogCategoryBase`:21, `FLogCategory<>` template:86,
   `IsSuppressed`:45, `SetVerbosity`:59.
-- `Logging/StructuredLog.h` — `UE_LOGFMT`:46, `UE_LOGFMT_EX`:64, `UE_LOG_CONTEXT`:143,
-  `FLogRecord`:181, `SerializeForLog`:297.
+- `Logging/StructuredLog.h` — `UE_LOGFMT`:48, `UE_LOGFMT_EX`:66, `UE_LOG_CONTEXT`:145,
+  `FLogRecord`:183, `SerializeForLog`:298.
 - `Misc/AssertionMacros.h` — `check`:229, `verify`:226, `checkf`:259, `verifyf`:256,
   `checkSlow`:333, `checkNoEntry`:283, `ensure`:461, `ensureMsgf`:462, `ensureAlways`:463,
   `ensureAlwaysMsgf`:464, `FDebug`:68, `LowLevelFatalError`:591.

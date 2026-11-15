@@ -2,7 +2,7 @@
 name: ue-game-thread-performance
 description: Explain how game-thread time drives frame rate and how to optimize it. Use when profiling CPU-bound frame-time spikes, tick-heavy actors, hitches, or when deciding whether to move work off the game thread.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: performance
 ---
 
@@ -132,7 +132,7 @@ AsyncTask(ENamedThreads::AnyBackgroundThreadNormalTask, [WeakThis = TWeakObjectP
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 - `Engine/Source/Runtime/Core/Public/Stats/Stats.h` — stats and cycle counter helpers.
 - `Engine/Source/Runtime/Engine/Private/LevelTick.cpp` — per-frame tick flow in the engine.
 - `Engine/Source/Runtime/Engine/Private/TimerManager.cpp` — timer-based deferral paths.

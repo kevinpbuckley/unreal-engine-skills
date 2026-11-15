@@ -9,7 +9,7 @@ description: >
   collections, manipulates strings, does 3D math, or when choosing between FString/FName/
   FText, between std:: and UE containers, or between FRotator and FQuat for rotation.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -253,9 +253,9 @@ See [references/utility-types.md](references/utility-types.md) for usage rules, 
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/Core/Public/`):
-- `Containers/Array.h`:767 — `TArray<T>` template class; `Contains`:1757, `Reserve`:3268,
-  `Sort`:3654.
+Engine source (UE 5.9, under `Engine/Source/Runtime/Core/Public/`):
+- `Containers/Array.h`:738 — `TArray<T>` template class; `Contains`:1728, `Reserve`:3239,
+  `Sort`:3625.
 - `Containers/Map.h` (via `Map.h.inl`) — `TMap<K,V>`; uses sparse-array + hash bucket
   backing.
 - `Containers/Set.h` — `TSet<T>`.
@@ -267,17 +267,17 @@ Engine source (UE 5.8, under `Engine/Source/Runtime/Core/Public/`):
   `Format`:1418, `FromInt`:1992.
 - `Containers/StringFwd.h`:23 — `FStringBuilderBase`; :32 — `TStringBuilder<N>` alias.
 - `Misc/StringBuilder.h`:78 — `TStringBuilderBase`; `Append`:238, `Appendf`:407.
-- `UObject/NameTypes.h`:631 — `FName`; `ToString`:697.
+- `UObject/NameTypes.h`:631 — `FName`; `ToString`:700.
 - `Internationalization/Text.h`:406 — `FText`; `Format`:675, `FromString`:520,
   `EqualTo`:599, `AsNumber`:428.
-- `Misc/Optional.h`:47 — `TOptional<T>`; `IsSet`:359, `GetValue`:370, `Get`:407.
-- `Misc/TVariant.h`:42 — `TVariant<T,Ts...>`; `IsType`:124, `Get`:132, `TryGet`:160.
+- `Misc/Optional.h`:47 — `TOptional<T>`; `IsSet`:379, `GetValue`:390, `Get`:427.
+- `Misc/TVariant.h`:43 — `TVariant<T,Ts...>`; `IsType`:125, `Get`:133, `TryGet`:161.
 - `Templates/Tuple.h`:531 — `TTuple<...>`; `MakeTuple`:45, `Get<N>()`:245.
 - `Math/MathFwd.h`:47 — type aliases: `FVector`, `FQuat`:50, `FTransform`:53, `FRotator`:57.
 - `Math/Vector.h`:50 — `TVector<T>`; `Dist`:1015, `DotProduct`:263, `CrossProduct`:238,
   `GetSafeNormal`:647, `Normalize`:630.
 - `Math/Quat.h`:38 — `TQuat<T>`; `Slerp`:658, `MakeFromEuler`:374.
-- `Math/TransformVectorized.h`:61 — `TTransform<T>`; `GetLocation`:599, `GetScale3D`:1237,
+- `Math/TransformVectorized.h`:61 — `TTransform<T>`; `GetLocation`:599, `GetScale3D`:1245,
   `TransformPosition`:562, `InverseTransformPosition`:567.
 - `Math/UnrealMathUtility.h` — `FMath`; `Clamp`:592, `Lerp`:1123, `FInterpTo`:1509,
   `FInterpConstantTo`:1490, `RandRange`:289.

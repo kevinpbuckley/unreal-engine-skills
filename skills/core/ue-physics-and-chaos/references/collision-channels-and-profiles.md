@@ -8,7 +8,7 @@ doc.
 
 ## Channel taxonomy
 
-`ECollisionChannel` (declared `EngineTypes.h`:1098) has two categories:
+`ECollisionChannel` (declared `EngineTypes.h`:1103) has two categories:
 
 **Object channels** — what a component *is*:
 
@@ -34,12 +34,12 @@ Settings → Collision you assign human-readable names (e.g. `Interactable`) and
 response. At C++ level they remain `ECC_GameTraceChannel1`, etc. Use
 `UEngineTypes::ConvertToCollisionChannel(ETraceTypeQuery)` and
 `UEngineTypes::ConvertToObjectType(ECollisionChannel)` to convert between Blueprint-facing
-enums and the runtime enum (`EngineTypes.h`:4066–4072).
+enums and the runtime enum (`EngineTypes.h`:4115–4121).
 
 ## FCollisionResponseContainer
 
 Each component stores its per-channel responses in an `FCollisionResponseContainer`
-(`EngineTypes.h`:1445). The struct lays out one `TEnumAsByte<ECollisionResponse>` per built-in
+(`EngineTypes.h`:1451). The struct lays out one `TEnumAsByte<ECollisionResponse>` per built-in
 channel as named fields (`WorldStatic`, `Pawn`, `Visibility`, etc.) plus unnamed slots for
 custom channels. Read/write via the named methods on `UPrimitiveComponent` rather than
 directly to keep the bookkeeping in sync.
@@ -53,7 +53,7 @@ MyComp->SetCollisionResponseToChannels(Responses);
 ```
 
 `FCollisionResponseContainer::SetResponse(ECollisionChannel, ECollisionResponse)` is declared
-at `EngineTypes.h`:1753.
+at `EngineTypes.h`:1759.
 
 ## Collision presets (profiles)
 

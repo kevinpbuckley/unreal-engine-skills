@@ -12,7 +12,8 @@ description: Persist and restore game data in Unreal C++ using the SaveGame syst
   multiple save slots or user profiles, serializing dynamic actor state, migrating old saves, or
   troubleshooting missing fields and null returns on load.
 metadata:
-  engine-version: "5.8"
+  aliases: "save game, savegame, USaveGame, save system, persistence, load game, serialization"
+  engine-version: "5.9"
   category: systems
 ---
 
@@ -246,22 +247,22 @@ void UMySaveGame::PostLoad()
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Classes/GameFramework/SaveGame.h` — `USaveGame` (abstract, `Blueprintable`);
   `ULocalPlayerSaveGame` with versioning hooks:47-226.
-- `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — `CreateSaveGameObject`:1124,
-  `SaveGameToMemory`:1134, `SaveDataToSlot`:1143, `AsyncSaveGameToSlot`:1155,
-  `SaveGameToSlot`:1167, `DoesSaveGameExist`:1175, `LoadGameFromMemory`:1182,
-  `LoadDataFromSlot`:1191, `AsyncLoadGameFromSlot`:1202, `LoadGameFromSlot`:1211,
-  `DeleteGameInSlot`:1231. Delegates `FAsyncSaveGameToSlotDelegate` /
+- `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — `CreateSaveGameObject`:1073,
+  `SaveGameToMemory`:1083, `SaveDataToSlot`:1092, `AsyncSaveGameToSlot`:1104,
+  `SaveGameToSlot`:1116, `DoesSaveGameExist`:1124, `LoadGameFromMemory`:1131,
+  `LoadDataFromSlot`:1140, `AsyncLoadGameFromSlot`:1151, `LoadGameFromSlot`:1160,
+  `DeleteGameInSlot`:1180. Delegates `FAsyncSaveGameToSlotDelegate` /
   `FAsyncLoadGameFromSlotDelegate`:43-47.
 - `Runtime/Engine/Public/SaveGameSystem.h` — `ISaveGameSystem` interface: `SaveGame`,
   `LoadGame`, `DeleteGame`, `DoesSaveGameExist`, async variants; `FGenericSaveGameSystem`
   (writes `Saved/SaveGames/<Name>.sav`).
 - `Runtime/CoreUObject/Public/UObject/ObjectMacros.h` — `CPF_SaveGame` flag:458;
   `SaveGame` specifier keyword:1194 — gates serialization when `ArIsSaveGame` is set.
-- `Runtime/Core/Public/Serialization/Archive.h` — `ArIsSaveGame` bitfield:942;
-  `IsSaveGame()` accessor:659-662.
+- `Runtime/Core/Public/Serialization/Archive.h` — `ArIsSaveGame` bitfield:938;
+  `IsSaveGame()` accessor:655-658.
 - `Runtime/CoreUObject/Public/Serialization/ObjectAndNameAsStringProxyArchive.h` —
   `FObjectAndNameAsStringProxyArchive`: serializes `UObject*` and `FName` as strings; wrap
   around `FMemoryWriter`/`FMemoryReader` for actor state capture.

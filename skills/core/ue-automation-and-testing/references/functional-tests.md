@@ -124,7 +124,7 @@ Place test maps in `Content/Tests/` and add the path to
 Testing Manager discovers them. The Functional Testing Editor plugin must be enabled
 for functional tests to appear in the Automation tab.
 
-## Source citations (UE 5.8)
+## Source citations (UE 5.9)
 
 `Developer/FunctionalTesting/Classes/FunctionalTest.h`:
 - `AFunctionalTest`:249 — base class declaration.

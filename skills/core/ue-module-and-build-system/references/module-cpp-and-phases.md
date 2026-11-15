@@ -1,9 +1,9 @@
 # Module C++ & Loading Phases Reference
 
 Grounded in UE 5.8 engine source:
-- `E:\Program Files\Epic Games\UE_5.8\Engine\Source\Runtime\Core\Public\Modules\ModuleInterface.h`
-- `E:\Program Files\Epic Games\UE_5.8\Engine\Source\Runtime\Core\Public\Modules\ModuleManager.h`
-- `E:\Program Files\Epic Games\UE_5.8\Engine\Source\Programs\UnrealBuildTool\Configuration\Descriptors\ModuleDescriptor.cs`
+- `C:\Program Files\Epic Games\UE_5.9\Engine\Source\Runtime\Core\Public\Modules\ModuleInterface.h`
+- `C:\Program Files\Epic Games\UE_5.9\Engine\Source\Runtime\Core\Public\Modules\ModuleManager.h`
+- `C:\Program Files\Epic Games\UE_5.9\Engine\Source\Programs\UnrealBuildTool\Configuration\Descriptors\ModuleDescriptor.cs`
 
 See also: [../SKILL.md](../SKILL.md)
 
@@ -33,7 +33,7 @@ within the same phase.
 
 ## Concrete implementation classes
 
-### `FDefaultModuleImpl` (`ModuleManager.h`:884)
+### `FDefaultModuleImpl` (`ModuleManager.h`:898)
 
 ```cpp
 class FDefaultModuleImpl : public IModuleInterface { };
@@ -42,7 +42,7 @@ class FDefaultModuleImpl : public IModuleInterface { };
 Empty: no startup/shutdown. Used for modules that only need to expose headers and compiled
 code without any explicit initialization sequence.
 
-### `FDefaultGameModuleImpl` (`ModuleManager.h`:892)
+### `FDefaultGameModuleImpl` (`ModuleManager.h`:906)
 
 ```cpp
 class FDefaultGameModuleImpl : public FDefaultModuleImpl
@@ -106,7 +106,7 @@ void FMyModule::ShutdownModule()
 There must be exactly one call per module `.cpp` translation unit. Placing it in a `.h` or
 calling it twice in the same module → linker error.
 
-## FModuleManager (`ModuleManager.h`:163)
+## FModuleManager (`ModuleManager.h`:164)
 
 `FModuleManager` is the singleton that tracks loaded modules. Common methods:
 
@@ -159,11 +159,11 @@ Symptom: the editor complains "could not find class X" or "plugin module not loa
 ## Source references
 
 - `ModuleInterface.h` — `IModuleInterface`: full interface (101 lines).
-- `ModuleManager.h`:163 — `FModuleManager` class.
-- `ModuleManager.h`:884 — `FDefaultModuleImpl`.
-- `ModuleManager.h`:892 — `FDefaultGameModuleImpl`.
-- `ModuleManager.h`:946 — `IMPLEMENT_MODULE` (modular build variant).
-- `ModuleManager.h`:1100–1136 — `IMPLEMENT_PRIMARY_GAME_MODULE`.
+- `ModuleManager.h`:164 — `FModuleManager` class.
+- `ModuleManager.h`:898 — `FDefaultModuleImpl`.
+- `ModuleManager.h`:906 — `FDefaultGameModuleImpl`.
+- `ModuleManager.h`:960 — `IMPLEMENT_MODULE` (modular build variant).
+- `ModuleManager.h`:1114–1150 — `IMPLEMENT_PRIMARY_GAME_MODULE`.
 - `Boilerplate/ModuleBoilerplate.h`:115 — `PER_MODULE_BOILERPLATE` macro.
 - `ModuleDescriptor.cs`:102 — `public enum ModuleLoadingPhase`.
 - `ModuleDescriptor.cs`:16 — `public enum ModuleHostType`.

@@ -22,9 +22,9 @@ Each cycle has three phases:
    `bPerformFullPurge=true`) it completes in one pass.
 
 `CollectGarbage(EObjectFlags KeepFlags, bool bPerformFullPurge)` is the manual trigger:
-`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:952.
+`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:953.
 `TryCollectGarbage` (non-blocking version):
-`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:962.
+`Runtime/CoreUObject/Public/UObject/UObjectGlobals.h`:963.
 
 ## Root set
 
@@ -85,7 +85,7 @@ gameplay code should stop using it, but raw pointers to it will not be nulled.
 
 `IsValid(UObject* Test)` returns `true` if `Test` is non-null and has neither the garbage flag
 nor the `RF_BeginDestroyed` flag set:
-`Runtime/CoreUObject/Public/UObject/Object.h`:1886.
+`Runtime/CoreUObject/Public/UObject/Object.h`:1891.
 
 `MarkAsGarbage` asserts `!IsRooted()` — you must `RemoveFromRoot()` before marking rooted objects
 as garbage:

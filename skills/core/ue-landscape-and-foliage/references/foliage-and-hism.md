@@ -155,7 +155,7 @@ UnrealEditor.exe MyProject MyMap -run=WorldPartitionBuilderCommandlet
 Foliage instances that straddle a cell boundary are assigned to one cell; they are not
 split. Keep dense foliage painting within cell bounds to avoid unexpected unloading.
 
-## Key source paths (UE 5.8)
+## Key source paths (UE 5.9)
 
 All under `Engine/Source/Runtime/Foliage/Public/` unless noted:
 - `FoliageType.h`:105 — `UFoliageType`; placement properties (Density, Radius, ScaleX/Y/Z,

@@ -117,7 +117,7 @@ must be network-addressable — either a replicated actor or a stably-named obje
 on both server and client with the same name, e.g. loaded from a level package or a default
 subobject created in a C++ constructor).
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `Runtime/Engine/Public/Net/UnrealNetwork.h` — `DOREPLIFETIME` :259, `DOREPLIFETIME_WITH_PARAMS`
   :250, `DOREPLIFETIME_WITH_PARAMS_FAST` :231, `DOREPLIFETIME_CONDITION` :277,

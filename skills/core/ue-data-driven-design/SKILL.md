@@ -9,7 +9,8 @@ description: Drive Unreal gameplay from externally-editable data instead of hard
   magic numbers with editable assets, or layering data across DLC/platforms with composite
   tables.
 metadata:
-  engine-version: "5.8"
+  aliases: "DataTable, DataAsset, data assets, curves, config, developer settings, CSV"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -284,7 +285,7 @@ assets that override it.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/`):
 - `Engine/Classes/Engine/DataTable.h` — `FTableRowBase`:33, `UDataTable`:76,
   `FindRow<T>`:219, `GetAllRows<T>`:199, `ForeachRow<T>`:232,
   `FDataTableRowHandle`:424, `FDataTableCategoryHandle`:497.

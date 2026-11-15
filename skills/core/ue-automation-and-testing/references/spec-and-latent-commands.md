@@ -164,14 +164,14 @@ Key macros (all in `AutomationTest.h`):
 - `ADD_LATENT_AUTOMATION_COMMAND(Constructor)` — enqueues an instance.
 - `UE_RETURN_ON_ERROR(Condition, Message)` — record error and early-out from `RunTest`.
 
-## Source citations (UE 5.8)
+## Source citations (UE 5.9)
 
 `Runtime/Core/Public/Misc/AutomationTest.h`:
-- `FAutomationSpecBase`:2899 — spec base class.
-- `Describe`:2757, `xDescribe`:2751 — scope definition.
-- `BeforeEach`:2821, `AfterEach`:2826 — setup/teardown.
+- `FAutomationSpecBase`:3123 — spec base class.
+- `Describe`:2981, `xDescribe`:2975 — scope definition.
+- `BeforeEach`:3045, `AfterEach`:3050 — setup/teardown.
 - `It`:2789, `LatentIt` (overload at :3417, :3426, :3435).
-- `IAutomationLatentCommand`:525 — latent command base.
-- `DEFINE_LATENT_AUTOMATION_COMMAND`:3796.
-- `ADD_LATENT_AUTOMATION_COMMAND`:4087.
-- `UE_RETURN_ON_ERROR`:81.
+- `IAutomationLatentCommand`:591 — latent command base.
+- `DEFINE_LATENT_AUTOMATION_COMMAND`:4270.
+- `ADD_LATENT_AUTOMATION_COMMAND`:4561.
+- `UE_RETURN_ON_ERROR`:82.

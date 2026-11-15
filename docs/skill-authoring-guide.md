@@ -44,6 +44,19 @@ description: Helps with gameplay.
 ```
 
 Include the words an agent's task would contain (class names, system names, error phrases).
+Agents often search with the text of an error they just got (`'unreal' has no attribute
+'SubsystemBlueprintLibrary'`, `Cannot nativize 'float' as 'MovieSceneTimeWarpVariant'`): put the
+errors your skill cures in the description and in an error table in the body.
+
+Put synonyms that are not already in the description in `metadata.aliases`, a comma-separated
+string (the spec's `metadata` values are strings): `aliases: "Sequencer, Level Sequence,
+MovieScene, cutscene"`. Search on the hosted server reads the description and body today;
+aliases are there for search that reads them.
+
+YAML block scalars (`description: >`) and wrapped descriptions are fine in this repo. The UE 5.9
+in-engine skill loader reads only one-line values, so `scripts/install-engine-skills.mjs`
+flattens them when it installs the library into a project; run it with `--check` after
+editing a description.
 
 ## 3. Body structure (recommended sections)
 
@@ -52,29 +65,42 @@ Order skills roughly like this. Omit sections that don't apply.
 1. **When to use this skill** — 2-4 bullet triggers (mirror/expand the description).
 2. **Mental model** — the few concepts the agent must hold to not make mistakes.
 3. **Core workflow / steps** — numbered, imperative, copy-pasteable.
-4. **C++ patterns** — minimal correct snippets that compile against 5.8.
+4. **C++ / editor Python patterns** — minimal correct snippets that compile (C++) or run
+   (editor Python) against 5.9.
 5. **Worked example** — a realistic example tying the patterns together (when it helps).
 6. **Gotchas & edge cases** — the mistakes this skill exists to prevent.
 7. **References & source material** *(required)* — real `Engine/Source/...` paths and verified
-   official UE 5.8 doc URLs, plus links to any `references/*.md`.
+   official UE doc URLs, plus links to any `references/*.md`.
+8. **Unverified** *(when it applies)* — claims read in source or reported by a project but not
+   run. Never state them as facts elsewhere in the skill.
 
 ## 4. Repo-specific rules
 
-- **Target UE 5.8.** Snippets must be valid against 5.8. When an API differs across 5.x,
-  add a short *Version note*.
+- **Target UE 5.9.** Snippets must be valid against 5.9. When an API differs across 5.x,
+  add a short *Version note* (say which version you compared against).
 - **Ground in real source, and always reference it.** Cite verified paths under
-  `E:\Program Files\Epic Games\UE_5.8\Engine\Source\...`. Prefer naming the header and class
+  `C:\Program Files\Epic Games\UE_5.9\Engine\Source\...` (or `Engine\Plugins\...`). Prefer naming the header and class
   (e.g. `GameFramework/Actor.h` → `AActor`) over vague references. If unsure of a signature,
   read the header before asserting it. **Every skill must include a "References & source
-  material" section** with at least one verified engine-source path (and official UE 5.8 doc
-  URLs where confirmed — never guess a URL).
-- **No tooling/automation instructions.** Skills are pure UE domain knowledge. Do **not**
-  describe how to drive the editor, MCP, or any specific tool — the consuming agent handles
-  that and has its own tooling skills. Describe *what* is correct in Unreal, not *which tool*
-  performs it.
+  material" section** with at least one verified engine-source path (and official UE doc
+  URLs where confirmed — never guess a URL). Line numbers are optional; when you give one,
+  read it in the 5.9 file.
+- **Engine API truth is in scope, whatever the language.** C++, Blueprint concepts, the
+  editor's `unreal` Python API (exact names, what is not exposed, return shapes, the error
+  each wrong guess produces) and, from 5.9, Epic's AI toolsets (`execute_python`, tool and
+  parameter names, the in-engine skill format) are engine features: document them like any
+  other API, from the 5.9 source. Most agent work on a 5.9 project goes through editor Python
+  and these toolsets, and that is where agents fail.
+- **Out of scope:** third-party plugins' tools (document the engine behaviour, not the
+  plugin), MCP client configuration, click-by-click UI walkthroughs, private paths and project
+  names. Facts measured in a real project are welcome; label them as such ("measured in ...")
+  and keep the numbers.
 - **Show the macro specifiers that matter.** `UPROPERTY`/`UFUNCTION`/`UCLASS` specifiers are
   where agents go wrong — show the exact specifiers (`EditAnywhere`, `BlueprintReadWrite`,
   `BlueprintCallable`, `Replicated`, `meta=(...)`) and why.
+- **Python names are snake_case wrappers of reflected members.** Check them in the engine
+  headers (`UFUNCTION`, `ScriptMethod`, `ScriptName`, `BlueprintInternalUseOnly` hides a
+  function from Python) or in the Python plugin source before writing them.
 - **Prefer modern APIs.** `TObjectPtr<>` for member UPROPERTYs, Enhanced Input over legacy
   input, MetaSounds over SoundCues, World Partition where applicable. Note legacy where the
   agent will still encounter it.
@@ -96,8 +122,11 @@ Order skills roughly like this. Omit sections that don't apply.
 - [ ] Folder name == `name` frontmatter; passes naming rules.
 - [ ] `description` says what + when, with keywords; ≤1024 chars.
 - [ ] Body ≤ ~500 lines; deep material moved to `references/`.
-- [ ] Every cited source path exists in the 5.8 tree.
-- [ ] C++ snippets compile against 5.8 (correct includes, macros, module deps).
+- [ ] `node scripts/check-citations.mjs <category>/<name>` passes against the 5.9 tree.
+- [ ] C++ snippets compile against 5.9 (correct includes, macros, module deps); Python names
+      checked in the 5.9 headers or Python plugin source.
 - [ ] Has a "References & source material" section with ≥1 verified engine source path.
-- [ ] No MCP/tooling/automation instructions.
+- [ ] No third-party tool instructions, private paths or project names; unverified claims are
+      in an *Unverified* section.
+- [ ] `node scripts/install-engine-skills.mjs --check` passes.
 - [ ] `skills-ref validate ./skills/<name>` passes (when available).

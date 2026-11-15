@@ -150,7 +150,7 @@ ConstraintComp->ConstraintInstance.ProfileInstance.LinearBreakThreshold = 10000.
 ConstraintComp->BreakConstraint();
 ```
 
-`OnConstraintBroken` is a single-cast delegate declared in `EngineTypes.h`:1179.
+`OnConstraintBroken` is a single-cast delegate declared in `EngineTypes.h`:1184.
 
 ## Ragdoll setup
 

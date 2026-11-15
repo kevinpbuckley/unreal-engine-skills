@@ -5,7 +5,7 @@ title: GAS dash ability with cooldown and stamina cost
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch` (with the
+In an Unreal Engine 5.9 C++ project module named `EvalScratch` (with the
 GameplayAbilities plugin enabled), set up the Gameplay Ability System on a character:
 an attribute set with `Stamina`/`MaxStamina`, an ASC on the character, and a Dash
 ability that costs 25 stamina, has a 4-second cooldown, and plays a montage while

@@ -13,7 +13,7 @@ description: >
   understanding EngineAssociation values, registering a primary game module, or debugging
   "wrong engine version" / "stale generated headers" / config-not-applying problems.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -138,7 +138,7 @@ Every C++ project needs exactly one **primary game module**. It is declared with
 IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultModuleImpl, MyGame, "MyGame");
 ```
 
-- Macro defined at `Runtime/Core/Public/Modules/ModuleManager.h:1100`.
+- Macro defined at `Runtime/Core/Public/Modules/ModuleManager.h:1114`.
 - Use `FDefaultModuleImpl` unless you need `StartupModule`/`ShutdownModule` hooks.
 - All additional modules in the project use `IMPLEMENT_MODULE` (not the primary variant).
 
@@ -280,24 +280,24 @@ text-merge). Full `.gitignore` and `.gitattributes` patterns:
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Projects/Public/ProjectDescriptor.h` — `FProjectDescriptor` struct:42,
   `EngineAssociation`:76, `Modules`:85, `Plugins`:88.
 - `Runtime/Projects/Public/ModuleDescriptor.h` — `FModuleDescriptor`:154,
   `EHostType::Type`:82, `ELoadingPhase::Type`:26.
 - `Runtime/Projects/Public/PluginReferenceDescriptor.h` — plugin enable/disable
   descriptor used in `"Plugins"` array.
-- `Runtime/Core/Public/Modules/ModuleManager.h` — `IMPLEMENT_PRIMARY_GAME_MODULE`:1100,
-  `IMPLEMENT_GAME_MODULE`:984, `IMPLEMENT_MODULE`:946.
-- `Runtime/Core/Public/Misc/ConfigCacheIni.h` — `FConfigCacheIni`:1264, `GetInt`:1490,
-  `LoadGlobalIniFile`:1843.
+- `Runtime/Core/Public/Modules/ModuleManager.h` — `IMPLEMENT_PRIMARY_GAME_MODULE`:1114,
+  `IMPLEMENT_GAME_MODULE`:998, `IMPLEMENT_MODULE`:960.
+- `Runtime/Core/Public/Misc/ConfigCacheIni.h` — `FConfigCacheIni`:1264, `GetInt`:1514,
+  `LoadGlobalIniFile`:1870.
 - `Runtime/Core/Public/Misc/ConfigHierarchy.h` — `GConfigLayers[]` inline array
   defining the full hierarchy layer order.
 - `Runtime/Core/Public/CoreGlobals.h` — `extern FConfigCacheIni* GConfig`:96,
   `GEngineIni`, `GGameIni` globals.
 - `Runtime/Core/Public/Misc/Paths.h` — `FPaths::ProjectDir()`:262,
-  `FPaths::ProjectContentDir()`:276, `FPaths::ProjectConfigDir()`:283,
-  `FPaths::ProjectSavedDir()`:290.
+  `FPaths::ProjectContentDir()`:281, `FPaths::ProjectConfigDir()`:288,
+  `FPaths::ProjectSavedDir()`:295.
 - `Runtime/EngineSettings/Classes/GameMapsSettings.h` — `UGameMapsSettings`:101,
   `GameDefaultMap`:209, `GlobalDefaultGameMode`:217.
 

@@ -1,8 +1,8 @@
 ---
 name: ue-landscape-rvt-and-grass
-description: Integrate runtime virtual textures and material-driven landscape grass in Unreal Engine 5.8. Use for terrain-to-mesh color blending, RVT write/sample setup, grass masks, vegetation culling, or reducing visible grass pop-in.
+description: Integrate runtime virtual textures and material-driven landscape grass in Unreal Engine 5.8 and 5.9. Use for terrain-to-mesh color blending, RVT write/sample setup, grass masks, vegetation culling, or reducing visible grass pop-in.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: world-building
 ---
 
@@ -28,9 +28,9 @@ Test terrain and receiving meshes in daylight and low light, at RVT tile boundar
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Classes/VT/RuntimeVirtualTexture.h` (`URuntimeVirtualTexture`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Classes/VT/RuntimeVirtualTextureVolume.h` (`ARuntimeVirtualTextureVolume`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionRuntimeVirtualTextureOutput.h` (`UMaterialExpressionRuntimeVirtualTextureOutput`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionRuntimeVirtualTextureSample.h` (`UMaterialExpressionRuntimeVirtualTextureSample`).
-- UE 5.8 source: `Engine/Source/Runtime/Landscape/Classes/Materials/MaterialExpressionLandscapeGrassOutput.h` (`UMaterialExpressionLandscapeGrassOutput`).
-- UE 5.8 source: `Engine/Source/Runtime/Landscape/Classes/LandscapeGrassType.h` (`ULandscapeGrassType`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Classes/VT/RuntimeVirtualTexture.h` (`URuntimeVirtualTexture`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Classes/VT/RuntimeVirtualTextureVolume.h` (`ARuntimeVirtualTextureVolume`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionRuntimeVirtualTextureOutput.h` (`UMaterialExpressionRuntimeVirtualTextureOutput`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionRuntimeVirtualTextureSample.h` (`UMaterialExpressionRuntimeVirtualTextureSample`).
+- UE 5.9 source: `Engine/Source/Runtime/Landscape/Classes/Materials/MaterialExpressionLandscapeGrassOutput.h` (`UMaterialExpressionLandscapeGrassOutput`).
+- UE 5.9 source: `Engine/Source/Runtime/Landscape/Classes/LandscapeGrassType.h` (`ULandscapeGrassType`).

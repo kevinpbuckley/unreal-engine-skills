@@ -8,7 +8,8 @@ description: Expose C++ classes, functions, and properties to Blueprint in Unrea
   specifiers to put on C++ members or functions, designing a designer-facing API, calling between
   C++ and Blueprint, or debugging missing nodes/properties/events in the Blueprint graph.
 metadata:
-  engine-version: "5.8"
+  aliases: "expose to Blueprint, BlueprintCallable, BlueprintImplementableEvent, BlueprintNativeEvent, UFUNCTION specifiers"
+  engine-version: "5.9"
   category: blueprints
 ---
 
@@ -261,7 +262,7 @@ FOnHealthDepleted OnHealthDepleted;
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/CoreUObject/Public/UObject/ObjectMacros.h` — `UF::BlueprintImplementableEvent`:992,
   `UF::BlueprintNativeEvent`:997, `UF::BlueprintPure`:1026, `UF::BlueprintCallable`:1029;
   `UP::EditAnywhere`:1158, `UP::EditDefaultsOnly`:1164, `UP::BlueprintReadOnly`:1176,

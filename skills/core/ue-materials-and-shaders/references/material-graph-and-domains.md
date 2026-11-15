@@ -41,7 +41,7 @@ material is evaluated for:
 - **`MD_Surface`** — the default. Evaluated per-pixel on meshes via the G-buffer
   (deferred) or directly (forward). All PBR inputs apply.
 - **`MD_DeferredDecal`** — projected onto surfaces. Blend mode is controlled by
-  `DecalBlendMode` (`Material.h`:489), not `BlendMode`. Decals can write to
+  `DecalBlendMode` (`Material.h`:490), not `BlendMode`. Decals can write to
   specific G-buffer channels.
 - **`MD_LightFunction`** — multiplied into a light's output. Only `Emissive Color`
   is used. Attach to a `ULightComponent` as a light function.

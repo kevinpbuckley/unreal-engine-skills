@@ -165,7 +165,7 @@ FGameplayDebuggerShape::MakeCylinder(Center, Radius, HalfHeight, Color, OptLabel
 
 Source: `Runtime/GameplayDebugger/Public/GameplayDebuggerTypes.h`.
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `Runtime/GameplayDebugger/Public/GameplayDebugger.h` — `IGameplayDebugger`:50,
   `RegisterCategory`:78, `UnregisterCategory`:79, `NotifyCategoriesChanged`:80.

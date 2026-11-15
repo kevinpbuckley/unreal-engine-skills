@@ -26,7 +26,7 @@ then copies the solved hierarchy pose back to the anim graph's `FCompactPose`.
 
 ## URigHierarchy — element types
 
-`URigHierarchy` (`RigHierarchy.h`:167) is the data model for all rig elements. Every
+`URigHierarchy` (`RigHierarchy.h`:199) is the data model for all rig elements. Every
 element is identified by an `FRigElementKey` (an `FName` + `ERigElementType` pair).
 
 | Element type | Purpose |
@@ -43,10 +43,10 @@ Access transforms from C++:
 // Read a bone's current global transform
 URigHierarchy* Hier = ControlRig->GetHierarchy();
 FRigElementKey BoneKey(FName("foot_l"), ERigElementType::Bone);
-FTransform T = Hier->GetGlobalTransform(BoneKey);   // RigHierarchy.h:2277
+FTransform T = Hier->GetGlobalTransform(BoneKey);   // RigHierarchy.h:2623
 
 // Write a bone's local transform (non-initial, affects children)
-Hier->SetLocalTransform(BoneKey, NewLocal);          // RigHierarchy.h:2229
+Hier->SetLocalTransform(BoneKey, NewLocal);          // RigHierarchy.h:2574
 ```
 
 `GetLocalTransform` / `SetLocalTransform` operate in the element's parent space.
@@ -173,22 +173,22 @@ to bind arbitrary scene components or socket transforms as rig inputs or outputs
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/Animation/ControlRig/Source/ControlRig/Public/`:
 - `ControlRig.h`:63 — `UControlRig` class.
-- `ControlRig.h`:203 — `GetHierarchy()`.
-- `ControlRig.h`:277 — `Execute(const FName&)`.
-- `ControlRig.h`:331 — `SetControlValue<T>()`.
-- `ControlRig.h`:338 — `GetControlValue()`.
-- `ControlRig.h`:443 — `OnPreConstruction_AnyThread()`, `OnPostConstruction_AnyThread()`.
+- `ControlRig.h`:213 — `GetHierarchy()`.
+- `ControlRig.h`:287 — `Execute(const FName&)`.
+- `ControlRig.h`:353 — `SetControlValue<T>()`.
+- `ControlRig.h`:360 — `GetControlValue()`.
+- `ControlRig.h`:472 — `OnPreConstruction_AnyThread()`, `OnPostConstruction_AnyThread()`.
 - `AnimNode_ControlRig.h`:21 — `FAnimNode_ControlRig`.
 - `AnimNode_ControlRig.h`:42 — `Evaluate_AnyThread()`.
 - `ControlRigComponent.h`:175 — `UControlRigComponent`.
 - `ModularRig.h` — `UModularRig`, `FRigModuleInstance`, `FModuleInstanceHandle`.
 - `Units/RigUnit.h`:59 — `FRigUnit`.
-- `Rigs/RigHierarchy.h`:167 — `URigHierarchy`.
-- `Rigs/RigHierarchy.h`:2181 — `GetLocalTransform()`.
-- `Rigs/RigHierarchy.h`:2229 — `SetLocalTransform()`.
-- `Rigs/RigHierarchy.h`:2277 — `GetGlobalTransform()`.
+- `Rigs/RigHierarchy.h`:199 — `URigHierarchy`.
+- `Rigs/RigHierarchy.h`:2525 — `GetLocalTransform()`.
+- `Rigs/RigHierarchy.h`:2574 — `SetLocalTransform()`.
+- `Rigs/RigHierarchy.h`:2623 — `GetGlobalTransform()`.
 - `Rigs/RigHierarchyElements.h` — `FRigBaseElement`, `FRigControlElement`, `FRigElementKey`.

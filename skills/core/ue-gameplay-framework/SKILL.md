@@ -7,7 +7,8 @@ description: Implement Unreal's gameplay framework in C++ — GameInstance, AGam
   classes, player login/spawn/possession, replicated game or player state, match-state machines,
   respawn logic, or deciding "where does this code live?"
 metadata:
-  engine-version: "5.8"
+  aliases: "GameMode, GameState, PlayerController, Pawn, Character, PlayerState, GameInstance, HUD, game framework"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -43,7 +44,7 @@ decision in UE gameplay code.
 Class hierarchy (verified in 5.8 source):
 - `AGameModeBase : public AInfo` (`GameModeBase.h`:47); `AGameMode : public AGameModeBase` (`GameMode.h`:35).
 - `AGameStateBase : public AInfo` (`GameStateBase.h`:32); `AGameState : public AGameStateBase` (`GameState.h`:16).
-- `APlayerController : public AController` (`PlayerController.h`:262); `AController : public AActor` (`Controller.h`:40).
+- `APlayerController : public AController` (`PlayerController.h`:273); `AController : public AActor` (`Controller.h`:40).
 - `APawn : public AActor` (`Pawn.h`:43); `ACharacter : public APawn` (`Character.h`:338).
 - `APlayerState : public AInfo` (`PlayerState.h`:41); `AHUD : public AActor` (`HUD.h`:36).
 - `UGameInstance : public UObject, public FExec` (`Engine/GameInstance.h`:151).
@@ -258,7 +259,7 @@ The idiomatic setup:
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/Engine/Classes/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/Engine/Classes/`):
 - `GameFramework/GameModeBase.h` — `AGameModeBase`:47, `InitGame`:62, `InitGameState`:69,
   `DefaultPawnClass`:108, `PlayerControllerClass`:96, `PlayerStateClass`:100, `GameStateClass`:92,
   `HUDClass`:104, `PreLogin`:293, `Login`:323, `PostLogin`:326, `OnPostLogin`:334,
@@ -271,8 +272,8 @@ Engine source (UE 5.8, under `Engine/Source/Runtime/Engine/Classes/`):
 - `GameFramework/GameState.h` — `AGameState`:16, `MatchState`:35, `ElapsedTime`:57.
 - `GameFramework/Controller.h` — `AController`:40, `PlayerState`:50, `GetPawn()`:233,
   `Possess` (final):284, `UnPossess` (final):288, `OnPossess`:299, `OnUnPossess`:306.
-- `GameFramework/PlayerController.h` — `APlayerController`:262, `PlayerCameraManager`:287,
-  `MyHUD`:280, `SetInputMode`:1649, `SetShowMouseCursor`:2168.
+- `GameFramework/PlayerController.h` — `APlayerController`:273, `PlayerCameraManager`:298,
+  `MyHUD`:291, `SetInputMode`:1657, `SetShowMouseCursor`:2207.
 - `GameFramework/Pawn.h` — `APawn`:43, `GetController()`:264, `GetPlayerState<T>()`:193,
   `PossessedBy`:374, `UnPossessed`:381.
 - `GameFramework/Character.h` — `ACharacter`:338.

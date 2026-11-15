@@ -116,7 +116,7 @@ instance; do not reuse it on a different MID.
 **Pattern 1 — from a component slot (most common)**
 
 ```cpp
-// PrimitiveComponent.h:1629
+// PrimitiveComponent.h:1633
 UMaterialInstanceDynamic* MID =
     Mesh->CreateDynamicMaterialInstance(SlotIndex, SourceMaterial);
 ```
@@ -130,7 +130,7 @@ starting parent (can be `nullptr` to use the slot's current material).
 UMaterialInstanceDynamic* MID =
     UMaterialInstanceDynamic::Create(BaseMat, this);
 // … configure parameters …
-Mesh->SetMaterial(SlotIndex, MID);   // PrimitiveComponent.h:1600
+Mesh->SetMaterial(SlotIndex, MID);   // PrimitiveComponent.h:1604
 ```
 
 Use this when you need to configure parameters before the MID is visible on a

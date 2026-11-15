@@ -134,7 +134,7 @@ IPluginManager::Get().MountExplicitlyLoadedPlugin_FromFileName(
 
 ## `IPluginManager` API in depth
 
-`Runtime/Projects/Public/Interfaces/IPluginManager.h`:284. Singleton via `Get()`:667.
+`Runtime/Projects/Public/Interfaces/IPluginManager.h`:284. Singleton via `Get()`:683.
 
 ### Finding plugins
 
@@ -168,7 +168,7 @@ for (const FPluginReferenceDescriptor& Dep : Deps)
 }
 ```
 
-`GetPluginDependencies` (`IPluginManager.h`:594) returns the list from the plugin's `Plugins`
+`GetPluginDependencies` (`IPluginManager.h`:610) returns the list from the plugin's `Plugins`
 descriptor array.
 
 ## `IPlugin` API in depth

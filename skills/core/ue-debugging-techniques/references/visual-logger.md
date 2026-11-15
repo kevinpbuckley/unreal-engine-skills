@@ -71,7 +71,7 @@ REDIRECT_OBJECT_TO_VLOG(SubsystemObj, ControllerActor);
 REDIRECT_TO_VLOG(ControllerActor);
 ```
 
-`FVisualLogger::Redirect` is the underlying call (`VisualLogger.h`:587). Redirection is
+`FVisualLogger::Redirect` is the underlying call (`VisualLogger.h`:892). Redirection is
 per-object and per-session; it does not persist between play sessions.
 
 ## Recording to file and Rewind Debugger
@@ -89,9 +89,9 @@ In UE 5.8 the Visual Logger can also stream to Unreal Insights for **Rewind Debu
 `FVisualLogger::Get().SetIsRecordingToTrace(true)`. This is the preferred workflow when you need
 to correlate Visual Logger data with CPU traces.
 
-Source: `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — `SetIsRecording`:581,
-`IsRecording` (static inline):575, `SetIsRecordingToFile`:693, `SetIsRecordingToTrace`:584,
-`FVisualLogger::Get()`:567.
+Source: `Runtime/Engine/Public/VisualLogger/VisualLogger.h` — `SetIsRecording`:844,
+`IsRecording` (static inline):838, `SetIsRecordingToFile`:998, `SetIsRecordingToTrace`:847,
+`FVisualLogger::Get()`:830.
 
 ## Common mistakes
 

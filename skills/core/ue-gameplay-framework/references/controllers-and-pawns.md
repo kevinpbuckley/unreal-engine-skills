@@ -49,22 +49,22 @@ possess (useful in split-screen / local multiplayer edge cases).
 
 ## APlayerController responsibilities
 
-`APlayerController` (`PlayerController.h`:262) is the bridge between human input and a pawn. It
+`APlayerController` (`PlayerController.h`:273) is the bridge between human input and a pawn. It
 persists through the entire play session while pawns come and go.
 
 Owned objects (all accessed through the PC):
-- `PlayerCameraManager` (`PlayerController.h`:287) — manages view/FOV/post-process blending.
-- `MyHUD` (`PlayerController.h`:280) — the legacy `AHUD` instance; null for AI controllers.
-- `Player` (`PlayerController.h`:272) — `ULocalPlayer` (local) or `UNetConnection` (remote).
+- `PlayerCameraManager` (`PlayerController.h`:298) — manages view/FOV/post-process blending.
+- `MyHUD` (`PlayerController.h`:291) — the legacy `AHUD` instance; null for AI controllers.
+- `Player` (`PlayerController.h`:283) — `ULocalPlayer` (local) or `UNetConnection` (remote).
 
 ### Input and UI
 
 ```cpp
 // Show a cursor for menu interaction; hide for gameplay
-SetShowMouseCursor(true);           // PlayerController.h:2168
+SetShowMouseCursor(true);           // PlayerController.h:2207
 
 // Switch input mode — UI-only, game-only, or game+UI
-SetInputMode(FInputModeUIOnly());   // PlayerController.h:1649
+SetInputMode(FInputModeUIOnly());   // PlayerController.h:1657
 ```
 
 For input binding in 5.8, prefer Enhanced Input (`ue-enhanced-input`) over the legacy
@@ -74,7 +74,7 @@ For input binding in 5.8, prefer Enhanced Input (`ue-enhanced-input`) over the l
 ### Camera management
 
 The `APlayerCameraManager` is spawned during `PostInitializeComponents` of the PlayerController
-via `SpawnPlayerCameraManager` (`PlayerController.h`:1948). It reads the pawn's
+via `SpawnPlayerCameraManager` (`PlayerController.h`:1987). It reads the pawn's
 `GetActorEyesViewPoint` and blend targets to compute the final view. Override
 `CalcCamera` on your pawn/character (inherits from `AActor`) to supply a custom view point.
 
@@ -158,7 +158,7 @@ player fully transitions.
 ## AHUD
 
 `AHUD` (`HUD.h`:36) is the legacy canvas-based overlay system. Each
-`APlayerController` owns one (`PlayerController.h`:280). It draws to a 2D canvas before the
+`APlayerController` owns one (`PlayerController.h`:291). It draws to a 2D canvas before the
 frame is presented. Override `DrawHUD()` (declared on `AHUD`) to issue canvas draw calls.
 
 For any non-trivial UI — menus, health bars, inventory — use UMG (`UUserWidget`) instead.

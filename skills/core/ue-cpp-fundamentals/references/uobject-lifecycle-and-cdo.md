@@ -10,7 +10,7 @@ UE 5.8 (`Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h`,
 
 Every `UClass` holds exactly one **Class Default Object** (`TObjectPtr<UObject> ClassDefaultObject`,
 `Class.h`:4047, deprecated as a direct field in 5.6). The CDO is constructed by
-`UClass::GetDefaultObject()` (`Class.h`:4519) the first time it is requested — typically at engine
+`UClass::GetDefaultObject()` (`Class.h`:4521) the first time it is requested — typically at engine
 startup during module registration. Constructing the CDO runs your C++ constructor with no world
 context.
 
@@ -23,7 +23,7 @@ The CDO serves several purposes:
 
 **Never mutate the CDO at runtime** — changes affect all future instances. Use
 `GetDefault<T>()` (read-only) or `GetMutableDefault<T>()` (rare, valid only during startup) from
-`UObjectGlobals.h`:2195/2209.
+`UObjectGlobals.h`:2200/2214.
 
 ## UObject construction sequence
 
@@ -31,7 +31,7 @@ For an object created with `NewObject<T>(Outer)`:
 
 1. Memory is allocated and zeroed (all members are zero-filled before the constructor runs).
 2. The C++ constructor executes. Reflection properties are then initialized from the CDO.
-3. `PostInitProperties()` (`Object.h`:226) — called after UPROPERTYs are initialized (including
+3. `PostInitProperties()` (`Object.h`:228) — called after UPROPERTYs are initialized (including
    config-loaded values). Override here to do early fixup that depends on defaults being set.
    This is the first point at which config values are available.
 4. Object is returned to the caller. No gameplay context exists yet.
@@ -44,7 +44,7 @@ For objects loaded from a package (`PostLoad` path):
 For `CreateDefaultSubobject` (constructor only):
 - Creates the subobject immediately and registers it as a default subobject of the outer class.
 - The outer's CDO owns the subobject's CDO; instances copy from it.
-- `FObjectInitializer::AssertIfInConstructor` (`UObjectGlobals.h`:1936) fires if you accidentally
+- `FObjectInitializer::AssertIfInConstructor` (`UObjectGlobals.h`:1941) fires if you accidentally
   call `NewObject` during construction instead.
 
 ## PostInitProperties vs BeginPlay
@@ -60,12 +60,12 @@ For `CreateDefaultSubobject` (constructor only):
 
 When a UObject becomes unreachable (no `UPROPERTY` or root-set reference holds it) and the GC runs:
 
-1. `BeginDestroy()` (`Object.h`:361) — release async/render-thread resources. Called immediately
+1. `BeginDestroy()` (`Object.h`:363) — release async/render-thread resources. Called immediately
    when the GC marks the object for deletion. The object is still in memory; do not access it from
    gameplay after this point.
-2. `IsReadyForFinishDestroy()` (`Object.h`:368) — the GC polls this each pass. Return `false` to
+2. `IsReadyForFinishDestroy()` (`Object.h`:370) — the GC polls this each pass. Return `false` to
    defer destruction until background work (e.g. render proxy teardown) completes.
-3. `FinishDestroy()` (`Object.h`:382) — final cleanup before the memory is reclaimed. Call
+3. `FinishDestroy()` (`Object.h`:384) — final cleanup before the memory is reclaimed. Call
    `Super::FinishDestroy()` **last** (not first), as the engine destroys properties here.
 
 Gameplay cleanup should happen in `EndPlay` (for Actors/Components), not in `BeginDestroy`.
@@ -122,5 +122,5 @@ Collection. Relevant flags: `RF_RootSet` (`0x00000080`), `RF_ClassDefaultObject`
 - Incremental GC (chunked reachability analysis) was introduced in UE 5.3 and remains opt-in in
   5.8 (`gc.AllowIncrementalReachability`). It spreads GC work across frames, reducing hitches.
   Settings are in Project Settings → Garbage Collection → Incremental Reachability Analysis.
-- `PostReinitProperties()` (`Object.h`:232) was added in UE 5.x to handle subobject
+- `PostReinitProperties()` (`Object.h`:234) was added in UE 5.x to handle subobject
   re-initialization from CDO; distinct from `PostInitProperties` which runs only once.

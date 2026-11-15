@@ -180,7 +180,7 @@ public:
 ```
 
 Engine evidence: `UActorComponent` at `Components/ActorComponent.h`:162;
-`UObject` at `CoreUObject/Public/UObject/Object.h`:100.
+`UObject` at `CoreUObject/Public/UObject/Object.h`:102.
 
 ## Common UHT gotchas
 
@@ -196,9 +196,9 @@ Engine evidence: `UActorComponent` at `Components/ActorComponent.h`:162;
 
 ## Source material
 
-Engine source paths verified in UE 5.8:
+Engine source paths verified in UE 5.9:
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:281–282 — `UCLASS(...)` / `class AActor`.
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:891, 1019, 1024 — `TObjectPtr` member examples.
 - `Runtime/Engine/Classes/Components/ActorComponent.h`:159–162 — `UCLASS()` + `GENERATED_BODY()`.
-- `Runtime/CoreUObject/Public/UObject/Object.h`:97–100 — `UCLASS(Abstract, MinimalAPI)` + `GENERATED_BODY()`.
+- `Runtime/CoreUObject/Public/UObject/Object.h`:99–102 — `UCLASS(Abstract, MinimalAPI)` + `GENERATED_BODY()`.
 - `Runtime/Engine/Classes/Interfaces/Interface_AssetUserData.h`:16–19 — `UINTERFACE()` + `GENERATED_UINTERFACE_BODY()`.

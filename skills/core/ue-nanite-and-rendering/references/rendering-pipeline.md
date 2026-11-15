@@ -57,7 +57,7 @@ into `FGPUScene`. The primitive is not GPU-visible until the next frame's `FGPUS
 
 ## FPostProcessSettings interaction with the pipeline
 
-`FPostProcessSettings` (`Scene.h`:711) fields are blended across all active Post Process
+`FPostProcessSettings` (`Scene.h`:715) fields are blended across all active Post Process
 Volumes and the camera. Each field has a paired `bOverride_<FieldName>` bit. When not
 overridden, the project default from `RendererSettings.h` applies (e.g.,
 `bDefaultFeatureBloom`, `bDefaultFeatureMotionBlur`).

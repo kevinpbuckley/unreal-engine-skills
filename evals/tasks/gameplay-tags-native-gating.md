@@ -5,7 +5,7 @@ title: Native tags + tag-gated ability check
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch`, add a character state
+In an Unreal Engine 5.9 C++ project module named `EvalScratch`, add a character state
 system using Gameplay Tags: declare native tags `State.Stunned`, `State.Immune`, and
 `Ability.Dash` shared across the module; give the character a tag container exposed to
 designers; and implement `bool CanDash() const` that returns false while the character

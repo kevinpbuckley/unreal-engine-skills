@@ -25,9 +25,9 @@ an `FPCGContext` (containing input `UPCGData` collections) and produces outputs.
 | Type | Path | Notes |
 |---|---|---|
 | `UPCGComponent` | `PCGComponent.h`:112 | Runs a graph; attached to any actor |
-| `UPCGGraph` | `PCGGraph.h`:332 | Editable graph asset (nodes + edges) |
-| `UPCGGraphInterface` | `PCGGraph.h`:159 | Abstract; `UPCGGraph` and `UPCGGraphInstance` both implement |
-| `UPCGGraphInstance` | `PCGGraph.h`:879 | Graph + local parameter overrides |
+| `UPCGGraph` | `PCGGraph.h`:356 | Editable graph asset (nodes + edges) |
+| `UPCGGraphInterface` | `PCGGraph.h`:183 | Abstract; `UPCGGraph` and `UPCGGraphInstance` both implement |
+| `UPCGGraphInstance` | `PCGGraph.h`:931 | Graph + local parameter overrides |
 | `UPCGNode` | `PCGNode.h` | A node in the graph; has a `UPCGSettings` |
 | `UPCGSettings` | `PCGSettings.h` | Defines node type, properties, pin descriptors |
 | `UPCGElement` | `PCGElement.h` | Stateless executor; `Execute(FPCGContext*)` produces outputs |
@@ -187,14 +187,14 @@ managed resources to a new standalone actor.
 - **PCG in packaged builds** — confirm the PCG plugin is added to `.uproject` with
   `"Enabled": true`; it is a shipped plugin but not enabled by default in all templates.
 
-## Key source paths (UE 5.8)
+## Key source paths (UE 5.9)
 
 All under `Engine/Plugins/PCG/Source/PCG/Public/`:
 - `PCGComponent.h`:112 — `UPCGComponent`; `Generate`:253, `Cleanup`:257,
   `GenerateLocal`:221, `CleanupLocal`:232, `NotifyPropertiesChangedFromBlueprint`:264,
   `GenerationTrigger`:327, `bIsComponentPartitioned`:324,
   `OnPCGGraphGeneratedExternal`:393, `OnPCGGraphCleanedExternal`:396.
-- `PCGGraph.h`:332 — `UPCGGraph`; `:159` — `UPCGGraphInterface`; `:879` — `UPCGGraphInstance`.
+- `PCGGraph.h`:356 — `UPCGGraph`; `:183` — `UPCGGraphInterface`; `:931` — `UPCGGraphInstance`.
 - `PCGSettings.h` — `UPCGSettings` (node settings base).
 - `PCGElement.h` — `UPCGElement`, `FSimplePCGElement`.
 - `PCGContext.h` — `FPCGContext` (input/output data collections).

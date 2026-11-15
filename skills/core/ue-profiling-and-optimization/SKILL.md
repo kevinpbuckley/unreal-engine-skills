@@ -10,7 +10,8 @@ description: Profile and optimize Unreal Engine performance — Unreal Insights 
   CPU/GPU bottlenecks, or memory growth, when adding timing instrumentation to find a
   hotspot, or when deciding on CPU vs GPU vs memory optimization levers.
 metadata:
-  engine-version: "5.8"
+  aliases: "performance, profiling, profiler, Unreal Insights, stat unit, FPS, frame time, memory"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -261,7 +262,7 @@ overdraw, post-process stack, screen percentage, too many dynamic lights.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/Core/Public/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/Core/Public/`):
 - `Stats/Stats.h` — `DECLARE_STATS_GROUP`:209, `DECLARE_CYCLE_STAT`:130,
   `SCOPE_CYCLE_COUNTER`:229, `QUICK_SCOPE_CYCLE_COUNTER`:226,
   `DECLARE_SCOPE_CYCLE_COUNTER`:221, `CONDITIONAL_SCOPE_CYCLE_COUNTER`:235.

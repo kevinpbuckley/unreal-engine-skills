@@ -95,7 +95,7 @@ Metadata is editor-only — never write game logic that depends on it.
 - `GetByRef` — the BP Get node returns a `const` reference instead of a copy (Sparse Class Data
   only).
 
-## Source locations (UE 5.8)
+## Source locations (UE 5.9)
 
 All specifiers below are in `Runtime/CoreUObject/Public/UObject/ObjectMacros.h`:
 

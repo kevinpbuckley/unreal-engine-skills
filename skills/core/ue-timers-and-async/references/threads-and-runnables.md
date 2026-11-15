@@ -20,7 +20,7 @@ and avoid the overhead of spawning a dedicated OS thread.
 
 ## FRunnable lifecycle
 
-Declared at `Runtime/Core/Public/HAL/Runnable.h`:19. The virtual interface:
+Declared at `Runtime/Core/Public/HAL/Runnable.h`:20. The virtual interface:
 
 | Method | Called by | Notes |
 |---|---|---|
@@ -144,7 +144,7 @@ consoles, single-threaded cooking), `FRunnableThread::Create` returns `nullptr`.
 engine will still call `Init`, `Run`, and `Exit` on the game thread when
 `FRunnableThread::Tick` is driven (via `FSingleThreadRunnable`). Override
 `GetSingleThreadInterface()` on your `FRunnable` if you need single-thread fallback
-behavior (verified: `Runnable.h`:69).
+behavior (verified: `Runnable.h`:70).
 
 ## Communicating results back to the game thread
 

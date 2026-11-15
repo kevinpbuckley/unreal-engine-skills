@@ -87,7 +87,7 @@ a supplement, not a replacement for standard shadow maps.
 ## Post Process Volume — exposure
 
 `APostProcessVolume` (`Engine/PostProcessVolume.h:22`) blends `FPostProcessSettings`
-(`Engine/Scene.h:711`). Relevant exposure fields:
+(`Engine/Scene.h:715`). Relevant exposure fields:
 
 | Field | Line | Notes |
 |---|---|---|

@@ -173,7 +173,7 @@ For migration details see the
 [Iris Replication System](https://dev.epicgames.com/documentation/unreal-engine/iris-replication-system-in-unreal-engine)
 docs.
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `Runtime/CoreUObject/Public/UObject/CoreNetTypes.h`:16–34 — `ELifetimeCondition` enum.
 - `Runtime/Engine/Public/Net/UnrealNetwork.h`:134,231,250,259,277,286,295,311 —

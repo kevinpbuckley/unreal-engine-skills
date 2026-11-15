@@ -1,7 +1,7 @@
 ---
 name: ue-skin-weights
 description: Read, edit, transfer, and rebuild skeletal mesh skin weights (weight
-  painting) in Unreal Engine 5.8 — USkinWeightModifier for scripted per-vertex weight
+  painting) in Unreal Engine 5.8 and 5.9 — USkinWeightModifier for scripted per-vertex weight
   edits on an asset (Python/Blueprint/C++), GeometryScript bone weight functions on
   a DynamicMesh (TransferBoneWeightsFromMesh with ClosestPointOnSurface or robust
   InpaintWeights, ComputeSmoothBoneWeights, PruneBoneWeights, SetVertexBoneWeights),
@@ -12,7 +12,7 @@ description: Read, edit, transfer, and rebuild skeletal mesh skin weights (weigh
   max influences, stray bones), or when a task says weight paint, skinning, bind,
   re-skin, or transfer weights.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: animation
 ---
 
@@ -227,7 +227,7 @@ with `GetBoneIndex`/`GetAllBonesInfo`. Full function and option tables:
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 
 - `Engine/Plugins/Runtime/MeshModelingToolset/Source/SkeletalMeshModifiers/Public/SkinWeightModifier.h` — `USkinWeightModifier` (full API + Python sample in the class comment)
 - `Engine/Plugins/Runtime/GeometryScripting/Source/GeometryScriptingCore/Public/GeometryScript/MeshBoneWeightFunctions.h` — GeometryScript bone-weight functions + option structs

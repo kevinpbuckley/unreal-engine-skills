@@ -9,7 +9,8 @@ description: Implement player/AI characters in Unreal C++ with ACharacter and
   custom movement mode (PhysCustom), adding root motion, or debugging network
   smoothing and prediction on a character.
 metadata:
-  engine-version: "5.8"
+  aliases: "character, movement, CharacterMovementComponent, CMC, jump, walk, sprint, crouch"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -135,7 +136,7 @@ Crouch requires one flag before calling `Crouch()`:
 ```cpp
 // In constructor or BeginPlay:
 GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
-// NavigationTypes.h:386 (FNavAgentProperties::bCanCrouch)
+// NavigationTypes.h:387 (FNavAgentProperties::bCanCrouch)
 
 // Then in input binding:
 Crouch();    // Character.h:988
@@ -150,17 +151,17 @@ CMC tracks state in `MovementMode` (`CMC.h:230`, `TEnumAsByte<EMovementMode>`):
 
 | Mode | Enum | Physics function |
 |------|------|-----------------|
-| Walking | `MOVE_Walking` | `PhysWalking` (`CMC.h:1995`) |
-| Falling | `MOVE_Falling` | `PhysFalling` (`CMC.h:1663`) |
-| Swimming | `MOVE_Swimming` | `PhysSwimming` (`CMC.h:2004`) |
-| Flying | `MOVE_Flying` | `PhysFlying` (`CMC.h:2001`) |
-| Custom | `MOVE_Custom` | `PhysCustom` (`CMC.h:2007`) — override this |
+| Walking | `MOVE_Walking` | `PhysWalking` (`CMC.h:2003`) |
+| Falling | `MOVE_Falling` | `PhysFalling` (`CMC.h:1671`) |
+| Swimming | `MOVE_Swimming` | `PhysSwimming` (`CMC.h:2012`) |
+| Flying | `MOVE_Flying` | `PhysFlying` (`CMC.h:2009`) |
+| Custom | `MOVE_Custom` | `PhysCustom` (`CMC.h:2015`) — override this |
 
 Switch modes at runtime:
 ```cpp
 GetCharacterMovement()->SetMovementMode(MOVE_Flying);  // CMC.h:1276
 // Revert to default land/water mode:
-GetCharacterMovement()->SetDefaultMovementMode();      // CMC.h:1873
+GetCharacterMovement()->SetDefaultMovementMode();      // CMC.h:1881
 ```
 
 `OnMovementModeChanged` fires on both the CMC (`CMC.h:1298`) and the Character
@@ -222,12 +223,12 @@ JumpSource->InstanceName    = FName("MyArcJump");
 JumpSource->Duration        = 0.6f;
 JumpSource->Height          = 200.f;
 JumpSource->bDisableTimeout = false;
-GetCharacterMovement()->ApplyRootMotionSource(JumpSource); // CMC.h:2807
+GetCharacterMovement()->ApplyRootMotionSource(JumpSource); // CMC.h:2815
 ```
 
 Remove by name when done:
 ```cpp
-GetCharacterMovement()->RemoveRootMotionSource(FName("MyArcJump")); // CMC.h:2819
+GetCharacterMovement()->RemoveRootMotionSource(FName("MyArcJump")); // CMC.h:2827
 ```
 
 See [references/root-motion-and-launch.md](references/root-motion-and-launch.md)
@@ -236,7 +237,7 @@ for the full `FRootMotionSource` type catalogue and network considerations.
 ## Networking (free, but mind authority)
 
 CMC implements the full client-prediction + server-reconciliation loop via
-`PerformMovement` (`CMC.h:2291`) and `FSavedMove_Character` (`CMC.h:2980`).
+`PerformMovement` (`CMC.h:2299`) and `FSavedMove_Character` (`CMC.h:2988`).
 Key rules:
 
 - Drive all movement through `AddMovementInput`/`Jump`/`LaunchCharacter` so
@@ -325,7 +326,7 @@ skill for full Mover setup, modes, layered moves, and backends.
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Source/Runtime/Engine/Classes/`):
+Engine source (UE 5.9, `Engine/Source/Runtime/Engine/Classes/`):
 - `GameFramework/Character.h` — `ACharacter:338`, `Jump:828`, `StopJumping:837`,
   `Crouch:988`, `UnCrouch:997`, `JumpMaxCount:740`, `JumpMaxHoldTime:731`,
   `OnMovementModeChanged:1041`, `ReplicatedMovementMode:703`,
@@ -336,19 +337,19 @@ Engine source (UE 5.8, `Engine/Source/Runtime/Engine/Classes/`):
   `MaxAcceleration:295`, `AirControl:360`, `RotationRate:410`,
   `bUseControllerDesiredRotation:439`, `bOrientRotationToMovement:446`,
   `NetworkMaxSmoothUpdateDistance:839`, `SetMovementMode:1276`,
-  `OnMovementModeChanged:1298`, `PhysFalling:1663`, `PhysWalking:1995`,
-  `PhysFlying:2001`, `PhysSwimming:2004`, `PhysCustom:2007`,
-  `PerformMovement:2291`, `FSavedMove_Character:2980`,
-  `ApplyRootMotionSource:2807`, `RemoveRootMotionSource:2819`.
+  `OnMovementModeChanged:1298`, `PhysFalling:1671`, `PhysWalking:2003`,
+  `PhysFlying:2009`, `PhysSwimming:2012`, `PhysCustom:2015`,
+  `PerformMovement:2299`, `FSavedMove_Character:2988`,
+  `ApplyRootMotionSource:2815`, `RemoveRootMotionSource:2827`.
 - `GameFramework/Pawn.h` — `AddMovementInput:499`.
 - `GameFramework/PawnMovementComponent.h` — `GetPendingInputVector:69`,
   `ConsumeInputVector:86`.
 - `GameFramework/NavMovementComponent.h` — `NavAgentProps:61`.
-- `AI/Navigation/NavigationTypes.h` — `FNavAgentProperties::bCanCrouch:386`.
+- `AI/Navigation/NavigationTypes.h` — `FNavAgentProperties::bCanCrouch:387`.
 - `GameFramework/MovementComponent.h` — `bConstrainToPlane:155`.
 - `GameFramework/RootMotionSource.h` — `FRootMotionSource`, `FRootMotionSource_JumpForce`.
 
-Plugin source (UE 5.8):
+Plugin source (UE 5.9):
 - `Engine/Plugins/Experimental/Mover/Source/Mover/Public/MoverComponent.h`
 - `Engine/Plugins/Experimental/Mover/Source/Mover/Public/DefaultMovementSet/CharacterMoverComponent.h`
 

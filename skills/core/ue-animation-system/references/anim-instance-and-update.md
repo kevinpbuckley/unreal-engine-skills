@@ -107,7 +107,7 @@ Most game projects do not need a custom proxy; use `NativeThreadSafeUpdateAnimat
 
 ## Related
 
-- Engine source: `AnimInstance.h` lines 1436–1457 — all `Native*` virtual overrides.
+- Engine source: `AnimInstance.h` lines 1439–1460 — all `Native*` virtual overrides.
 - Engine source: `AnimInstanceProxy.h` — `FAnimInstanceProxy`, `PreUpdate`, `Update`.
 - Official doc: [Animation Blueprints](https://dev.epicgames.com/documentation/unreal-engine/animation-blueprints-in-unreal-engine)
 - Official doc: [How to Get Animation Variables](https://dev.epicgames.com/documentation/unreal-engine/how-to-get-animation-variables-in-animation-blueprints-in-unreal-engine)

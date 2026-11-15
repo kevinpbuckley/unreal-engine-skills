@@ -5,7 +5,7 @@ title: C++ HUD widget with BindWidget and dynamic updates
 
 ## Prompt
 
-In an Unreal Engine 5.8 C++ project module named `EvalScratch`, build a HUD: a C++
+In an Unreal Engine 5.9 C++ project module named `EvalScratch`, build a HUD: a C++
 `UUserWidget` base class with a health progress bar and an ammo text block that
 designers lay out in the Blueprint subclass, a `SetHealth(float Current, float Max)` /
 `SetAmmo(int32 Clip, int32 Reserve)` API, and player-controller code that creates the

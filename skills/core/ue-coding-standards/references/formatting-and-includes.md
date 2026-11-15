@@ -202,7 +202,7 @@ This is defined per-platform in `Core/Public/Windows/WindowsPlatform.h`:209–21
 Without the macro, the linker cannot find the symbol in other modules. Engine examples:
 - `ENGINE_API AActor()` at `GameFramework/Actor.h`:288 (constructor export)
 - `ENGINE_API virtual void GetLifetimeReplicatedProps(...)` at `GameFramework/Actor.h`:306
-- `COREUOBJECT_API UObject()` at `CoreUObject/Public/UObject/Object.h`:106
+- `COREUOBJECT_API UObject()` at `CoreUObject/Public/UObject/Object.h`:108
 
 Inline functions and template specializations do not need the export macro (they are
 header-only). Only apply the macro to non-inline methods or free functions that must cross
@@ -238,10 +238,10 @@ to eliminate ambiguity.
 
 ## Source material
 
-Engine source paths verified in UE 5.8:
+Engine source paths verified in UE 5.9:
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:3, 32 — `#pragma once`, `generated.h` last.
 - `Runtime/Engine/Classes/GameFramework/Character.h`:3, 5, 19 — `CoreMinimal.h` first, `generated.h` last.
 - `Runtime/Engine/Classes/Components/ActorComponent.h`:3, 23, 27–38 — `#pragma once`, `generated.h` last, forward decls.
-- `Runtime/CoreUObject/Public/UObject/Object.h`:106, 129 — `COREUOBJECT_API` export macro.
+- `Runtime/CoreUObject/Public/UObject/Object.h`:108, 131 — `COREUOBJECT_API` export macro.
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:288, 306 — `ENGINE_API` on constructor and virtual.
 - `Runtime/Core/Public/Windows/WindowsPlatform.h`:209–210 — `DLLEXPORT`/`DLLIMPORT` definition.

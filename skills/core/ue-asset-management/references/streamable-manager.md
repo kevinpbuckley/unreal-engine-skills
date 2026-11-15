@@ -8,7 +8,7 @@ release semantics. Grounded in UE 5.8
 ## Overview
 
 `FStreamableManager` is a non-UObject struct (`struct FStreamableManager : public FGCObject`,
-`StreamableManager.h`:731) that drives all on-demand loading. It maintains an internal map from
+`StreamableManager.h`:733) that drives all on-demand loading. It maintains an internal map from
 `FSoftObjectPath` to `FStreamable` tracking records, dispatches `FlushAsyncLoading`-backed
 requests, and keeps loaded assets in memory via `FStreamableHandle` until the handle is released.
 
@@ -44,7 +44,7 @@ void AMyActor::OnLoaded()
 }
 ```
 
-`RequestAsyncLoad` (`StreamableManager.h`:756) accepts:
+`RequestAsyncLoad` (`StreamableManager.h`:758) accepts:
 - A single `FSoftObjectPath`, an array, or any container convertible to `TArray<FSoftObjectPath>`.
 - An optional `FStreamableDelegate` or lambda (called on completion or next tick if already loaded).
 - An optional `TAsyncLoadPriority` (default `0`; `AsyncLoadHighPriority = 100` is available).
@@ -79,7 +79,7 @@ TSharedPtr<FStreamableHandle> Combined =
 Combined->BindCompleteDelegate(
     FStreamableDelegate::CreateUObject(this, &AMyActor::OnAllLoaded));
 ```
-`CreateCombinedHandle` (`StreamableManager.h`:849) creates a parent handle that waits for all
+`CreateCombinedHandle` (`StreamableManager.h`:851) creates a parent handle that waits for all
 children. Child handles remain individually cancellable.
 
 ## Synchronous load
@@ -87,11 +87,11 @@ children. Child handles remain individually cancellable.
 ```cpp
 // Blocks until complete — avoid during gameplay:
 UObject* Asset = UAssetManager::GetStreamableManager().LoadSynchronous(
-    MySoftPtr.ToSoftObjectPath());           // StreamableManager.h:800
+    MySoftPtr.ToSoftObjectPath());           // StreamableManager.h:802
 ```
 Or the typed convenience wrapper on `TSoftObjectPtr<T>`:
 ```cpp
-UStaticMesh* M = MeshSoftPtr.LoadSynchronous();   // SoftObjectPtr.h:547
+UStaticMesh* M = MeshSoftPtr.LoadSynchronous();   // SoftObjectPtr.h:409
 ```
 Both are fine during level load or initial startup; never call in `Tick` or response to input.
 
@@ -128,7 +128,7 @@ in-memory object) the asset stays resident regardless.
 
 ```cpp
 // Load at high priority (jumps the queue):
-FStreamableManager::AsyncLoadHighPriority  // = 100  (StreamableManager.h:736)
+FStreamableManager::AsyncLoadHighPriority  // = 100  (StreamableManager.h:738)
 // Default priority:
 FStreamableManager::DefaultAsyncLoadPriority  // = 0
 ```

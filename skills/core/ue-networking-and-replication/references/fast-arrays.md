@@ -164,7 +164,7 @@ automatically for fast-array types in `UnrealNetwork.h`:379–390).
 | Ability/task list (GAS) | `FFastArraySerializer` (GAS uses it internally) |
 | Ordered collection where order matters | Plain replicated `TArray` (fast array order is not guaranteed) |
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `Runtime/Net/Core/Classes/Net/Serialization/FastArraySerializer.h` — usage pattern :60–134,
   `FFastArraySerializer` :408, `FFastArraySerializerItem` :298, `MarkItemDirty`, `MarkArrayDirty`,

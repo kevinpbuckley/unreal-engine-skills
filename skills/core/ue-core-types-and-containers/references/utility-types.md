@@ -36,7 +36,7 @@ FHitResult Hit = Result.Get(FHitResult{});  // Get:407
 
 ## TVariant
 
-`TVariant<A, B, ...>` (`Misc/TVariant.h`:42) is a type-safe discriminated union — one of
+`TVariant<A, B, ...>` (`Misc/TVariant.h`:43) is a type-safe discriminated union — one of
 several pre-declared types at a time, stored inline.
 
 ```cpp
@@ -45,13 +45,13 @@ using FEvent = TVariant<FPickupEvent, FDamageEvent, FDeathEvent>;
 FEvent E;
 E.Set<FPickupEvent>(FPickupEvent{ Actor });   // Set and activate the type
 
-if (E.IsType<FPickupEvent>())                 // IsType:124
+if (E.IsType<FPickupEvent>())                 // IsType:125
 {
-    FPickupEvent& Pickup = E.Get<FPickupEvent>(); // Get:132 — asserts if wrong type
+    FPickupEvent& Pickup = E.Get<FPickupEvent>(); // Get:133 — asserts if wrong type
 }
 
 // Safe fallback
-if (FDamageEvent* D = E.TryGet<FDamageEvent>()) // TryGet:160 — returns pointer, null if wrong type
+if (FDamageEvent* D = E.TryGet<FDamageEvent>()) // TryGet:161 — returns pointer, null if wrong type
 {
     ApplyDamage(*D);
 }

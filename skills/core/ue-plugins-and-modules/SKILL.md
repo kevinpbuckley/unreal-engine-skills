@@ -10,7 +10,8 @@ description: Create, structure, and manage Unreal Engine plugins — the .uplugi
   structuring an editor or runtime plugin, wiring plugin module C++, enabling plugins in a
   project, or troubleshooting a plugin that won't load or whose content won't mount.
 metadata:
-  engine-version: "5.8"
+  aliases: "plugin, plugins, uplugin, module, modules, Fab plugin"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -159,7 +160,7 @@ void FMyFeatureModule::ShutdownModule()
 }
 ```
 
-- `IMPLEMENT_MODULE` is in `Runtime/Core/Public/Modules/ModuleManager.h`:946. It registers
+- `IMPLEMENT_MODULE` is in `Runtime/Core/Public/Modules/ModuleManager.h`:960. It registers
   the module with the `FModuleManager` and installs UE's memory allocator overrides
   (`PER_MODULE_BOILERPLATE`). Every plugin module must have exactly one call.
 - `IModuleInterface::StartupModule()`:49 / `ShutdownModule()`:79 in
@@ -302,7 +303,7 @@ For code-level dependencies between modules inside or across plugins, list the m
 
 ## References & source material
 
-Engine source (UE 5.8, under `E:\Program Files\Epic Games\UE_5.8\Engine\Source\`):
+Engine source (UE 5.9, under `C:\Program Files\Epic Games\UE_5.9\Engine\Source\`):
 - `Runtime/Projects/Public/PluginDescriptor.h` — `FPluginDescriptor`:38,
   `EPluginEnabledByDefault`:28, `Modules` field:90, `bCanContainContent`:127,
   `Plugins` field:174.
@@ -312,12 +313,12 @@ Engine source (UE 5.8, under `E:\Program Files\Epic Games\UE_5.8\Engine\Source\`
   `bEnabled`:32, `bOptional`:35.
 - `Runtime/Projects/Public/Interfaces/IPluginManager.h` — `IPlugin`:110, `IPluginManager`:284,
   `FindPlugin`:393, `FindEnabledPlugin`:404, `GetEnabledPlugins`:428,
-  `GetEnabledPluginsWithContent`:435, `GetDiscoveredPlugins`:454, `Get()`:667.
-- `Runtime/Core/Public/Modules/ModuleManager.h` — `IMPLEMENT_MODULE`:946.
-- `Runtime/Core/Public/Modules/ModuleInterface.h` — `IModuleInterface`, `StartupModule`:49,
-  `ShutdownModule`:79.
+  `GetEnabledPluginsWithContent`:435, `GetDiscoveredPlugins`:454, `Get()`:683.
+- `Runtime/Core/Public/Modules/ModuleManager.h` — `IMPLEMENT_MODULE`:960.
+- `Runtime/Core/Public/Modules/ModuleInterface.h` — `IModuleInterface`, `StartupModule`:50,
+  `ShutdownModule`:80.
 
-Real example descriptor: `E:\Program Files\Epic Games\UE_5.8\Engine\Plugins\FX\Niagara\Niagara.uplugin`
+Real example descriptor: `C:\Program Files\Epic Games\UE_5.9\Engine\Plugins\FX\Niagara\Niagara.uplugin`
 
 Official docs (UE 5.8):
 - Plugins in Unreal Engine —

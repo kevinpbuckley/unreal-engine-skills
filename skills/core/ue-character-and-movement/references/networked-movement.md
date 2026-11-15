@@ -12,8 +12,8 @@ CMC implements `INetworkPredictionInterface` (`CMC.h:136`). Every tick on the
 **autonomous proxy** (locally controlled client):
 
 1. `TickComponent` gathers input and calls `ReplicateMoveToServer`.
-2. `ReplicateMoveToServer` calls `PerformMovement` (`CMC.h:2291`) locally,
-   saves the result into a `FSavedMove_Character` (`CMC.h:2980`), then sends
+2. `ReplicateMoveToServer` calls `PerformMovement` (`CMC.h:2299`) locally,
+   saves the result into a `FSavedMove_Character` (`CMC.h:2988`), then sends
    the move to the server via `ServerMovePacked` RPC (`Character.h:377`).
 3. The **server** receives the RPC, runs `PerformMovement` with the same input,
    and compares its resulting position to the client's reported position.
@@ -183,7 +183,7 @@ complexity in input handling.
 
 - The prediction RPC pair changed from `ServerMove`/`ClientAdjustPosition` to
   `ServerMovePacked`/`ClientMoveResponsePacked` for bandwidth efficiency. The old
-  names are `DEPRECATED_CHARACTER_MOVEMENT_RPC`-marked in 5.8 (`CMC.h:2635`).
+  names are `DEPRECATED_CHARACTER_MOVEMENT_RPC`-marked in 5.8 (`CMC.h:2643`).
   Existing code using the old names still compiles but should migrate.
 - Mover's networked physics backend (Chaos) is separate from the Network
   Prediction Plugin backend; choose at plugin configuration time.

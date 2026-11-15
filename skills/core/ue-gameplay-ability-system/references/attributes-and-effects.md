@@ -155,11 +155,11 @@ Component-based GEs replace the old monolithic approach. Common built-in compone
 
 #### Configuring GE Components in C++ constructors
 
-`FindOrAddComponent<T>()` / `AddComponent<T>()` (`GameplayEffect.h:2497-2521`) call `NewObject`
+`FindOrAddComponent<T>()` / `AddComponent<T>()` (`GameplayEffect.h:2500-2524`) call `NewObject`
 with an empty name, which **fatal-asserts inside a CDO constructor** ("NewObject with empty name
 can't be used to create default subobjects...") and kills the editor at module load. They are for
 runtime-built dynamic GEs only. In a constructor, create the component as a default subobject and
-append it to the protected `GEComponents` array (`GameplayEffect.h:2466`) — this must run inside
+append it to the protected `GEComponents` array (`GameplayEffect.h:2469`) — this must run inside
 the `UGameplayEffect` subclass:
 
 ```cpp

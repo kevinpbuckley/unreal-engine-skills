@@ -22,11 +22,11 @@ ULightComponent : ULightComponentBase  (LightComponent.h:48)
 ├─ ShadowSlopeBias:float (line 123)
 ├─ ContactShadowLength:float (line 131)
 ├─ bAllowMegaLights:uint32 (line 171) — opt into stochastic many-light (UE5.5+)
-├─ LightFunctionMaterial (line 205)   — cookie material (not supported on RectLight)
-├─ IESTexture (line 219)              — real-world luminaire distribution
-├─ SetIntensity(float) (line 286)
-├─ SetLightColor(FLinearColor, bSRGB) (line 296)
-└─ SetTemperature(float) (line 303)
+├─ LightFunctionMaterial (line 208)   — cookie material (not supported on RectLight)
+├─ IESTexture (line 222)              — real-world luminaire distribution
+├─ SetIntensity(float) (line 289)
+├─ SetLightColor(FLinearColor, bSRGB) (line 299)
+└─ SetTemperature(float) (line 306)
 
 ULocalLightComponent : ULightComponent  (LocalLightComponent.h:18)
 ├─ IntensityUnits:ELightUnits (line 28)   — Candelas | Lumens | EV100
@@ -57,11 +57,11 @@ UDirectionalLightComponent : ULightComponent  (DirectionalLightComponent.h:18)
 ├─ bAtmosphereSunLight:uint32 (line 164)   — drives USkyAtmosphereComponent
 └─ SetAtmosphereSunLight(bool) (line 311)
 
-USkyLightComponent : ULightComponentBase  (SkyLightComponent.h:101)
-├─ bRealTimeCapture:bool (line 108)        — recapture every frame
-├─ SourceType:ESkyLightSourceType (line 112) — CapturedScene | SpecifiedCubemap
-├─ Cubemap:UTextureCube* (line 116)
-└─ RecaptureSky() (line 304)
+USkyLightComponent : ULightComponentBase  (SkyLightComponent.h:116)
+├─ bRealTimeCapture:bool (line 123)        — recapture every frame
+├─ SourceType:ESkyLightSourceType (line 127) — CapturedScene | SpecifiedCubemap
+├─ Cubemap:UTextureCube* (line 131)
+└─ RecaptureSky() (line 319)
 ```
 
 ## Intensity units for local lights

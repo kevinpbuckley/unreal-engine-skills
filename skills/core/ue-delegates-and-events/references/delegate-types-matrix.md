@@ -24,7 +24,7 @@ Source: `DelegateCombinations.h` — base macros at lines 20 (`DECLARE_DELEGATE`
 32 (`DECLARE_EVENT`), 35 (`DECLARE_DYNAMIC_DELEGATE`), 38 (`DECLARE_DYNAMIC_MULTICAST_DELEGATE`).
 
 The `UE_PRIVATE_DECLARE_*` helper macros in `Delegate.h` define the actual typedef/class bodies
-(lines 205, 209, 213, 221, 231, 239). The old `FUNC_DECLARE_*` forms are deprecated in 5.8.
+(lines 206, 210, 214, 222, 232, 240). The old `FUNC_DECLARE_*` forms are deprecated in 5.8.
 
 ## Parameter count suffixes
 

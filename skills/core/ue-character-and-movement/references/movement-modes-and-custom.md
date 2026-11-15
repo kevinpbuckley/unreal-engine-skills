@@ -36,11 +36,11 @@ Each mode delegates per-tick work to a virtual function:
 
 | Mode | Function | What it does |
 |------|----------|--------------|
-| `MOVE_Walking` | `PhysWalking(float, int32)` `CMC.h:1995` | Floor sweeps, step-up logic, slope walkability |
-| `MOVE_Falling` | `PhysFalling(float, int32)` `CMC.h:1663` | Gravity integration, `AirControl`, landing detection |
-| `MOVE_Flying` | `PhysFlying(float, int32)` `CMC.h:2001` | Friction-only velocity damping, no gravity |
-| `MOVE_Swimming` | `PhysSwimming(float, int32)` `CMC.h:2004` | Buoyancy, water friction, surface detection |
-| `MOVE_Custom` | `PhysCustom(float, int32)` `CMC.h:2007` | **Override this in your subclass** |
+| `MOVE_Walking` | `PhysWalking(float, int32)` `CMC.h:2003` | Floor sweeps, step-up logic, slope walkability |
+| `MOVE_Falling` | `PhysFalling(float, int32)` `CMC.h:1671` | Gravity integration, `AirControl`, landing detection |
+| `MOVE_Flying` | `PhysFlying(float, int32)` `CMC.h:2009` | Friction-only velocity damping, no gravity |
+| `MOVE_Swimming` | `PhysSwimming(float, int32)` `CMC.h:2012` | Buoyancy, water friction, surface detection |
+| `MOVE_Custom` | `PhysCustom(float, int32)` `CMC.h:2015` | **Override this in your subclass** |
 
 The top-level dispatcher (`MoveAlongFloor`/`PerformMovement`) calls the correct
 physX function based on the current mode. Sub-iterations (`int32 Iterations`)

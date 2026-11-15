@@ -35,10 +35,10 @@ during the owning actor's spawn. For components created during play you must cal
 ```cpp
 UStaticMeshComponent* C = NewObject<UStaticMeshComponent>(this);
 C->SetupAttachment(GetRootComponent());
-C->RegisterComponent();      // ActorComponent.h:1322 — required for runtime components
+C->RegisterComponent();      // ActorComponent.h:1325 — required for runtime components
 // ...
-C->UnregisterComponent();    // ActorComponent.h:1325 — remove from update/render/physics
-C->DestroyComponent();       // ActorComponent.h:1328 — unregister and tear down
+C->UnregisterComponent();    // ActorComponent.h:1328 — remove from update/render/physics
+C->DestroyComponent();       // ActorComponent.h:1331 — unregister and tear down
 ```
 
 Registering during play has a cost; do it only when necessary. The component must be associated
@@ -50,17 +50,17 @@ While registering, the engine runs (override these to hook in):
 
 | Function | Role | Cite |
 |---|---|---|
-| `OnRegister` | general per-register hook | `ActorComponent.h`:830 |
+| `OnRegister` | general per-register hook | `ActorComponent.h`:833 |
 | `CreateRenderState` | initialize render state | — |
 | `OnCreatePhysicsState` | initialize physics state | — |
 
-While unregistering, the mirror set runs: `OnUnregister` (`ActorComponent.h`:835),
+While unregistering, the mirror set runs: `OnUnregister` (`ActorComponent.h`:838),
 `DestroyRenderState`, `OnDestroyPhysicsState`.
 
 ## Render state
 
 To draw, a component needs a **render state**, which also tells the engine when render data changed.
-When something changes, mark it "dirty" with `MarkRenderStateDirty()` (`ActorComponent.h`:1128); at
+When something changes, mark it "dirty" with `MarkRenderStateDirty()` (`ActorComponent.h`:1131); at
 end of frame all dirty components update their render data. Scene and primitive components create
 render states by default; plain actor components do not (nothing to draw).
 
@@ -68,7 +68,7 @@ render states by default; plain actor components do not (nothing to draw).
 
 To take part in physics simulation/collision, a component needs a **physics state**, which updates
 immediately (no dirty-marker / frame-behind issues). Only primitive components create one by
-default. Override `ShouldCreatePhysicsState()` (`ActorComponent.h`:878) to decide per class — don't
+default. Override `ShouldCreatePhysicsState()` (`ActorComponent.h`:881) to decide per class — don't
 blindly return `true`; respect the cases (e.g. during destruction) where the `UPrimitiveComponent`
 version returns `false`, and prefer returning `Super::ShouldCreatePhysicsState()` where you'd
 otherwise return `true`.
@@ -94,13 +94,13 @@ drive it manually from the owning actor. See `ue-timers-and-async` for event/tim
 
 ## `InitializeComponent` vs `BeginPlay`
 
-- `InitializeComponent` (`ActorComponent.h`:919) runs during the actor's component-init
+- `InitializeComponent` (`ActorComponent.h`:922) runs during the actor's component-init
   sub-sequence (before `BeginPlay`) — **only if** the component sets
   `bWantsInitializeComponent = true` (`:340`) in its constructor. Use it for self-contained setup
   that must exist before any actor's `BeginPlay`.
-- `UActorComponent::BeginPlay` (`:936`) runs when gameplay starts, after the owning actor's
+- `UActorComponent::BeginPlay` (`:939`) runs when gameplay starts, after the owning actor's
   `BeginPlay`. Bind delegates and start gameplay interactions here. The mirror cleanup is
-  `EndPlay` (`:949`); `UninitializeComponent` (`:955`) mirrors `InitializeComponent`.
+  `EndPlay` (`:952`); `UninitializeComponent` (`:958`) mirrors `InitializeComponent`.
 
 Practical rule: bind delegates in `BeginPlay` and react via the observer pattern, so you don't have
 to reason about init order across components.
@@ -109,7 +109,7 @@ to reason about init order across components.
 
 Some components/actors have no visual representation, making them hard to select or debug.
 **Visualization components** are ordinary components that exist only in the editor: create the
-component, call `SetIsVisualizationComponent(true)` (`ActorComponent.h`:723), and guard all
+component, call `SetIsVisualizationComponent(true)` (`ActorComponent.h`:726), and guard all
 references behind `WITH_EDITORONLY_DATA` / `WITH_EDITOR` so packaged builds never reference them.
 The Camera Component uses this pattern to draw its view frustum in-editor. Such components do not
 appear during Play-in-Editor or in packaged builds.

@@ -10,7 +10,7 @@ description: Create and edit UAnimSequence assets programmatically — build a s
   place (skeleton ref pose vs mesh proportions, untracked bones), or validating poses
   without opening the editor UI.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: animation
 ---
 
@@ -166,8 +166,8 @@ Engine source (5.8), paths under `Engine/Source/`:
   (FVector/FQuat).
 - `Runtime/Engine/Classes/Animation/AnimSequenceBase.h` — `GetController`:249.
 - `Runtime/Engine/Classes/Animation/AnimSequence.h` — `UAnimSequence`.
-- `Runtime/Engine/Classes/Animation/Skeleton.h` — `USkeleton`:294,
-  `GetReferenceSkeleton`:366.
+- `Runtime/Engine/Classes/Animation/Skeleton.h` — `USkeleton`:296,
+  `GetReferenceSkeleton`:368.
 - `Editor/UnrealEd/Classes/Factories/AnimSequenceFactory.h` — `UAnimSequenceFactory`:18,
   `TargetSkeleton`:23.
 - `Editor/UnrealEd/Classes/Factories/FbxImportUI.h` — `UFbxImportUI`:98,

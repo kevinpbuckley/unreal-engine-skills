@@ -13,7 +13,8 @@ description: Implement collision, physics simulation, and world queries using Un
   interaction, simulating rigid-body objects, applying forces or impulses, building
   ragdolls, constraining bodies, or debugging missing hit/overlap events.
 metadata:
-  engine-version: "5.8"
+  aliases: "physics, collision, Chaos, traces, line trace, sweep, ragdoll, constraints"
+  engine-version: "5.9"
   category: systems
 ---
 
@@ -85,7 +86,7 @@ void AMyActor::BeginPlay()
     Mesh->OnComponentHit.AddDynamic(this, &AMyActor::OnHit);
 }
 
-// Exact delegate signatures required — see PrimitiveComponent.h:1457,1468
+// Exact delegate signatures required — see PrimitiveComponent.h:1461,1472
 UFUNCTION()
 void AMyActor::OnBeginOverlap(UPrimitiveComponent* Comp, AActor* Other,
     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
@@ -240,16 +241,16 @@ internals differ from PhysX but the `UPrimitiveComponent` API is unchanged.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
-- `Runtime/Engine/Classes/Engine/EngineTypes.h` — `ECollisionChannel`:1098,
-  `ECollisionResponse`:1346, `ECollisionEnabled`:1805, `FCollisionResponseContainer`:1445.
+Engine source (UE 5.9, under `Engine/Source/`):
+- `Runtime/Engine/Classes/Engine/EngineTypes.h` — `ECollisionChannel`:1103,
+  `ECollisionResponse`:1351, `ECollisionEnabled`:1811, `FCollisionResponseContainer`:1451.
 - `Runtime/Engine/Classes/Engine/HitResult.h` — `FHitResult`:20.
-- `Runtime/Engine/Classes/Components/PrimitiveComponent.h` — `OnComponentHit`:1457,
-  `OnComponentBeginOverlap`:1468, `SetGenerateOverlapEvents`:418, `SetSimulatePhysics`:1661,
-  `AddImpulse`:1692, `AddForce`:1759, `SetCollisionEnabled`:2026,
-  `SetCollisionProfileName`:2036, `SetCollisionObjectType`:2047,
-  `SetCollisionResponseToAllChannels`:2952, `GetBodyInstance`:2337,
-  `SetMassOverrideInKg`:2857.
+- `Runtime/Engine/Classes/Components/PrimitiveComponent.h` — `OnComponentHit`:1461,
+  `OnComponentBeginOverlap`:1472, `SetGenerateOverlapEvents`:418, `SetSimulatePhysics`:1665,
+  `AddImpulse`:1696, `AddForce`:1763, `SetCollisionEnabled`:2034,
+  `SetCollisionProfileName`:2044, `SetCollisionObjectType`:2055,
+  `SetCollisionResponseToAllChannels`:2960, `GetBodyInstance`:2345,
+  `SetMassOverrideInKg`:2865.
 - `Runtime/Engine/Classes/PhysicsEngine/BodyInstance.h` — `LinearDamping`:629,
   `AngularDamping`:633.
 - `Runtime/Engine/Classes/PhysicsEngine/ConstraintInstance.h` — `FConstraintInstance`:254,
@@ -257,9 +258,9 @@ Engine source (UE 5.8, under `Engine/Source/`):
 - `Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h` —
   `UPhysicsConstraintComponent`:24, `BreakConstraint`:142, `SetLinearPositionDrive`:151,
   `SetAngularDriveMode`:213.
-- `Runtime/Engine/Classes/Engine/World.h` — `LineTraceSingleByChannel`:2161,
-  `LineTraceMultiByChannel`:2210, `SweepSingleByChannel`:2286, `SweepMultiByChannel`:2325,
-  `OverlapMultiByChannel`:2418.
+- `Runtime/Engine/Classes/Engine/World.h` — `LineTraceSingleByChannel`:2162,
+  `LineTraceMultiByChannel`:2211, `SweepSingleByChannel`:2287, `SweepMultiByChannel`:2326,
+  `OverlapMultiByChannel`:2419.
 - `Runtime/Engine/Public/CollisionQueryParams.h` — `FCollisionQueryParams`:42,
   `AddIgnoredActor`:243, `bTraceComplex`:51.
 - `Runtime/PhysicsCore/Public/PhysicalMaterials/PhysicalMaterial.h` —

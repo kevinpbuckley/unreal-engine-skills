@@ -8,7 +8,7 @@ description: Design and plan Unreal Engine gameplay systems before implementatio
   comparing architectural approaches, deciding where logic or state should live, mapping a
   feature across gameplay classes, or preparing a safe task list for an implementation agent.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cross-cutting-meta
 ---
 

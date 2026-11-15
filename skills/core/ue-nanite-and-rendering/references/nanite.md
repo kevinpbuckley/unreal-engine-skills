@@ -15,12 +15,12 @@ At build time, Nanite analyzes each mesh and produces a hierarchical cluster tre
 2. **Hierarchy nodes** (`FPackedHierarchyNode`) — form a BVH over clusters. The GPU
    traverses this hierarchy per frame to select visible clusters at the right LOD.
 3. **Pages** — clusters are packed into streaming pages. Root pages reside in memory at
-   all times (`FResources::RootData`, `NaniteResources.h`:455); the remainder are streamed
-   on demand from the `StreamablePages` bulk store (`:456`).
+   all times (`FResources::RootData`, `NaniteResources.h`:458); the remainder are streamed
+   on demand from the `StreamablePages` bulk store (`:459`).
 4. **Imposter** — a billboard fallback used for very distant instances when even the
    coarsest cluster is too expensive.
 
-`Nanite::FResources` (`NaniteResources.h`:452) is the runtime handle:
+`Nanite::FResources` (`NaniteResources.h`:455) is the runtime handle:
 
 | Field | Meaning |
 |---|---|
@@ -99,7 +99,7 @@ Fallback quality is controlled by `FallbackPercentTriangles` (triangle budget) a
 `FallbackRelativeError` toward 0 (less simplification). For runtime memory savings,
 increase it (more aggressive simplification).
 
-`UStaticMesh::HasNaniteFallbackMesh(EShaderPlatform)` (`StaticMesh.h`:2192) returns
+`UStaticMesh::HasNaniteFallbackMesh(EShaderPlatform)` (`StaticMesh.h`:2234) returns
 `true` if a fallback was built for the given platform.
 
 ## Nanite visualization modes

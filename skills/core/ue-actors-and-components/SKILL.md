@@ -8,7 +8,7 @@ description: Build and compose gameplay objects from Actors and Components in Un
   components, spawning actors, registering runtime components, or debugging lifecycle/ticking/
   attachment/overlap issues.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -249,21 +249,21 @@ GetComponents<USceneComponent>(All);                                     // all 
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/`):
 - `Engine/Classes/GameFramework/Actor.h` — `AActor` lifecycle, `RootComponent`:1024,
   `PrimaryActorTick`:318, `SetRootComponent`:2493, `AttachToActor`:2029, `FinishSpawning`:3117,
   `GetComponentByClass`:3796.
-- `Engine/Classes/Components/ActorComponent.h` — `UActorComponent`, `RegisterComponent`:1322,
-  `OnRegister`:830, `InitializeComponent`:919, `BeginPlay`:936, `TickComponent`:976,
+- `Engine/Classes/Components/ActorComponent.h` — `UActorComponent`, `RegisterComponent`:1325,
+  `OnRegister`:833, `InitializeComponent`:922, `BeginPlay`:939, `TickComponent`:979,
   `PrimaryComponentTick`:177, `bWantsInitializeComponent`:340.
 - `Engine/Classes/Components/SceneComponent.h` — transforms, `SetupAttachment`:734,
   `AttachToComponent`:752, `DetachFromComponent`:786, `Mobility`:303.
-- `Engine/Classes/Components/PrimitiveComponent.h` — rendering/collision, `OnComponentBeginOverlap`:1468,
-  `SetGenerateOverlapEvents`:418, `SetCollisionEnabled`:2026.
-- `Engine/Classes/Engine/World.h` — `SpawnActor`/`SpawnActorDeferred`:3851, `FActorSpawnParameters`:420.
-- `Engine/Classes/Engine/EngineTypes.h` — `FAttachmentTransformRules`:75, `EEndPlayReason`:3670,
-  `ESpawnActorCollisionHandlingMethod`:4411.
-- `CoreUObject/Public/UObject/Object.h` — `CreateDefaultSubobject`:151.
+- `Engine/Classes/Components/PrimitiveComponent.h` — rendering/collision, `OnComponentBeginOverlap`:1472,
+  `SetGenerateOverlapEvents`:418, `SetCollisionEnabled`:2034.
+- `Engine/Classes/Engine/World.h` — `SpawnActor`/`SpawnActorDeferred`:3852, `FActorSpawnParameters`:419.
+- `Engine/Classes/Engine/EngineTypes.h` — `FAttachmentTransformRules`:75, `EEndPlayReason`:3719,
+  `ESpawnActorCollisionHandlingMethod`:4460.
+- `CoreUObject/Public/UObject/Object.h` — `CreateDefaultSubobject`:153.
 
 Official docs (UE 5.8):
 - Actor Lifecycle — <https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-actor-lifecycle>

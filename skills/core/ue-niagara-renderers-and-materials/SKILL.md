@@ -1,8 +1,8 @@
 ---
 name: ue-niagara-renderers-and-materials
-description: Choose and author Niagara sprite, mesh, and ribbon renderers and their VFX materials in Unreal Engine 5.8. Use for SubUV animation, trails, beams, mesh particles, UV motion, or particle-driven material controls.
+description: Choose and author Niagara sprite, mesh, and ribbon renderers and their VFX materials in Unreal Engine 5.8 and 5.9. Use for SubUV animation, trails, beams, mesh particles, UV motion, or particle-driven material controls.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: vfx-audio
 ---
 
@@ -35,6 +35,6 @@ Inspect the effect from gameplay camera angles, with scene lighting and exposure
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraSpriteRendererProperties.h` (`UNiagaraSpriteRendererProperties`).
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraMeshRendererProperties.h` (`UNiagaraMeshRendererProperties`).
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraRibbonRendererProperties.h` (`UNiagaraRibbonRendererProperties`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraSpriteRendererProperties.h` (`UNiagaraSpriteRendererProperties`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraMeshRendererProperties.h` (`UNiagaraMeshRendererProperties`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraRibbonRendererProperties.h` (`UNiagaraRibbonRendererProperties`).

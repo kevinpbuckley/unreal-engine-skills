@@ -3,7 +3,7 @@
 Deep dive for [../SKILL.md](../SKILL.md). Covers the Lumen architecture, the two
 tracing modes, the full settings table from `FPostProcessSettings`, emissive GI,
 sky light integration, and hardware ray tracing notes. Grounded in UE 5.8
-(`Engine/Source/Runtime/Engine/Classes/Engine/Scene.h` — `FPostProcessSettings`:711)
+(`Engine/Source/Runtime/Engine/Classes/Engine/Scene.h` — `FPostProcessSettings`:715)
 and the official
 [Lumen Global Illumination and Reflections](https://dev.epicgames.com/documentation/unreal-engine/lumen-global-illumination-and-reflections-in-unreal-engine)
 doc.
@@ -50,7 +50,7 @@ To disable static lighting interference:
 - HRT scene update cost scales with instance count; scenes with >100k instances see
   significant update overhead — use SRT for open worlds at that scale.
 
-## Post Process Volume settings (FPostProcessSettings, Scene.h:711)
+## Post Process Volume settings (FPostProcessSettings, Scene.h:715)
 
 All Lumen-related overrides require the corresponding `bOverride_*` bit to be set;
 the editor's checkbox does this automatically.

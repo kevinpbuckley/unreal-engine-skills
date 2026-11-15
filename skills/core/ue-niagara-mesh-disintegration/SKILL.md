@@ -1,8 +1,8 @@
 ---
 name: ue-niagara-mesh-disintegration
-description: Build mesh-sampled Niagara dissolve and disintegration effects in Unreal Engine 5.8. Use when particles reproduce a static or animated skeletal mesh, peel away from its surface, or coordinate a material dissolve with particle emission.
+description: Build mesh-sampled Niagara dissolve and disintegration effects in Unreal Engine 5.8 and 5.9. Use when particles reproduce a static or animated skeletal mesh, peel away from its surface, or coordinate a material dissolve with particle emission.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: vfx-audio
 ---
 
@@ -32,6 +32,6 @@ Test a static object and, where relevant, an animated pose. Inspect the dissolve
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Internal/DataInterface/NiagaraDataInterfaceStaticMesh.h` (`UNiagaraDataInterfaceStaticMesh`).
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceSkeletalMesh.h` (`UNiagaraDataInterfaceSkeletalMesh`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstanceDynamic.h` (`UMaterialInstanceDynamic`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Internal/DataInterface/NiagaraDataInterfaceStaticMesh.h` (`UNiagaraDataInterfaceStaticMesh`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceSkeletalMesh.h` (`UNiagaraDataInterfaceSkeletalMesh`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstanceDynamic.h` (`UMaterialInstanceDynamic`).

@@ -101,7 +101,7 @@ calling `IMPLEMENT_PRIMARY_GAME_MODULE` in its `.cpp` implementation file.
 IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultModuleImpl, MyGame, "MyGame");
 ```
 
-- The macro is defined at `Runtime/Core/Public/Modules/ModuleManager.h:1100–1136`.
+- The macro is defined at `Runtime/Core/Public/Modules/ModuleManager.h:1114–1150`.
 - In modular (editor/development) builds it expands to `IMPLEMENT_GAME_MODULE`, which
   itself expands to `IMPLEMENT_MODULE`. In monolithic (shipping) builds it additionally
   writes the project name string into `GInternalProjectName` so the executable knows what

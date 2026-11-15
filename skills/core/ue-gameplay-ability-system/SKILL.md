@@ -12,7 +12,8 @@ description: Build abilities, attributes, and effects with Unreal's Gameplay Abi
   or networked server-authoritative ability activation with client prediction. GAS requires the
   GameplayAbilities plugin and AbilitySystemGlobals initialization.
 metadata:
-  engine-version: "5.8"
+  aliases: "GAS, Gameplay Ability System, abilities, gameplay effects, attributes, AbilitySystemComponent, ASC"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -312,7 +313,7 @@ Cue handlers are `UGameplayCueNotify_Static` (one-shot, `OnExecute`) or
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/`):
+Engine source (UE 5.9, `Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/`):
 - `AbilitySystemComponent.h` — `UAbilitySystemComponent`: `GiveAbility`:949,
   `TryActivateAbility`:1040, `TryActivateAbilityByClass`:1032, `InitAbilityActorInfo`:1523,
   `MakeOutgoingSpec`:372, `MakeEffectContext`:376, `ApplyGameplayEffectSpecToTarget`:339,
@@ -330,7 +331,7 @@ Engine source (UE 5.8, `Engine/Plugins/Runtime/GameplayAbilities/Source/Gameplay
   (Instant/Infinite/HasDuration), `EGameplayEffectVersion`:95 (Modular53).
 - `AbilitySystemInterface.h` — `IAbilitySystemInterface::GetAbilitySystemComponent()`:30.
 - `AbilitySystemGlobals.h` — `UAbilitySystemGlobals::InitGlobalData()`:69.
-- `Abilities/Tasks/AbilityTask.h` — `UAbilityTask`:90, `NewAbilityTask<T>`:136.
+- `Abilities/Tasks/AbilityTask.h` — `UAbilityTask`:90, `NewAbilityTask<T>`:140.
 - `GameplayCueNotify_Static.h` — `UGameplayCueNotify_Static`:19.
 - `GameplayCueNotify_Actor.h` — `AGameplayCueNotify_Actor` (actor-spawning cue notify):20.
 

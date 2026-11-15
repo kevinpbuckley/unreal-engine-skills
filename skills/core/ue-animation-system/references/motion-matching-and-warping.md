@@ -134,8 +134,8 @@ a full Motion Matching database for deterministic asset selection.
 ## Related
 
 - `PoseSearchLibrary.h`: `UPoseSearchLibrary`:141, `FMotionMatchingState`:56.
-- `MotionWarpingComponent.h`: `UMotionWarpingComponent`:100,
-  `AddOrUpdateWarpTargetFromTransform`:186, `bSearchForWindowsInAnimsWithinMontages`:112.
+- `MotionWarpingComponent.h`: `UMotionWarpingComponent`:107,
+  `AddOrUpdateWarpTargetFromTransform`:196, `bSearchForWindowsInAnimsWithinMontages`:119.
 - Official doc: [Motion Matching](https://dev.epicgames.com/documentation/unreal-engine/motion-matching-in-unreal-engine)
 - Official doc: [Dynamic Asset Selection](https://dev.epicgames.com/documentation/unreal-engine/dynamic-asset-selection-in-unreal-engine)
 - Official doc: [Locomotion](https://dev.epicgames.com/documentation/unreal-engine/locomotion-in-unreal-engine)

@@ -262,7 +262,7 @@ MoverComp->IsModifierActiveOrQueued(Handle);   // :671
 resizes the capsule (assumes the updated component *is* a capsule), applies
 movement-settings changes on start, reverts on end, and reports the
 `Mover_IsCrouching` tag. `UCharacterMoverComponent::Crouch/UnCrouch`
-(`CharacterMoverComponent.h:95-99`) queue/cancel it and broadcast
+(`CharacterMoverComponent.h:96-100`) queue/cancel it and broadcast
 `OnStanceChanged` when `bHandleStanceChanges` is enabled. `EStanceMode::Prone`
 exists but is not implemented in 5.8. Note the modifier reads "standing" values
 from the actor CDO when reverting — non-default capsule sizes set at runtime

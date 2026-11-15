@@ -15,7 +15,7 @@ Spawning can **fail and return null** (e.g. blocked location), so null-check the
 
 ## `SpawnActor` variants
 
-Templated overloads return the typed pointer (`World.h`:~3790+):
+Templated overloads return the typed pointer (`World.h`:~3791+):
 
 ```cpp
 // Class supplied as a UClass / TSubclassOf, with transform + params:
@@ -31,7 +31,7 @@ subclass. Spawning the C++ class directly bypasses any components/defaults added
 
 ## `FActorSpawnParameters`
 
-`World.h`:420 — the optional knobs. Common fields:
+`World.h`:419 — the optional knobs. Common fields:
 
 | Field | Purpose |
 |---|---|
@@ -54,7 +54,7 @@ Params.SpawnCollisionHandlingOverride =
 
 ## Collision handling on spawn
 
-`ESpawnActorCollisionHandlingMethod` (`EngineTypes.h`:4411) decides what happens when the spawn
+`ESpawnActorCollisionHandlingMethod` (`EngineTypes.h`:4460) decides what happens when the spawn
 transform overlaps existing geometry:
 
 | Value | Behavior |
@@ -98,7 +98,7 @@ Actor->SetLifeSpan(5.f);          // auto-Destroy after N seconds
 garbage collection frees it later. `EndPlay(EEndPlayReason::Destroyed)` runs as part of this —
 put cleanup there, since `EndPlay` also covers level transitions, PIE end, and streaming unload.
 Don't keep raw pointers to actors that may be destroyed; use `TWeakObjectPtr<AActor>` and check
-`IsValid()`. `EEndPlayReason` is defined at `EngineTypes.h`:3670.
+`IsValid()`. `EEndPlayReason` is defined at `EngineTypes.h`:3719.
 
 ## Object pooling (when spawn/destroy churn matters)
 

@@ -1,8 +1,8 @@
 ---
 name: ue-master-material-authoring
-description: Design reusable Unreal Engine 5.8 master materials and material instances. Use for PBR texture controls, material functions, UV options, static switches, channel-packed masks, or maintaining a family of related materials.
+description: Design reusable Unreal Engine 5.8 and 5.9 master materials and material instances. Use for PBR texture controls, material functions, UV options, static switches, channel-packed masks, or maintaining a family of related materials.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -31,8 +31,8 @@ Create a few representative instances from the master: one with only defaults, o
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/Material.h` (`UMaterial`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstance.h` (`UMaterialInstance`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialFunction.h` (`UMaterialFunction`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionStaticSwitchParameter.h` (`UMaterialExpressionStaticSwitchParameter`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionComponentMask.h` (`UMaterialExpressionComponentMask`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/Material.h` (`UMaterial`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstance.h` (`UMaterialInstance`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialFunction.h` (`UMaterialFunction`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionStaticSwitchParameter.h` (`UMaterialExpressionStaticSwitchParameter`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionComponentMask.h` (`UMaterialExpressionComponentMask`).

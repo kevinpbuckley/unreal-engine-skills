@@ -14,7 +14,7 @@ Every Blueprint involves two cooperating objects:
 
 | Object | Header | Role |
 |---|---|---|
-| `UBlueprint` | `Engine/Blueprint.h`:402 | Editor-only asset; holds graphs, variable metadata, component templates, compile settings |
+| `UBlueprint` | `Engine/Blueprint.h`:394 | Editor-only asset; holds graphs, variable metadata, component templates, compile settings |
 | `UBlueprintGeneratedClass` | `Engine/BlueprintGeneratedClass.h`:429 | Runtime `UClass`; contains `FProperty`s, `UFunction`s, component template arrays, timelines |
 
 `UBlueprint` inherits from `UBlueprintCore` (`Engine/BlueprintCore.h`:13), which holds two
@@ -41,21 +41,21 @@ like any other `UClass`.
 | `BPTYPE_FunctionLibrary` (`:74`) | Blueprint Function Library | Static utility functions |
 | `BPTYPE_Const` (`:66`) | Const Blueprint Class | All methods treated as const; no state mutation |
 
-The `EBlueprintType` is stored in `UBlueprint::BlueprintType` (`Blueprint.h`:416).
+The `EBlueprintType` is stored in `UBlueprint::BlueprintType` (`Blueprint.h`:408).
 
 ## What UBlueprint stores
 
 Key fields of `UBlueprint` (all `WITH_EDITORONLY_DATA` where noted):
 
-- `ParentClass` (`:412`) — the C++ or Blueprint parent this BP derives from.
-- `UbergraphPages` (`:543`) — the event graph pages that get merged into a single uber-graph.
-- `FunctionGraphs` (`:547`) — user-authored function graphs.
-- `MacroGraphs` (`:555`) — macro graphs.
-- `SimpleConstructionScript` (`:538`) — the component tree authored in the Components panel.
-- `ComponentTemplates` (`:572`) — component template objects (also stored on `UBlueprintGeneratedClass`).
-- `bRunConstructionScriptOnDrag` (`:453`) — whether the Construction Script reruns while dragging
+- `ParentClass` (`:404`) — the C++ or Blueprint parent this BP derives from.
+- `UbergraphPages` (`:535`) — the event graph pages that get merged into a single uber-graph.
+- `FunctionGraphs` (`:539`) — user-authored function graphs.
+- `MacroGraphs` (`:547`) — macro graphs.
+- `SimpleConstructionScript` (`:530`) — the component tree authored in the Components panel.
+- `ComponentTemplates` (`:564`) — component template objects (also stored on `UBlueprintGeneratedClass`).
+- `bRunConstructionScriptOnDrag` (`:445`) — whether the Construction Script reruns while dragging
   the actor in the editor (can be expensive for heavy scripts).
-- `CompileMode` (`:504`) — `EBlueprintCompileMode`: Default, Development, or FinalRelease.
+- `CompileMode` (`:496`) — `EBlueprintCompileMode`: Default, Development, or FinalRelease.
 
 ## What UBlueprintGeneratedClass stores
 
@@ -104,7 +104,7 @@ current graph state.
 
 The generated class is named `<BlueprintName>_C`. Its CDO is `Default__<BlueprintName>_C`.
 These names appear in log output and are used by redirectors. The pattern is baked into
-`UBlueprint::GetBlueprintClassNames()` (`Blueprint.h`:817).
+`UBlueprint::GetBlueprintClassNames()` (`Blueprint.h`:809).
 
 ## Version notes
 

@@ -154,7 +154,7 @@ across platforms. See Epic's build infrastructure samples for reference.
 | Blueprint-visible | no | no |
 | Ground Truth Data | no | via functional test |
 
-## Source citations (UE 5.8)
+## Source citations (UE 5.9)
 
 - `Developer/LowLevelTestsRunner/Public/TestHarness.h` — Catch2 bridge, `std::ostream`
   adapters for UE types.

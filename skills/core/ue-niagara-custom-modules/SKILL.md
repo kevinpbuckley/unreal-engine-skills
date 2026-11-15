@@ -1,8 +1,8 @@
 ---
 name: ue-niagara-custom-modules
-description: Build Niagara scratch-pad modules and emitter interactions in Unreal Engine 5.8. Use for custom particle attributes, attribute readers, collision-driven secondary effects, texture sampling, or reusable rain and waterfall behaviors.
+description: Build Niagara scratch-pad modules and emitter interactions in Unreal Engine 5.8 and 5.9. Use for custom particle attributes, attribute readers, collision-driven secondary effects, texture sampling, or reusable rain and waterfall behaviors.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: vfx-audio
 ---
 
@@ -30,6 +30,6 @@ Test the module at zero and high spawn rates, with missing inputs and changing e
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraScript.h` (`UNiagaraScript`).
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceParticleRead.h` (`UNiagaraDataInterfaceParticleRead`).
-- UE 5.8 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceTexture.h` (`UNiagaraDataInterfaceTexture`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraScript.h` (`UNiagaraScript`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceParticleRead.h` (`UNiagaraDataInterfaceParticleRead`).
+- UE 5.9 source: `Engine/Plugins/FX/Niagara/Source/Niagara/Classes/NiagaraDataInterfaceTexture.h` (`UNiagaraDataInterfaceTexture`).

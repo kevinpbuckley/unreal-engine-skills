@@ -5,7 +5,7 @@
  * Verifies that every engine-source path cited in the skills
  * (Engine/Source/... and Engine/Plugins/...) exists on disk in a real engine
  * install. This keeps the repo's core quality claim — "ground claims in real
- * 5.8 source paths" — honest, and doubles as the upgrade tool when re-targeting
+ * 5.9 source paths" — honest, and doubles as the upgrade tool when re-targeting
  * a new engine version: anything that moved fails immediately.
  *
  * Usage:
@@ -14,7 +14,12 @@
  *
  * Engine root resolution:
  *   1. UE_ENGINE_ROOT env var (the directory that CONTAINS Engine/), if set.
- *   2. E:\Program Files\Epic Games\UE_5.8 (this machine's primary install).
+ *   2. C:\Program Files\Epic Games\UE_5.9 (the default Epic Games Launcher install).
+ *
+ * Also checks that a line number written right after a full cited path
+ * (`Engine/.../File.h:123` or `Engine/.../File.h`:123) is not past the end of the
+ * file. It cannot tell whether that line still holds the symbol: re-map line
+ * numbers when re-targeting a new engine version.
  *
  * Exit code 0 = all cited paths exist; 1 = at least one missing (or engine
  * root not found).
@@ -28,7 +33,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const skillsRoot = path.join(repoRoot, 'skills');
 
-const DEFAULT_ENGINE_ROOT = 'E:\\Program Files\\Epic Games\\UE_5.8';
+const DEFAULT_ENGINE_ROOT = 'C:\\Program Files\\Epic Games\\UE_5.9';
 const engineRoot = process.env.UE_ENGINE_ROOT?.trim() || DEFAULT_ENGINE_ROOT;
 
 // Matches Engine/Source/... and Engine/Plugins/... citations ending in a
@@ -36,7 +41,11 @@ const engineRoot = process.env.UE_ENGINE_ROOT?.trim() || DEFAULT_ENGINE_ROOT;
 const CITATION_RE =
   /Engine[\\/](?:Source|Plugins)[\\/][A-Za-z0-9_.\-\\/]+?\.(?:h|hpp|cpp|inl|cs|ini|usf|ush)\b/g;
 
-// A cited base DIRECTORY, e.g. "Engine source (UE 5.8, `Engine/Source/Runtime/GameplayTags/`):".
+// A full citation followed by a line number or range: `Engine/.../X.h:12`, `Engine/.../X.h`:12-40.
+const LINE_REF_RE =
+  /(Engine[\\/](?:Source|Plugins)[\\/][A-Za-z0-9_.\-\\/]+?\.(?:h|hpp|cpp|inl|cs|ini|usf|ush))`?:L?(\d+)(?:[-–](\d+))?/g;
+
+// A cited base DIRECTORY, e.g. "Engine source (UE 5.9, `Engine/Source/Runtime/GameplayTags/`):".
 // Subsequent backticked relative paths in list items resolve against the most
 // recent base until the next base appears.
 const BASE_DIR_RE = /Engine[\\/](?:Source|Plugins)[\\/][A-Za-z0-9_.\-\\/]+[\\/](?=`|\)|\s|$)/;
@@ -95,6 +104,8 @@ async function main() {
 
   let citedTotal = 0;
   let missingTotal = 0;
+  let lineRefsTotal = 0;
+  const lineCountCache = new Map(); // normalized engine-relative path -> line count
   const fileCache = new Map(); // normalized engine-relative path -> boolean
   const failures = [];
 
@@ -150,6 +161,24 @@ async function main() {
       }
     }
 
+    // Line numbers written right after a full path: `.../File.h:123`, `.../File.h`:123, ...:120-140.
+    for (const m of text.matchAll(LINE_REF_RE)) {
+      const cited = m[1].replace(/[\\]/g, '/');
+      const line = Math.max(Number(m[2]), Number(m[3] || 0));
+      if (!fileCache.get(cited)) continue; // missing files are reported above
+      let count = lineCountCache.get(cited);
+      if (count === undefined) {
+        const body = await readFile(path.join(engineRoot, ...cited.split('/')), 'utf8');
+        count = body.split('\n').length;
+        lineCountCache.set(cited, count);
+      }
+      lineRefsTotal++;
+      if (line > count) {
+        missingHere.push(`${cited}:${line} (file has ${count} lines)`);
+        missingTotal++;
+      }
+    }
+
     if (missingHere.length > 0) {
       failures.push({ file: path.relative(repoRoot, mdFile), missing: missingHere });
     }
@@ -158,9 +187,10 @@ async function main() {
   console.log(`[check-citations] Engine root: ${engineRoot}`);
   console.log(`[check-citations] Markdown files scanned: ${mdFiles.length}`);
   console.log(`[check-citations] Unique citations checked: ${citedTotal}`);
+  console.log(`[check-citations] Line numbers after a full path checked: ${lineRefsTotal}`);
 
   if (failures.length === 0) {
-    console.log('[check-citations] OK — every cited engine path exists on disk.');
+    console.log('[check-citations] OK — every cited engine path exists on disk and no cited line is past the end of its file.');
     return;
   }
 

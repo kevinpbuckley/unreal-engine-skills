@@ -146,7 +146,7 @@ When reading a parameter, the engine walks the chain from child to root and
 returns the first overridden value it finds. When setting on a MID, only that
 MID's override table is written — the parent MIC is never mutated.
 
-`UMaterialInstance::GetMaterial()` (on `MaterialInstance.h`:626) returns the
+`UMaterialInstance::GetMaterial()` (on `MaterialInstance.h`:674) returns the
 root `UMaterial` regardless of chain depth.
 
 ## MID lifetime gotchas

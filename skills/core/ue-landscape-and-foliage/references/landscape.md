@@ -140,7 +140,7 @@ For pure runtime slope/height queries (without editor-only APIs), trace against 
 landscape's collision (a `ULandscapeHeightfieldCollisionComponent`) using
 `GetWorld()->LineTraceSingleByChannel`.
 
-## Key source paths (UE 5.8)
+## Key source paths (UE 5.9)
 
 All under `Engine/Source/Runtime/Landscape/Classes/`:
 - `Landscape.h` — `ALandscape`:276

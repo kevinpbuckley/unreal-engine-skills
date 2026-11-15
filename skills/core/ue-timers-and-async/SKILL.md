@@ -10,7 +10,7 @@ description: Schedule and defer work in Unreal C++ — FTimerManager (SetTimer w
   one frame, offloading CPU-heavy work to a background thread, or building a non-actor
   ticker. Cross-references ue-actors-and-components (EndPlay cleanup) and ue-delegates-and-events.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -378,7 +378,7 @@ subclass `UBlueprintAsyncActionBase` instead of implementing a raw `FPendingLate
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Classes/Engine/TimerHandle.h` — `FTimerHandle`:11.
 - `Runtime/Engine/Public/TimerManager.h` — `FTimerManager`:137, `SetTimer`:167,
   `SetTimerForNextTick`:249, `ClearTimer`:281, `PauseTimer`:304, `UnPauseTimer`:311,
@@ -395,7 +395,7 @@ Engine source (UE 5.8, under `Engine/Source/`):
 - `Runtime/Core/Public/Tasks/Task.h` — `UE::Tasks::TTask`, `FTask` alias, `Launch`,
   `AddNested`, `Wait` in `namespace UE::Tasks`.
 - `Runtime/Core/Public/Tasks/Pipe.h` — `UE::Tasks::FPipe`:28.
-- `Runtime/Core/Public/HAL/Runnable.h` — `FRunnable`:19 (`Init`, `Run`, `Stop`, `Exit`).
+- `Runtime/Core/Public/HAL/Runnable.h` — `FRunnable`:20 (`Init`, `Run`, `Stop`, `Exit`).
 - `Runtime/Core/Public/HAL/RunnableThread.h` — `FRunnableThread`:19, `Create`:44.
 - `Runtime/Core/Public/Containers/Ticker.h` — `FTSTicker`:26, `AddTicker`:45,
   `RemoveTicker`:66, `FTSTickerObjectBase`:136.

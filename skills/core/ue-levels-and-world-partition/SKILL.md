@@ -10,7 +10,8 @@ description: Structure and stream Unreal worlds in C++ — UWorld (persistent le
   toggling content sets (day/night, quest states) at runtime, creating reusable instanced
   level chunks, or choosing between World Partition and explicit sublevels.
 metadata:
-  engine-version: "5.8"
+  aliases: "level, levels, map, maps, level streaming, World Partition, data layers, HLOD, level instance"
+  engine-version: "5.9"
   category: world-building
 ---
 
@@ -102,7 +103,7 @@ if (UWorldPartition* WP = GetWorld()->GetWorldPartition())
 UDataLayerManager* DLM = GetWorld()->GetDataLayerManager(); // null for non-WP worlds
 ```
 
-Source: `Runtime/Engine/Classes/Engine/World.h`:2955 (`GetWorldPartition`), :2963 (`GetDataLayerManager`).
+Source: `Runtime/Engine/Classes/Engine/World.h`:2956 (`GetWorldPartition`), :2963 (`GetDataLayerManager`).
 
 ## Data Layers
 
@@ -242,14 +243,14 @@ streaming.
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Source/`):
-- `Runtime/Engine/Classes/Engine/World.h`:931 — `UWorld`; :953 `PersistentLevel`;
-  :1001 `StreamingLevels`; :2955 `GetWorldPartition`; :2963 `GetDataLayerManager`.
+Engine source (UE 5.9, `Engine/Source/`):
+- `Runtime/Engine/Classes/Engine/World.h`:930 — `UWorld`; :952 `PersistentLevel`;
+  :1000 `StreamingLevels`; :2956 `GetWorldPartition`; :2964 `GetDataLayerManager`.
 - `Runtime/Engine/Classes/Engine/Level.h`:419 — `ULevel`; :445 `bUseExternalActors` (OFPA).
 - `Runtime/Engine/Classes/Engine/LevelStreaming.h`:138 — `ULevelStreaming`.
 - `Runtime/Engine/Classes/Kismet/GameplayStatics.h`:306 — `LoadStreamLevel`; :314 `UnloadStreamLevel`.
 - `Runtime/Engine/Public/WorldPartition/WorldPartition.h`:152 — `UWorldPartition`.
-- `Runtime/Engine/Public/WorldPartition/WorldPartitionSubsystem.h`:63 — `UWorldPartitionSubsystem`.
+- `Runtime/Engine/Public/WorldPartition/WorldPartitionSubsystem.h`:96 — `UWorldPartitionSubsystem`.
 - `Runtime/Engine/Public/WorldPartition/DataLayer/DataLayerAsset.h`:29 — `UDataLayerAsset`.
 - `Runtime/Engine/Public/WorldPartition/DataLayer/DataLayerInstance.h`:59 — `UDataLayerInstance`; :23 `EDataLayerRuntimeState`.
 - `Runtime/Engine/Public/WorldPartition/DataLayer/DataLayerManager.h`:46 — `UDataLayerManager`; :82 `SetDataLayerInstanceRuntimeState`.

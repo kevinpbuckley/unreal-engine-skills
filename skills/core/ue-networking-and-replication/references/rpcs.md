@@ -136,7 +136,7 @@ spawned with `Params.Owner = PlayerController`.
 Calling a Server RPC on an unowned actor is silently dropped — no error, no log at default
 verbosity. Enable `net.RPC.Debug 1` to see drops.
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `Runtime/Engine/Classes/GameFramework/Actor.h` — `HasAuthority` :1938, `GetLocalRole` :776,
   `GetRemoteRole` :780, `bReplicates` :593.

@@ -10,7 +10,7 @@ description: Wire up callbacks and events in Unreal C++ using delegates — sing
   observer pattern, exposing C++ events to Blueprints, decoupling game systems,
   binding overlap/hit/ability callbacks, or debugging delegate crashes and silent no-ops.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -229,14 +229,14 @@ separately. (`DelegateCombinations.h:26`)
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/Core/Public/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/Core/Public/`):
 - `Delegates/DelegateCombinations.h` — all `DECLARE_*` macros: single-cast:20,
   multicast:23, TS multicast:26, event:32, dynamic:35, dynamic multicast:38.
 - `Delegates/Delegate.h` — `TDelegate`/`TMulticastDelegate` concepts, binding table,
-  payload variable documentation; `UE_PRIVATE_DECLARE_DELEGATE`:205,
-  `UE_PRIVATE_DECLARE_MULTICAST_DELEGATE`:209, `UE_PRIVATE_DECLARE_EVENT`:221,
-  `UE_PRIVATE_DECLARE_DYNAMIC_DELEGATE`:231, `UE_PRIVATE_DECLARE_DYNAMIC_MULTICAST_DELEGATE`:239.
-  (The old `FUNC_DECLARE_*` forms are deprecated in 5.8, `:247`–`:252`.)
+  payload variable documentation; `UE_PRIVATE_DECLARE_DELEGATE`:206,
+  `UE_PRIVATE_DECLARE_MULTICAST_DELEGATE`:210, `UE_PRIVATE_DECLARE_EVENT`:222,
+  `UE_PRIVATE_DECLARE_DYNAMIC_DELEGATE`:232, `UE_PRIVATE_DECLARE_DYNAMIC_MULTICAST_DELEGATE`:240.
+  (The old `FUNC_DECLARE_*` forms are deprecated in 5.8, `:248`–`:253`.)
 - `Delegates/DelegateSignatureImpl.inl` — `TDelegateRegistration`/`TDelegate`:327,
   `BindLambda`:138, `BindWeakLambda`:163, `BindUObject`:288; `TMulticastDelegateRegistration`:743,
   `AddLambda`:823, `AddWeakLambda`:853, `AddUObject`:1020, `Remove`:1062,

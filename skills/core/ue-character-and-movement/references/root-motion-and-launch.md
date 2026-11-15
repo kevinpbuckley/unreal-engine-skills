@@ -14,7 +14,7 @@ Grounded in UE 5.8
 | **Root motion sources (RMS)** | `FRootMotionSource` objects applied to CMC | Yes — via `FRootMotionSourceGroup` in `FSavedMove_Character` |
 
 Both systems feed into `UCharacterMovementComponent::CurrentRootMotion`
-(`CMC.h:2795`) which CMC evaluates inside `PerformMovement` (`CMC.h:2291`).
+(`CMC.h:2803`) which CMC evaluates inside `PerformMovement` (`CMC.h:2299`).
 
 ## Animation root motion
 
@@ -62,14 +62,14 @@ MoveSource->Duration         = 0.35f;
 MoveSource->bRestrictSpeedToExpected = true;   // clamp to keep arc clean
 
 uint16 SourceID = GetCharacterMovement()->ApplyRootMotionSource(MoveSource);
-// CMC.h:2807 — returns ID for later removal
+// CMC.h:2815 — returns ID for later removal
 ```
 
 Remove when cancelled:
 ```cpp
-GetCharacterMovement()->RemoveRootMotionSourceByID(SourceID); // CMC.h:2822
+GetCharacterMovement()->RemoveRootMotionSourceByID(SourceID); // CMC.h:2830
 // OR by name:
-GetCharacterMovement()->RemoveRootMotionSource(FName("DodgeRoll")); // CMC.h:2819
+GetCharacterMovement()->RemoveRootMotionSource(FName("DodgeRoll")); // CMC.h:2827
 ```
 
 ## LaunchCharacter
@@ -97,8 +97,8 @@ set `Velocity` on the client for launches.
 
 When a server applies a root motion source, CMC synchronizes it to the client
 via the `FSavedMove_Character` serialization path:
-- Server sends `ServerCorrectionRootMotion` (`CMC.h:2798`) in corrections.
-- Client applies `ConvertRootMotionServerIDsToLocalIDs` (`CMC.h:2825`) to
+- Server sends `ServerCorrectionRootMotion` (`CMC.h:2806`) in corrections.
+- Client applies `ConvertRootMotionServerIDsToLocalIDs` (`CMC.h:2833`) to
   reconcile server-assigned IDs with locally assigned ones after replay.
 
 Because IDs can differ between server and client, always look up sources by

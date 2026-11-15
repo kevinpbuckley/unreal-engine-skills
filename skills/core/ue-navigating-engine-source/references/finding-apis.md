@@ -1,7 +1,7 @@
 # Finding APIs in the engine source
 
 Deep-dive companion to [../SKILL.md](../SKILL.md). Grounded in UE 5.8 at
-`E:\Program Files\Epic Games\UE_5.8\Engine\Source` (Build.version: 5.8.1).
+`C:\Program Files\Epic Games\UE_5.9\Engine\Source` (Build.version: 5.9.0).
 
 A repeatable, step-by-step playbook for locating any class, function, or type
 without guessing. Uses tools available to an agent (Grep, Glob, Read).
@@ -14,7 +14,7 @@ without guessing. Uses tools available to an agent (Grep, Glob, Read).
 
 1. **Glob for the header** — most UE types have a header named after them:
    ```
-   Glob("**/*.h", path="E:/Program Files/Epic Games/UE_5.8/Engine/Source")
+   Glob("**/*.h", path="C:/Program Files/Epic Games/UE_5.9/Engine/Source")
    → filter for "GameplayTagContainer.h"
    ```
    Result: `Runtime\GameplayTags\Classes\GameplayTagContainer.h`.
@@ -46,7 +46,7 @@ without guessing. Uses tools available to an agent (Grep, Glob, Read).
 
 1. **Grep for the symbol** — limit to one pass of headers:
    ```
-   Grep("SpawnActor", path="E:/Program Files/Epic Games/UE_5.8/Engine/Source/Runtime/Engine/Classes/Engine/World.h",
+   Grep("SpawnActor", path="C:/Program Files/Epic Games/UE_5.9/Engine/Source/Runtime/Engine/Classes/Engine/World.h",
         output_mode="content")
    ```
    Scan the output for the templated overload signature.
@@ -115,11 +115,11 @@ Use the other available engine roots:
 
 | Version | Root |
 |---|---|
-| 5.5.1 | `E:\Repo\Git\UE_5_5_1_Fresh\UnrealEngine\Engine\Source` |
-| 5.7 | `E:\Program Files\Epic Games\UE_5.7\Engine\Source` |
-| 5.8.1 (primary) | `E:\Program Files\Epic Games\UE_5.8\Engine\Source` |
+| 5.9 (primary) | `C:\Program Files\Epic Games\UE_5.9\Engine\Source` |
+| 5.8 | `<install dir>\UE_5.8\Engine\Source` |
+| source build | `<git clone>\UnrealEngine\Engine\Source` |
 
-Grep the same symbol in all three, then diff the results. When an API changed
+Grep the same symbol in each, then diff the results. When an API changed
 between versions, document the version it changed in the skill or code you produce.
 
 ---

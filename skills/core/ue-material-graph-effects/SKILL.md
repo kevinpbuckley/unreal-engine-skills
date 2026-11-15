@@ -1,8 +1,8 @@
 ---
 name: ue-material-graph-effects
-description: Author animated and interactive Unreal Engine 5.8 material graph effects. Use for scrolling UVs, periodic motion, vertex animation, reactive foliage or seaweed WPO, masked dissolve, emissive edges, or per-actor material changes driven by gameplay.
+description: Author animated and interactive Unreal Engine 5.8 and 5.9 material graph effects. Use for scrolling UVs, periodic motion, vertex animation, reactive foliage or seaweed WPO, masked dissolve, emissive edges, or per-actor material changes driven by gameplay.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -44,7 +44,7 @@ Check start, end, and interrupted states; fast and slow parameter changes; diffe
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionTextureCoordinate.h` (`UMaterialExpressionTextureCoordinate`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionPanner.h` (`UMaterialExpressionPanner`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionSine.h` (`UMaterialExpressionSine`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstanceDynamic.h` (`UMaterialInstanceDynamic`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionTextureCoordinate.h` (`UMaterialExpressionTextureCoordinate`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionPanner.h` (`UMaterialExpressionPanner`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionSine.h` (`UMaterialExpressionSine`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialInstanceDynamic.h` (`UMaterialInstanceDynamic`).

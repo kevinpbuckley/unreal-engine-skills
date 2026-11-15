@@ -92,11 +92,11 @@ the log call takes precedence over the context. Context names are collected into
 `$Context` array field on the `FLogRecord`.
 
 Multiple contexts can be stacked; they are unregistered in LIFO order by `FLogContext`
-destructor (`StructuredLog.h`:533).
+destructor (`StructuredLog.h`:526).
 
 ## FLogRecord
 
-`UE_LOGFMT` constructs an `FLogRecord` (`StructuredLog.h`:181) which is dispatched to
+`UE_LOGFMT` constructs an `FLogRecord` (`StructuredLog.h`:183) which is dispatched to
 output devices. Fields of interest for custom output devices or log output device subclasses:
 
 ```cpp
@@ -131,7 +131,7 @@ inline void SerializeForLog(FCbWriter& Writer, const FMyStruct& Value)
 
 The `$text` field in an object overrides the default JSON serialization for the
 human-readable message. Without it, the object is rendered as JSON. Declared in
-`StructuredLog.h`:288.
+`StructuredLog.h`:289.
 
 ## Conditional structured log — UE_CLOGFMT
 
@@ -151,4 +151,4 @@ UE_LOGFMT_LOC(LogUI, Display, "LoadFailed", "Failed to load '{Name}'",
     ("Name", AssetName));
 ```
 
-The key identifies the localized FText entry. Declared in `StructuredLog.h`:87.
+The key identifies the localized FText entry. Declared in `StructuredLog.h`:89.

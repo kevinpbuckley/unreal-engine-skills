@@ -1,7 +1,7 @@
 # Source conventions and naming
 
 Deep-dive companion to [../SKILL.md](../SKILL.md). Grounded in UE 5.8 at
-`E:\Program Files\Epic Games\UE_5.8\Engine\Source` (Build.version: 5.8.1).
+`C:\Program Files\Epic Games\UE_5.9\Engine\Source` (Build.version: 5.9.0).
 
 Covers naming prefixes, the Public/Private/Classes folder convention, how
 `*.generated.h` fits in, and Include What You Use (IWYU) rules.

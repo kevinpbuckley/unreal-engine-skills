@@ -8,7 +8,7 @@ description: Write correct Unreal Engine C++ using the UObject reflection system
   functions to Blueprints or replication, fixing UHT/reflection build errors, or choosing between
   pointer and ownership types.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: cpp-foundations
 ---
 
@@ -225,10 +225,10 @@ reference with less-common options.
 | `Cast<T>(Obj)` | Anywhere | Safe checked cast; returns null on failure — never `static_cast` |
 | `IsValid(Obj)` | Anywhere | True if non-null and not garbage; prefer over bare null check |
 
-`CreateDefaultSubobject` is declared on `UObject` (`Object.h`:151). `NewObject` template
-overloads are in `UObjectGlobals.h` (lines 1931, 1959, 1974).
+`CreateDefaultSubobject` is declared on `UObject` (`Object.h`:153). `NewObject` template
+overloads are in `UObjectGlobals.h` (lines 1936, 1964, 1979).
 
-The **CDO** is created by `UClass::GetDefaultObject` (`Class.h`:4519) the first time it is needed.
+The **CDO** is created by `UClass::GetDefaultObject` (`Class.h`:4521) the first time it is needed.
 After construction the CDO is read-only; modify only through archetype/default propagation.
 
 Full construction paths, CDO lifecycle, and `PostInitProperties` are in
@@ -256,7 +256,7 @@ encounter will mix both styles.
 - **Gameplay logic in the constructor** → runs on the CDO and in the editor; no world, no
   gameplay. Always put gameplay init in `BeginPlay`.
 - **`CreateDefaultSubobject` outside the constructor** → asserts (detected by
-  `FObjectInitializer::AssertIfInConstructor`, `UObjectGlobals.h`:1936).
+  `FObjectInitializer::AssertIfInConstructor`, `UObjectGlobals.h`:1941).
 - **`NewObject` with an empty name inside a constructor** → also asserts; use
   `CreateDefaultSubobject` instead.
 - **Calling editor-only API from runtime code** → packaging failures; guard with `#if WITH_EDITOR`.
@@ -276,17 +276,17 @@ encounter will mix both styles.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/CoreUObject/Public/UObject/`):
-- `Object.h`:98 — `UObject` class definition; `:151` — `CreateDefaultSubobject`; `:226` —
-  `PostInitProperties`; `:361` — `BeginDestroy`; `:368` — `IsReadyForFinishDestroy`; `:382` —
-  `FinishDestroy`; `:1886` — `IsValid()`.
+Engine source (UE 5.9, under `Engine/Source/Runtime/CoreUObject/Public/UObject/`):
+- `Object.h`:100 — `UObject` class definition; `:153` — `CreateDefaultSubobject`; `:228` —
+  `PostInitProperties`; `:363` — `BeginDestroy`; `:370` — `IsReadyForFinishDestroy`; `:384` —
+  `FinishDestroy`; `:1891` — `IsValid()`.
 - `ObjectMacros.h`:778 — `UPROPERTY`/`UFUNCTION`/`USTRUCT`/`UENUM` macro stubs; `:800` —
   `GENERATED_BODY`; `:832` — `UCLASS` specifiers; `:985` — `UFUNCTION` specifiers; `:1086` —
   `UPROPERTY` specifiers; `:1216` — `USTRUCT` specifiers.
 - `Class.h`:495 — `UStruct`; `:1774` — `UScriptStruct`; `:3893` — `UClass`; `:4045` —
-  deprecated `ClassDefaultObject` field (5.6+); `:4519` — `GetDefaultObject()`.
-- `UObjectGlobals.h`:1931 — `NewObject<T>(Outer, Class, Name, …)`; `:1959` —
-  `NewObject<T>(Outer)` (no name); `:1974` — `NewObject<T>(Outer, Name, …)`.
+  deprecated `ClassDefaultObject` field (5.6+); `:4521` — `GetDefaultObject()`.
+- `UObjectGlobals.h`:1936 — `NewObject<T>(Outer, Class, Name, …)`; `:1964` —
+  `NewObject<T>(Outer)` (no name); `:1979` — `NewObject<T>(Outer, Name, …)`.
 - `ObjectPtr.h`:519 — `TObjectPtr<T>`.
 - `Interface.h`:18 — `UInterface` base class.
 

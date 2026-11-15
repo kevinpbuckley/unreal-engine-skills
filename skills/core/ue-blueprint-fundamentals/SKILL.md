@@ -8,7 +8,7 @@ description: Understand Blueprints as Unreal's visual scripting and asset-class 
   designing a class hierarchy that spans both, explaining how Blueprint logic maps onto the
   underlying C++/UObject model, or debugging Blueprint compilation and class-relationship issues.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: blueprints
 ---
 
@@ -33,7 +33,7 @@ Every Blueprint has two cooperating objects:
 
 | Object | Header | Role |
 |---|---|---|
-| `UBlueprint` | `Engine/Blueprint.h`:402 | Editor-only asset; holds graphs, variable metadata, component templates, compile options |
+| `UBlueprint` | `Engine/Blueprint.h`:394 | Editor-only asset; holds graphs, variable metadata, component templates, compile options |
 | `UBlueprintGeneratedClass` | `Engine/BlueprintGeneratedClass.h`:429 | Runtime `UClass`; contains `FProperty`s, `UFunction`s, timelines, SCS tree |
 
 `UBlueprint` derives from `UBlueprintCore` (`Engine/BlueprintCore.h`:13), which stores:
@@ -108,7 +108,7 @@ components can parent to them.
 
 Component templates live on both `UBlueprint` (editor templates) and `UBlueprintGeneratedClass`
 (runtime templates). Timeline nodes in the Event Graph compile to
-`UBlueprintGeneratedClass::Timelines` (`BlueprintGeneratedClass.h`:478) and become
+`UBlueprintGeneratedClass::Timelines` (`BlueprintGeneratedClass.h`:482) and become
 `UTimelineComponent`s on instances.
 
 ## The Construction Script
@@ -118,7 +118,7 @@ by `ExecuteConstruction` (`Actor.h`:3439). It runs on:
 
 - Every **actor spawn** (including PIE).
 - Every **property edit** on a placed instance in the editor.
-- Every editor **drag** (if `bRunConstructionScriptOnDrag`, `Blueprint.h`:453).
+- Every editor **drag** (if `bRunConstructionScriptOnDrag`, `Blueprint.h`:445).
 
 Design it to be **idempotent** — it can run many times without accumulating state. Never assume
 it runs only once. Expensive world queries or asset loads in the CS slow down property editing.
@@ -218,14 +218,14 @@ harder to debug, and slower. Move complex logic to C++ and expose a clean surfac
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Classes/Engine/BlueprintCore.h`:13 — `UBlueprintCore`; `SkeletonGeneratedClass`:21,
   `GeneratedClass`:25.
-- `Runtime/Engine/Classes/Engine/Blueprint.h`:402 — `UBlueprint`; `EBlueprintType`:61,
-  `ParentClass`:412, `UbergraphPages`:543, `FunctionGraphs`:547, `MacroGraphs`:555,
-  `SimpleConstructionScript`:538, `bRunConstructionScriptOnDrag`:453.
+- `Runtime/Engine/Classes/Engine/Blueprint.h`:394 — `UBlueprint`; `EBlueprintType`:61,
+  `ParentClass`:404, `UbergraphPages`:535, `FunctionGraphs`:539, `MacroGraphs`:547,
+  `SimpleConstructionScript`:530, `bRunConstructionScriptOnDrag`:445.
 - `Runtime/Engine/Classes/Engine/BlueprintGeneratedClass.h`:429 — `UBlueprintGeneratedClass`;
-  `Timelines`:478, `SimpleConstructionScript`:492, `UberGraphFunction`:501.
+  `Timelines`:482, `SimpleConstructionScript`:496, `UberGraphFunction`:505.
 - `Runtime/Engine/Classes/Engine/SimpleConstructionScript.h`:18 — `USimpleConstructionScript`;
   `ExecuteScriptOnActor`:47.
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:3445 — `OnConstruction(Transform)`;

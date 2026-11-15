@@ -1,7 +1,7 @@
 ---
 name: ue-mover-movement-system
 description: Implement actor movement with Unreal's experimental Mover plugin
-  (UE 5.8) — the modular, rollback-networked successor to
+  (UE 5.8 and 5.9) — the modular, rollback-networked successor to
   CharacterMovementComponent. Covers UMoverComponent / UCharacterMoverComponent
   setup, producing input via IMoverInputProducerInterface and
   FCharacterDefaultInputs, movement modes and transitions, layered moves,
@@ -12,7 +12,7 @@ description: Implement actor movement with Unreal's experimental Mover plugin
   mode or layered move, migrating from CMC, wiring Enhanced Input into
   ProduceInput, or debugging Mover prediction/rollback behavior.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -89,7 +89,7 @@ PublicDependencyModuleNames.AddRange(new string[] { "Mover" });
 
 ## Minimal Mover pawn (C++)
 
-`UCharacterMoverComponent` (`DefaultMovementSet/CharacterMoverComponent.h:27`)
+`UCharacterMoverComponent` (`DefaultMovementSet/CharacterMoverComponent.h:28`)
 extends `UMoverComponent` with character defaults: Walking/Falling/Flying modes
 pre-registered, `StartingMovementMode = Falling`, jump + stance (crouch)
 handling. The plain `UMoverComponent` starts with **no** modes.
@@ -171,7 +171,7 @@ Wiring notes:
 
 - If the **owning actor** implements `IMoverInputProducerInterface`, the
   MoverComponent auto-registers it as its `InputProducer` at BeginPlay
-  (`MoverComponent.cpp:292-302`). Actor components implementing the interface
+  (`MoverComponent.cpp:291-301`). Actor components implementing the interface
   are also gathered when `bGatherInputFromAllInputProducerComponents` is true
   (`MoverComponent.h:232`).
 - `ProduceInput` is a `BlueprintNativeEvent` — override
@@ -304,7 +304,7 @@ delays application so every endpoint applies it on the same frame.
 `UCharacterMoverComponent` provides the classic character surface:
 
 ```cpp
-MoverComp->Jump();          // CharacterMoverComponent.h:87 (queues a jump impulse effect)
+MoverComp->Jump();          // CharacterMoverComponent.h:88 (queues a jump impulse effect)
 MoverComp->CanActorJump();  // :83
 MoverComp->Crouch();        // :95 — applies an FStanceModifier (capsule resize + tag)
 MoverComp->UnCrouch();      // :99
@@ -313,7 +313,7 @@ MoverComp->IsCrouching(); MoverComp->IsSwimming(); MoverComp->IsSlopeSliding();
 ```
 
 The default character inputs also drive jumping (`bIsJumpJustPressed`) when
-`bHandleJump` is set (`CharacterMoverComponent.h:129`). Crouching is a
+`bHandleJump` is set (`CharacterMoverComponent.h:136`). Crouching is a
 **movement modifier** (`FStanceModifier`,
 `DefaultMovementSet/MovementModifiers/StanceModifier.h:30`) — see the modes
 reference for modifier authoring.
@@ -346,7 +346,7 @@ The legacy-style modes read a **shared settings object**,
 `UCommonLegacyMovementSettings`
 (`DefaultMovementSet/Settings/CommonLegacyMovementSettings.h`): `MaxSpeed:63`,
 `Acceleration:114`, `Deceleration:110`, `TurningRate:118`, `MaxStepHeight:59`,
-`MaxWalkSlopeCosine:40`, `JumpUpwardsSpeed:133`, ground/air/swim mode-name
+`MaxWalkSlopeCosine:40`, `JumpUpwardsSpeed:144`, ground/air/swim mode-name
 mappings, friction and braking. Edit it under the Mover component's **Shared
 Settings** array (auto-populated from each mode's `SharedSettingsClasses`), or
 at runtime:
@@ -470,8 +470,8 @@ Plugin source (UE 5.8, `Engine/Plugins/Experimental/Mover/Source/Mover/Public/`)
 - `LayeredMove.h` — `FLayeredMoveBase:74`, `FLayeredMoveGroup:191`;
   `LayeredMoveBase.h` — `ULayeredMoveLogic:133`.
 - `InstantMovementEffect.h` — `FInstantMovementEffect:51`.
-- `DefaultMovementSet/CharacterMoverComponent.h` — `UCharacterMoverComponent:27`,
-  `Jump:87`, `Crouch:95`.
+- `DefaultMovementSet/CharacterMoverComponent.h` — `UCharacterMoverComponent:28`,
+  `Jump:88`, `Crouch:96`.
 - `DefaultMovementSet/Settings/CommonLegacyMovementSettings.h` —
   `UCommonLegacyMovementSettings:13`.
 - `DefaultMovementSet/LayeredMoves/BasicLayeredMoves.h`,

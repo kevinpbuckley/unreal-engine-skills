@@ -8,7 +8,8 @@ description: Reference and load Unreal assets correctly — hard vs soft referen
   loading assets on demand (level streaming, DLC, runtime content), enumerating or filtering
   assets without loading, or setting up a managed primary-asset pipeline with UPrimaryDataAsset.
 metadata:
-  engine-version: "5.8"
+  aliases: "asset manager, soft references, async loading, StreamableManager, AssetRegistry, primary assets"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -227,16 +228,16 @@ Add to your `Build.cs` as needed:
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
-- `Runtime/Engine/Classes/Engine/StreamableManager.h` — `FStreamableManager`:731,
-  `FStreamableHandle`:196, `RequestAsyncLoad`:756, `LoadSynchronous`:800,
+Engine source (UE 5.9, under `Engine/Source/`):
+- `Runtime/Engine/Classes/Engine/StreamableManager.h` — `FStreamableManager`:733,
+  `FStreamableHandle`:196, `RequestAsyncLoad`:758, `LoadSynchronous`:802,
   `FStreamableDelegate` alias:38.
 - `Runtime/Engine/Classes/Engine/AssetManager.h` — `UAssetManager`:83,
-  `GetStreamableManager()`:105, `LoadPrimaryAsset`:333, `UnloadPrimaryAssets`:367,
-  `ChangeBundleStateForPrimaryAssets`:390.
-- `Runtime/CoreUObject/Public/UObject/SoftObjectPtr.h` — `FSoftObjectPtr`:44,
-  `TSoftObjectPtr`:173, `TSoftClassPtr`:795, `LoadSynchronous`:82/547, `IsValid`:571/933,
-  `IsNull`:592/954, `ToSoftObjectPath`:96/604.
+  `GetStreamableManager()`:105, `LoadPrimaryAsset`:334, `UnloadPrimaryAssets`:368,
+  `ChangeBundleStateForPrimaryAssets`:391.
+- `Runtime/CoreUObject/Public/UObject/SoftObjectPtr.h` — `FSoftObjectPtr`:36,
+  `TSoftObjectPtr`:165, `TSoftClassPtr`:574, `LoadSynchronous`:74/409, `IsValid`:433/700,
+  `IsNull`:465/732, `ToSoftObjectPath`:88/477.
 - `Runtime/CoreUObject/Public/UObject/PrimaryAssetId.h` — `FPrimaryAssetType`:27,
   `FPrimaryAssetId`:133.
 - `Runtime/Engine/Classes/Engine/DataAsset.h` — `UDataAsset`:17, `UPrimaryDataAsset`:47,

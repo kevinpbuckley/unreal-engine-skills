@@ -5,7 +5,7 @@ title: Multiplayer inventory architecture and implementation plan
 
 ## Prompt
 
-I am building a four-player co-op extraction game in Unreal Engine 5.8. Design an item pickup and
+I am building a four-player co-op extraction game in Unreal Engine 5.9. Design an item pickup and
 inventory architecture before we implement it. Inventory must survive pawn death and respawn but
 reset when the match ends. The server must validate pickups, other players should see a pickup
 disappear, only the owning player needs full inventory contents, designers need to author item

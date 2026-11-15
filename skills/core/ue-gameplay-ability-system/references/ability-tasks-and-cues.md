@@ -25,7 +25,7 @@ DelayTask->OnFinish.AddDynamic(this, &UGA_Example::OnDelayFinished);
 DelayTask->ReadyForActivation();
 ```
 
-`NewAbilityTask<T>` (`AbilityTask.h:136`) is the internal factory used by built-in tasks:
+`NewAbilityTask<T>` (`AbilityTask.h:140`) is the internal factory used by built-in tasks:
 ```cpp
 template <class T>
 static T* NewAbilityTask(UGameplayAbility* ThisAbility, FName InstanceName = FName());
@@ -36,7 +36,7 @@ subclasses.
 ## Task lifecycle
 
 Tasks hold `TObjectPtr<UGameplayAbility> Ability` and `TWeakObjectPtr<UAbilitySystemComponent>
-AbilitySystemComponent` (`AbilityTask.h:110,113`). When the ability ends, the ASC automatically
+AbilitySystemComponent` (`AbilityTask.h:114,117`). When the ability ends, the ASC automatically
 calls `EndTask` on all active tasks belonging to it, which calls `OnDestroy(true)`.
 
 **Custom task checklist:**

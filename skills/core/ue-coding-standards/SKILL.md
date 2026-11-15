@@ -9,7 +9,7 @@ description: Write Unreal C++ that conforms to Epic's coding standard — type p
   C++, naming types or members, structuring headers, or making code consistent with the
   engine and surrounding project code.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: meta
 ---
 
@@ -236,16 +236,16 @@ float MaxHealth = 100.f;
 
 ## References and source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Classes/GameFramework/Actor.h`:281–282, 288, 306, 593, 891, 1019, 1024
 - `Runtime/Engine/Classes/GameFramework/Character.h`:3, 5, 19, 337–338
 - `Runtime/Engine/Classes/Components/ActorComponent.h`:3, 23, 27–38, 159–162, 177, 340
 - `Runtime/Engine/Classes/Engine/EngineTypes.h`:62, 75
 - `Runtime/Engine/Classes/Interfaces/Interface_AssetUserData.h`:3, 16–22
-- `Runtime/CoreUObject/Public/UObject/Object.h`:97–100, 106, 129
-- `Runtime/Core/Public/Containers/Array.h`:767
+- `Runtime/CoreUObject/Public/UObject/Object.h`:99–102, 108, 131
+- `Runtime/Core/Public/Containers/Array.h`:738
 - `Runtime/Core/Public/Windows/WindowsPlatform.h`:209–210
-- `Runtime/Core/Public/HAL/Platform.h`:1063–1065
+- `Runtime/Core/Public/HAL/Platform.h`:1081–1083
 
 Official docs (UE 5.8):
 - Epic C++ Coding Standard:

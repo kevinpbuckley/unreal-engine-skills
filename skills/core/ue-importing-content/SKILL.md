@@ -11,7 +11,8 @@ description: Import external assets into Unreal using the Interchange framework 
   wrong scale/rotation/shading after import, scripting automated batch import, customising
   an import pipeline, or setting up a repeatable reimport workflow.
 metadata:
-  engine-version: "5.8"
+  aliases: "import, importing, FBX, glTF, Interchange, Alembic, texture import, audio import"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -260,7 +261,7 @@ Engine > Interchange** or pass it via `FImportAssetParameters::OverridePipelines
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 
 Core Interchange (under `Engine/Source/Runtime/Interchange/`):
 - `Engine/Public/InterchangeManager.h` — `UInterchangeManager` singleton, `ImportAsset`:648,

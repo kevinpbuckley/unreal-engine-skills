@@ -11,7 +11,8 @@ description: Implement player input with Unreal's Enhanced Input system — UInp
   mapping contexts at runtime (on-foot vs. in-vehicle vs. menu), reading analog values, or
   migrating from legacy BindAxis/BindAction input.
 metadata:
-  engine-version: "5.8"
+  aliases: "input, Enhanced Input, keybinding, key bindings, controls, InputAction, mapping context, gamepad"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -269,7 +270,7 @@ default). Migrate by replacing axis/action map entries with `UInputAction` + `UI
 
 ## References & source material
 
-Engine source (UE 5.8, plugin path prefix:
+Engine source (UE 5.9, plugin path prefix:
 `Engine/Plugins/EnhancedInput/Source/EnhancedInput/Public/`):
 - `InputAction.h` — `UInputAction`:55 (`UDataAsset` subclass), `EInputActionValueType`
   (`InputActionValue.h`:10, `Boolean`/`Axis1D`/`Axis2D`/`Axis3D`),

@@ -10,7 +10,8 @@ description: Terrain, instanced vegetation, and procedural environment generatio
   HISM, authoring PCG graphs, querying landscape data from C++, or debugging instancing
   and PCG generation issues.
 metadata:
-  engine-version: "5.8"
+  aliases: "landscape, terrain, foliage, PCG, procedural content generation, grass"
+  engine-version: "5.9"
   category: world-building
 ---
 
@@ -175,8 +176,8 @@ PCG is a shipped plugin at `Engine/Plugins/PCG/`. Enable it in `.uproject` if no
 | Type | Header | Role |
 |---|---|---|
 | `UPCGComponent` | `PCGComponent.h`:112 | Runs a graph on its actor; entry point for generate/cleanup |
-| `UPCGGraph` | `PCGGraph.h`:332 | Asset containing nodes and edges |
-| `UPCGGraphInterface` | `PCGGraph.h`:159 | Abstract base for graphs and graph instances |
+| `UPCGGraph` | `PCGGraph.h`:356 | Asset containing nodes and edges |
+| `UPCGGraphInterface` | `PCGGraph.h`:183 | Abstract base for graphs and graph instances |
 | `UPCGData` | `PCGData.h` | Base for all spatial/attribute data flowing through the graph |
 | `UPCGPointData` | `Data/PCGPointData.h` | Point cloud — the primary per-instance data type |
 | `UPCGLandscapeData` | `Data/PCGLandscapeData.h` | Samples landscape height/normals/layers |
@@ -281,7 +282,7 @@ graph to, for example, restrict scatter to slope ranges below a threshold.
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 - `Runtime/Landscape/Classes/Landscape.h` — `ALandscape`:276 (extends `ALandscapeProxy`).
 - `Runtime/Landscape/Classes/LandscapeProxy.h` — `ALandscapeProxy`:450,
   `LandscapeComponents`:682, `LandscapeMaterial`:604, `ComponentSizeQuads`:924,
@@ -298,7 +299,7 @@ Engine source (UE 5.8):
   `RemoveInstance`:305, `UpdateInstanceTransform`:308, `BuildTreeIfOutdated`:330.
 - `Plugins/PCG/Source/PCG/Public/PCGComponent.h` — `UPCGComponent`:112,
   `Generate()`:253, `Cleanup()`:257, `GenerateLocal()`:221, `GenerationTrigger`:327.
-- `Plugins/PCG/Source/PCG/Public/PCGGraph.h` — `UPCGGraph`:332, `UPCGGraphInterface`:159.
+- `Plugins/PCG/Source/PCG/Public/PCGGraph.h` — `UPCGGraph`:356, `UPCGGraphInterface`:183.
 - `Plugins/PCG/Source/PCG/Public/Data/PCGLandscapeData.h` — `UPCGLandscapeData`,
   `FPCGLandscapeDataProps` (layer weights, height-only mode, GPU sampling).
 - `Plugins/PCG/Source/PCG/Public/Data/PCGPointData.h` — `UPCGPointData`.

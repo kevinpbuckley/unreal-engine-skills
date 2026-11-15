@@ -72,7 +72,7 @@ From C++ you can toggle individual emitters within a running system:
 
 ```cpp
 // Enable or disable a named emitter (e.g. to turn off sparks at end of game):
-FX->SetEmitterEnable(TEXT("Sparks"), false);   // NiagaraComponent.h:78
+FX->SetEmitterEnable(TEXT("Sparks"), false);   // NiagaraComponent.h:77
 ```
 
 The string is the emitter's name as set in the Niagara Editor.

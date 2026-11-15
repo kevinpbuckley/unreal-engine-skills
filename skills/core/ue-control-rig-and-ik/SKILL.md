@@ -10,7 +10,8 @@ description: Procedural animation and inverse kinematics in Unreal Engine — Co
   UIKRigDefinition, UIKRetargeter, FAnimNode_ControlRig, FAnimNode_IKRig,
   FAnimNode_RetargetPoseFromMesh, FIKRigGoal, UControlRigComponent, UIKRigComponent.
 metadata:
-  engine-version: "5.8"
+  aliases: "Control Rig, IK, IK Rig, IK Retargeter, retargeting, full body IK"
+  engine-version: "5.9"
   category: animation
 ---
 
@@ -268,19 +269,19 @@ blend, before output.
 
 ## References & source material
 
-Engine source (UE 5.8 — all paths under `Engine/Plugins/Animation/`):
+Engine source (UE 5.9 — all paths under `Engine/Plugins/Animation/`):
 - `ControlRig/Source/ControlRig/Public/ControlRig.h`:63 — `UControlRig` class declaration.
-- `ControlRig/Source/ControlRig/Public/ControlRig.h`:203 — `GetHierarchy()`.
-- `ControlRig/Source/ControlRig/Public/ControlRig.h`:277 — `Execute(const FName&)`.
-- `ControlRig/Source/ControlRig/Public/ControlRig.h`:331 — `SetControlValue<T>()`.
+- `ControlRig/Source/ControlRig/Public/ControlRig.h`:213 — `GetHierarchy()`.
+- `ControlRig/Source/ControlRig/Public/ControlRig.h`:287 — `Execute(const FName&)`.
+- `ControlRig/Source/ControlRig/Public/ControlRig.h`:353 — `SetControlValue<T>()`.
 - `ControlRig/Source/ControlRig/Public/AnimNode_ControlRig.h`:21 — `FAnimNode_ControlRig`.
 - `ControlRig/Source/ControlRig/Public/ControlRigComponent.h`:175 — `UControlRigComponent`.
 - `ControlRig/Source/ControlRig/Public/ModularRig.h` — `UModularRig`, `FRigModuleInstance`.
 - `ControlRig/Source/ControlRig/Public/Units/RigUnit.h`:59 — `FRigUnit` base struct.
-- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:167 — `URigHierarchy`.
-- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2181 — `GetLocalTransform()`.
-- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2229 — `SetLocalTransform()`.
-- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2277 — `GetGlobalTransform()`.
+- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:199 — `URigHierarchy`.
+- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2525 — `GetLocalTransform()`.
+- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2574 — `SetLocalTransform()`.
+- `ControlRig/Source/ControlRig/Public/Rigs/RigHierarchy.h`:2623 — `GetGlobalTransform()`.
 - `IKRig/Source/IKRig/Public/Rig/IKRigDefinition.h`:134 — `FBoneChain`.
 - `IKRig/Source/IKRig/Public/Rig/IKRigDefinition.h`:165 — `FRetargetDefinition`.
 - `IKRig/Source/IKRig/Public/Rig/IKRigDefinition.h`:206 — `UIKRigDefinition`.

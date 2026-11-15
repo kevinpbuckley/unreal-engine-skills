@@ -12,7 +12,7 @@ description: Use Gameplay Tags in Unreal C++ — hierarchical FName-based labels
   systems share; when replacing brittle enums or string comparisons; or when working
   with GAS, AI behavior trees, animation, or UI systems that gate behavior on tags.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -249,7 +249,7 @@ and show custom editor widgets in Details panels.
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Source/Runtime/GameplayTags/`):
+Engine source (UE 5.9, `Engine/Source/Runtime/GameplayTags/`):
 - `Classes/GameplayTagContainer.h` — `FGameplayTag`:41, `RequestGameplayTag`:57,
   `MatchesTag`:91, `MatchesTagExact`:100, `MatchesAny`:126, `GetSingleTagContainer`:144;
   `FGameplayTagContainer`:247, `HasTag`:299, `HasTagExact`:316, `HasAny`:333,

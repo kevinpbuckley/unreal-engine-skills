@@ -3,13 +3,13 @@ name: ue-navigating-engine-source
 description: Locate, read, and cite exact Unreal Engine APIs in the on-disk engine source
   instead of guessing. Use when you need a real function signature, class hierarchy,
   UPROPERTY/UFUNCTION specifier, module name, or include path; when verifying that an API
-  exists in UE 5.8; when resolving "which module do I add to Build.cs?"; or when an API
+  exists in UE 5.9; when resolving "which module do I add to Build.cs?"; or when an API
   changed between engine versions. Covers the full source tree layout (Runtime/Editor/
   Developer/Plugins), the Public/Private/Classes folder convention, UHT-generated files,
   naming prefixes as navigation hints, IWYU include rules, and repeatable search patterns
   for finding any class, function, or type from first principles.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: meta
 ---
 
@@ -31,17 +31,18 @@ Memory is often a version or two stale.
 
 ## Source tree on this machine
 
-| Version | Root | Notes |
+| Version | Root (default Epic Games Launcher install) | Notes |
 |---|---|---|
-| **5.8** (primary) | `E:\Program Files\Epic Games\UE_5.8\Engine` | Binary install; ships full C++ source |
-| 5.7 | `E:\Program Files\Epic Games\UE_5.7\Engine` | Binary install; previous release for comparison |
-| 5.5.1 | `E:\Repo\Git\UE_5_5_1_Fresh\UnrealEngine\Engine` | Full source build |
+| **5.9** (primary) | `C:\Program Files\Epic Games\UE_5.9\Engine` | Binary install; ships full C++ source |
+| 5.8 | `<install dir>\UE_5.8\Engine` | Previous release, for comparing signatures |
+| any | `<git clone>\UnrealEngine\Engine` | Full source build |
 
-Default to **5.8**. Use the others only to compare signatures across versions.
+Default to **5.9**. Use the others only to compare signatures across versions. Installs on another drive keep
+the same layout below `UE_5.x`.
 
 Confirm the exact version any time:
-`E:\Program Files\Epic Games\UE_5.8\Engine\Build\Build.version`
-→ MajorVersion 5, MinorVersion 8, PatchVersion 1.
+`C:\Program Files\Epic Games\UE_5.9\Engine\Build\Build.version`
+→ MajorVersion 5, MinorVersion 9, PatchVersion 0.
 
 ## Source tree organization
 
@@ -84,7 +85,7 @@ subfolders grounded in the 5.8 tree:
   `SceneComponent.h`, `PrimitiveComponent.h`, `StaticMeshComponent.h`,
   `SkeletalMeshComponent.h`, `CapsuleComponent.h`, `AudioComponent.h`,
   `SplineComponent.h`, `TimelineComponent.h`
-- `Runtime\Engine\Classes\Engine\` — `World.h`:931, `EngineTypes.h`,
+- `Runtime\Engine\Classes\Engine\` — `World.h`:930, `EngineTypes.h`,
   `AssetManager.h`, `Canvas.h`
 - `Runtime\Engine\Classes\Kismet\` — `GameplayStatics.h`,
   `BlueprintFunctionLibrary.h`, `KismetMathLibrary.h`, `KismetSystemLibrary.h`
@@ -95,8 +96,8 @@ subfolders grounded in the 5.8 tree:
 Other key Runtime modules:
 - `Runtime\Core\Public\` — `CoreMinimal.h`, `Containers\Array.h`,
   `Containers\Map.h`, `Math\Vector.h`, `Delegates\`
-- `Runtime\CoreUObject\Public\UObject\Object.h` — `UObject`:98,
-  `CreateDefaultSubobject`:129
+- `Runtime\CoreUObject\Public\UObject\Object.h` — `UObject`:100,
+  `CreateDefaultSubobject`:131
 - `Runtime\GameplayTags\Classes\GameplayTagContainer.h` — `FGameplayTag`:41,
   `FGameplayTagContainer`:247
 - `Runtime\AIModule\Classes\` — `AIController.h`, `BehaviorTree\`,
@@ -110,8 +111,8 @@ and roughly where to look:
 
 | Prefix | Kind | Examples |
 |---|---|---|
-| `A` | Actor (`AActor` subclass) | `ACharacter`, `AGameModeBase`:47, `APlayerController` |
-| `U` | UObject (non-actor) | `UActorComponent`, `UStaticMeshComponent`, `UWorld`:931 |
+| `A` | Actor (`AActor` subclass) | `ACharacter`, `AGameModeBase`:46, `APlayerController` |
+| `U` | UObject (non-actor) | `UActorComponent`, `UStaticMeshComponent`, `UWorld`:880 |
 | `F` | Non-UObject struct/class | `FVector`, `FHitResult`, `FGameplayTag`:41 |
 | `E` | Enum | `EEndPlayReason`, `ECollisionChannel` |
 | `T` | Template class | `TArray`, `TObjectPtr`, `TSubclassOf`, `TWeakObjectPtr` |
@@ -144,7 +145,7 @@ Confirm by finding `<ModuleName>.Build.cs` under the source folder.
 
 Glob for `**/<ClassName>.h` under the source root, then confirm with Grep:
 ```
-Glob("**/Character.h", path="E:/Program Files/Epic Games/UE_5.8/Engine/Source")
+Glob("**/Character.h", path="C:/Program Files/Epic Games/UE_5.9/Engine/Source")
 → Runtime\Engine\Classes\GameFramework\Character.h
 
 Grep("class ACharacter", path="...Character.h")
@@ -213,7 +214,7 @@ the module's `Intermediate\` folder, not in `Source\`.
 
 ## Verified examples (UE 5.8)
 
-All paths relative to `E:\Program Files\Epic Games\UE_5.8\Engine\Source\`:
+All paths relative to `C:\Program Files\Epic Games\UE_5.9\Engine\Source\`:
 
 **AActor** (`Runtime\Engine\Classes\GameFramework\Actor.h`):
 - :281 `UCLASS(BlueprintType, Blueprintable, config=Engine, meta=(ShortTooltip="..."), MinimalAPI)`
@@ -229,10 +230,10 @@ All paths relative to `E:\Program Files\Epic Games\UE_5.8\Engine\Source\`:
 
 **AGameModeBase** (`Runtime\Engine\Classes\GameFramework\GameModeBase.h:47`)
 
-**UWorld** (`Runtime\Engine\Classes\Engine\World.h:931`)
+**UWorld** (`Runtime\Engine\Classes\Engine\World.h:930`)
 
-**UObject** (`Runtime\CoreUObject\Public\UObject\Object.h:98`),
-`CreateDefaultSubobject`:129
+**UObject** (`Runtime\CoreUObject\Public\UObject\Object.h:100`),
+`CreateDefaultSubobject`:131
 
 **FGameplayTag** (`Runtime\GameplayTags\Classes\GameplayTagContainer.h:41`),
 `FGameplayTagContainer`:247
@@ -257,8 +258,8 @@ class/function names are stable.)
 
 ## References & source material
 
-Engine source (UE 5.8, under `E:\Program Files\Epic Games\UE_5.8\Engine\`):
-- Version file: `Build\Build.version` (5.8.1, changelist 56057345).
+Engine source (UE 5.9, under `C:\Program Files\Epic Games\UE_5.9\Engine\`):
+- Version file: `Build\Build.version` (5.9.0, changelist 60351404).
 - Primary source root: `Engine\Source\` → `Runtime\`, `Editor\`, `Developer\`,
   `Programs\`, `ThirdParty\`.
 - Plugin root: `Engine\Plugins\` → `AI\`, `Animation\`, `EnhancedInput\`, `FX\`,

@@ -117,7 +117,7 @@ object-to-world mapping used by actors and scene components.
 FTransform T = Actor->GetActorTransform();
 FVector Loc  = T.GetLocation();    // GetLocation:599
 FQuat   Rot  = T.GetRotation();
-FVector Scale = T.GetScale3D();    // GetScale3D:1237
+FVector Scale = T.GetScale3D();    // GetScale3D:1245
 
 // Transform a world-space point to local space
 FVector LocalPt = T.InverseTransformPosition(WorldPoint); // InverseTransformPosition:567

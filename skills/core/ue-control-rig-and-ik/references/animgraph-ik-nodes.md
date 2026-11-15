@@ -164,7 +164,7 @@ Practical guidance:
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 - `IKRig/Source/IKRig/Public/AnimNodes/AnimNode_IKRig.h`:22 — `FAnimNode_IKRig`.
 - `IKRig/Source/IKRig/Public/AnimNodes/AnimNode_IKRig.h`:97 — `SetProcessorNeedsInitialized()`.

@@ -9,7 +9,8 @@ description: Write and run automated tests for Unreal Engine projects — simple
   or CI. Use when writing unit or integration tests for gameplay logic or systems,
   setting up headless CI test runs, verifying data/content, or catching regressions.
 metadata:
-  engine-version: "5.8"
+  aliases: "tests, testing, unit tests, automation tests, automation spec, functional tests, CI, Gauntlet"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -276,13 +277,13 @@ indicates test failures when `-unattended` is set.
 
 ## References & source material
 
-Engine source (UE 5.8):
-- `Runtime/Core/Public/Misc/AutomationTest.h` — `EAutomationTestFlags`:88,
-  `FAutomationTestBase`:1594, `RunTest`:2653, `TestEqual`:1985, `TestFalse`:2367,
-  `TestNull`:2530, `TestTrue`:2603, `FAutomationSpecBase`:2899, `Describe`:2757,
-  `BeforeEach`:2821, `It`:2789, `IAutomationLatentCommand`:525,
-  `DEFINE_LATENT_AUTOMATION_COMMAND`:3796, `ADD_LATENT_AUTOMATION_COMMAND`:4087,
-  `IMPLEMENT_SIMPLE_AUTOMATION_TEST`:4297, `DEFINE_SPEC`:4339, `BEGIN_DEFINE_SPEC`:4346.
+Engine source (UE 5.9):
+- `Runtime/Core/Public/Misc/AutomationTest.h` — `EAutomationTestFlags`:89,
+  `FAutomationTestBase`:1733, `RunTest`:2792, `TestEqual`:2124, `TestFalse`:2506,
+  `TestNull`:2669, `TestTrue`:2742, `FAutomationSpecBase`:3123, `Describe`:2981,
+  `BeforeEach`:3045, `It`:2789, `IAutomationLatentCommand`:591,
+  `DEFINE_LATENT_AUTOMATION_COMMAND`:4270, `ADD_LATENT_AUTOMATION_COMMAND`:4561,
+  `IMPLEMENT_SIMPLE_AUTOMATION_TEST`:4773, `DEFINE_SPEC`:4815, `BEGIN_DEFINE_SPEC`:4822.
 - `Developer/FunctionalTesting/Classes/FunctionalTest.h` — `AFunctionalTest`:249,
   `FinishTest`:678, `PrepareTest`:777, `IsReady_Implementation`:814, `AddError`:659.
 - `Developer/LowLevelTestsRunner/Public/TestHarness.h` — Catch2 bridge/harness header.

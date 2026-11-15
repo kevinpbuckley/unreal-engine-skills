@@ -12,7 +12,8 @@ description: Author and drive Unreal materials — UMaterial (the node graph ass
   setting global weather or world-state parameters, fixing material shader permutation count
   or translucency overdraw, or cross-referencing the material class hierarchy.
 metadata:
-  engine-version: "5.8"
+  aliases: "material, materials, shader, shaders, HLSL, material instance, MID, custom node"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -56,11 +57,11 @@ UObject
 Store and pass materials as `UMaterialInterface*` so any concrete type fits.
 
 Source locations (UE 5.8 `Engine/Source/Runtime/Engine/Public/Materials/`):
-- `MaterialInterface.h` — `UMaterialInterface`:351 (common interface, `GetMaterial`,
+- `MaterialInterface.h` — `UMaterialInterface`:374 (common interface, `GetMaterial`,
   `GetRenderProxy`, property getters).
-- `Material.h` — `UMaterial`:448 (`MaterialDomain`:482, `BlendMode`:486,
-  `ShadingModel`:511, `bUsedWithSkeletalMesh`:703, `GetDefaultMaterial`:1455).
-- `MaterialInstance.h` — `UMaterialInstance`:626 (shared parameter storage and
+- `Material.h` — `UMaterial`:449 (`MaterialDomain`:483, `BlendMode`:487,
+  `ShadingModel`:512, `bUsedWithSkeletalMesh`:704, `GetDefaultMaterial`:1477).
+- `MaterialInstance.h` — `UMaterialInstance`:674 (shared parameter storage and
   hierarchy traversal).
 - `MaterialInstanceConstant.h` — `UMaterialInstanceConstant`:20 (editor-only setters;
   read-only at runtime).
@@ -126,7 +127,7 @@ attributes, static switches, and custom HLSL nodes.
 ## Runtime parameters (MID) in C++
 
 ```cpp
-// PrimitiveComponent.h:1629 — creates a MID from SourceMaterial and assigns it
+// PrimitiveComponent.h:1633 — creates a MID from SourceMaterial and assigns it
 // to slot ElementIndex; returns the new MID.
 UMaterialInstanceDynamic* MID =
     MeshComp->CreateDynamicMaterialInstance(0, BaseMaterial);
@@ -243,11 +244,11 @@ for a Substrate overview.
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Source/Runtime/Engine/`):
-- `Public/Materials/MaterialInterface.h` — `UMaterialInterface`:351.
-- `Public/Materials/Material.h` — `UMaterial`:448; `MaterialDomain`:482;
-  `BlendMode`:486; `ShadingModel`:511; usage flags from :703.
-- `Public/Materials/MaterialInstance.h` — `UMaterialInstance`:626.
+Engine source (UE 5.9, `Engine/Source/Runtime/Engine/`):
+- `Public/Materials/MaterialInterface.h` — `UMaterialInterface`:374.
+- `Public/Materials/Material.h` — `UMaterial`:449; `MaterialDomain`:483;
+  `BlendMode`:487; `ShadingModel`:512; usage flags from :704.
+- `Public/Materials/MaterialInstance.h` — `UMaterialInstance`:674.
 - `Public/Materials/MaterialInstanceConstant.h` — `UMaterialInstanceConstant`:20.
 - `Public/Materials/MaterialInstanceDynamic.h` — `UMaterialInstanceDynamic`:14;
   `Create`:176; `SetScalarParameterValue`:24; `SetVectorParameterValue`:109;
@@ -257,8 +258,8 @@ Engine source (UE 5.8, `Engine/Source/Runtime/Engine/`):
 - `Classes/Engine/EngineTypes.h` — `EBlendMode`:245; `EMaterialShadingModel`:707.
 - `Classes/Kismet/KismetMaterialLibrary.h` — `UKismetMaterialLibrary`:22;
   `SetScalarParameterValue`:30; `SetVectorParameterValue`:34.
-- `Classes/Components/PrimitiveComponent.h` — `SetMaterial`:1600;
-  `CreateDynamicMaterialInstance`:1629.
+- `Classes/Components/PrimitiveComponent.h` — `SetMaterial`:1604;
+  `CreateDynamicMaterialInstance`:1633.
 
 Official docs (UE 5.8):
 - Materials overview —

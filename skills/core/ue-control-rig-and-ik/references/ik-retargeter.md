@@ -139,7 +139,7 @@ animation set; use runtime retargeting for NPCs or crowds that share a source li
 
 ---
 
-## Source references (UE 5.8)
+## Source references (UE 5.9)
 
 All paths under `Engine/Plugins/Animation/IKRig/Source/IKRig/Public/`:
 - `Rig/IKRigDefinition.h`:134 — `FBoneChain`.

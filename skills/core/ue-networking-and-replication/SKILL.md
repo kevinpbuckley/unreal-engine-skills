@@ -12,7 +12,8 @@ description: Implement server-authoritative multiplayer in Unreal C++ — networ
   multiplayer authority bugs, choosing replication conditions, or diagnosing "works in single player
   but not multiplayer" issues.
 metadata:
-  engine-version: "5.8"
+  aliases: "multiplayer, networking, replication, RPC, netcode, dedicated server, listen server, Iris"
+  engine-version: "5.9"
   category: systems
 ---
 
@@ -70,7 +71,7 @@ AMyActor::AMyActor()
 
 `bReplicates` (`Actor.h`:593), `SetReplicates` (`Actor.h`:759), `NetDormancy` (`Actor.h`:869),
 `bAlwaysRelevant` (`Actor.h`:333), `NetUpdateFrequency`/`SetNetUpdateFrequency` (`Actor.h`:905,
-:4624).
+:4631).
 
 Key actors by design: GameMode is server-only. GameState and PlayerState are built to replicate
 (`ue-gameplay-framework`). `SetReplicates(true)` at runtime triggers a replication start callback
@@ -225,7 +226,7 @@ to simulate 100ms latency.
 ## Version notes
 
 - **5.5+**: `NetUpdateFrequency` direct write is deprecated; use `SetNetUpdateFrequency()` /
-  `GetNetUpdateFrequency()` (`Actor.h`:903).
+  `GetNetUpdateFrequency()` (`Actor.h`:904).
 - **5.8 / Iris**: The Iris replication system remains beta and opt-in in 5.8
   (`net.Iris.UseIrisReplication`, default off). It coexists with the
   existing property/RPC model — existing `DOREPLIFETIME` and RPC code continues to work. Iris
@@ -235,12 +236,12 @@ to simulate 100ms latency.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/Engine/Public/Net/UnrealNetwork.h` — `DOREPLIFETIME*` macros (:231–293),
   `FDoRepLifetimeParams` (:134), `DOREPLIFETIME_CONDITION_NOTIFY` (:286),
   `DOREPLIFETIME_ACTIVE_OVERRIDE` (:311), `RegisterReplicatedLifetimeProperty` (:360).
 - `Runtime/Engine/Classes/GameFramework/Actor.h` — `bReplicates`:593, `SetReplicates`:759,
-  `GetLocalRole`:776, `GetRemoteRole`:780, `HasAuthority`:1938 (inlined :4967),
+  `GetLocalRole`:776, `GetRemoteRole`:780, `HasAuthority`:1938 (inlined :4975),
   `bAlwaysRelevant`:333, `NetDormancy`:869, `NetUpdateFrequency`:905,
   `SetNetDormancy`:3174, `FlushNetDormancy`:3178.
 - `Runtime/CoreUObject/Public/UObject/CoreNetTypes.h` — `ELifetimeCondition` enum (:16),

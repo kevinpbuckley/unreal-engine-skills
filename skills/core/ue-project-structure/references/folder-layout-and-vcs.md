@@ -67,14 +67,14 @@ project descriptor and is always committed. For the cascade and syntax see
 [references/config-system.md](config-system.md).
 
 `FPaths::ProjectConfigDir()` resolves to this folder at runtime
-(`Runtime/Core/Public/Misc/Paths.h:283`).
+(`Runtime/Core/Public/Misc/Paths.h:288`).
 
 ### Content/
 
 All Unreal assets (`.uasset`) and maps (`.umap`) live here. The engine refers to them
 via the `/Game/` virtual mount point; never use OS paths to reference content.
 
-`FPaths::ProjectContentDir()` resolves to this folder (`Paths.h:276`).
+`FPaths::ProjectContentDir()` resolves to this folder (`Paths.h:281`).
 
 Binary assets do not text-merge. Use **Git LFS** (tracking `*.uasset` and `*.umap`) or
 Perforce with exclusive checkout on any project where multiple people edit the same
@@ -118,7 +118,7 @@ shared network DDC path (`[InstalledDerivedDataBackend]` in `Engine/Config/BaseE
 Never commit the local DDC.
 
 `FPaths::ProjectSavedDir()` and `FPaths::ProjectIntermediateDir()` resolve to `Saved/` and
-`Intermediate/` respectively (`Paths.h:290`, `Paths.h:297`).
+`Intermediate/` respectively (`Paths.h:295`, `Paths.h:302`).
 
 ### Saved/
 

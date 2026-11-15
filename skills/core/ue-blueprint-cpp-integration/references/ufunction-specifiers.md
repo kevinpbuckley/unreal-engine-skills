@@ -99,7 +99,7 @@ All metadata lives only in the editor build; never query it from gameplay code.
 | `UnsafeDuringActorConstruction` | Marks a function not safe to call in the construction script |
 | `Latent` + `LatentInfo="Param"` | Marks the function as a latent (async) action |
 
-## Source locations (UE 5.8)
+## Source locations (UE 5.9)
 
 All specifiers below are in `Runtime/CoreUObject/Public/UObject/ObjectMacros.h`:
 

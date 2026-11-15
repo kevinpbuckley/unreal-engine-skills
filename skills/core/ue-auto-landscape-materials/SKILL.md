@@ -1,8 +1,8 @@
 ---
 name: ue-auto-landscape-materials
-description: Build asset-agnostic automatic landscape materials in Unreal Engine 5.8. Use for painted layers plus generated slope or height masks, macro variation, distance-aware detail, and triplanar projection on steep terrain.
+description: Build asset-agnostic automatic landscape materials in Unreal Engine 5.8 and 5.9. Use for painted layers plus generated slope or height masks, macro variation, distance-aware detail, and triplanar projection on steep terrain.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: world-building
 ---
 
@@ -57,7 +57,7 @@ Check painted and generated layers together on flat ground, gentle slopes, cliff
 
 ## References & source material
 
-- UE 5.8 source: `Engine/Source/Runtime/Landscape/Classes/Materials/MaterialExpressionLandscapeLayerBlend.h` (`UMaterialExpressionLandscapeLayerBlend`).
-- UE 5.8 source: `Engine/Source/Runtime/Landscape/Classes/LandscapeLayerInfoObject.h` (`ULandscapeLayerInfoObject`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionVertexNormalWS.h` (`UMaterialExpressionVertexNormalWS`).
-- UE 5.8 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionWorldPosition.h` (`UMaterialExpressionWorldPosition`).
+- UE 5.9 source: `Engine/Source/Runtime/Landscape/Classes/Materials/MaterialExpressionLandscapeLayerBlend.h` (`UMaterialExpressionLandscapeLayerBlend`).
+- UE 5.9 source: `Engine/Source/Runtime/Landscape/Classes/LandscapeLayerInfoObject.h` (`ULandscapeLayerInfoObject`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionVertexNormalWS.h` (`UMaterialExpressionVertexNormalWS`).
+- UE 5.9 source: `Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionWorldPosition.h` (`UMaterialExpressionWorldPosition`).

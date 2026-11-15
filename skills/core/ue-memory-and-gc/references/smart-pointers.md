@@ -44,7 +44,7 @@ overhead over a raw pointer in shipping builds. `MakeUnique<T>(...)` is the fact
 When a `UObject` contains a `TUniquePtr<F*>` member, the `F*` destructor must be visible at the
 point the `UObject`'s destructor is compiled — declare the destructor in the `.h` and define it
 (even as `= default`) in the `.cpp` to avoid incomplete-type errors from UHT-generated code.
-This is described in the `TDefaultDelete` comment in `UniquePtr.h`:55.
+This is described in the `TDefaultDelete` comment in `UniquePtr.h`:54.
 
 ## TSharedPtr\<T\> and TSharedRef\<T\>
 
@@ -132,7 +132,7 @@ Both allow a non-UObject class to keep one or more UObjects alive. The choice:
 registers once and reports all references from a single `AddReferencedObjects` call — more
 efficient when holding many objects.
 
-`FGCObject` is not trivially relocatable (`GCObject.h`:226). Do not store `FGCObject` subclasses
+`FGCObject` is not trivially relocatable (`GCObject.h`:227). Do not store `FGCObject` subclasses
 by value in `TArray` or similar relocating containers.
 
 ## Casting

@@ -9,7 +9,7 @@ description: Configure Nanite virtualized geometry (FMeshNaniteSettings on stati
   post-process in code or volumes, rendering to a texture (minimap, mirror, portal), tuning
   scalability cvars, or understanding the deferred/forward rendering split.
 metadata:
-  engine-version: "5.8"
+  engine-version: "5.9"
   category: world-building
 ---
 
@@ -38,7 +38,7 @@ draw-call-per-mesh path with a GPU-driven visibility and rasterization pass.
 ### FMeshNaniteSettings — the control struct
 
 `FMeshNaniteSettings` (defined in
-`Runtime/Engine/Classes/Engine/EngineTypes.h`:3280) holds all per-mesh Nanite build
+`Runtime/Engine/Classes/Engine/EngineTypes.h`:3286) holds all per-mesh Nanite build
 parameters. Key fields:
 
 | Field | Type | Default | Purpose |
@@ -53,9 +53,9 @@ parameters. Key fields:
 | `DisplacementMaps` | `TArray<FMeshDisplacementMap>` | empty | Offline tessellation/displacement maps |
 | `PositionPrecision` | `int32` | `MIN_int32` (auto) | Vertex position quantization |
 
-`UStaticMesh` exposes `GetNaniteSettings()`/`SetNaniteSettings()` (`StaticMesh.h`:855–868)
-and `IsNaniteEnabled()` (`:1049`). `USkeletalMesh` has the same accessor pair
-(`SkeletalMesh.h`:970–977).
+`UStaticMesh` exposes `GetNaniteSettings()`/`SetNaniteSettings()` (`StaticMesh.h`:874–887)
+and `IsNaniteEnabled()` (`:1068`). `USkeletalMesh` has the same accessor pair
+(`SkeletalMesh.h`:1003–1010).
 
 > **5.7 deprecation note:** Direct member access to `UStaticMesh::NaniteSettings` is
 > deprecated (`UE_DEPRECATED(5.7, ...)`). Use the accessor functions instead.
@@ -100,15 +100,15 @@ Nanite is **not** supported for:
 - **Lighting channels** and **minimum screen radius / distance culling** per-object overrides.
 
 On `UStaticMeshComponent`, `bDisallowNanite` and `bForceNaniteForMasked` let you opt
-individual component instances in or out at runtime (`StaticMeshComponent.h`:162–166).
-`WorldPositionOffsetDisableDistance` (`:158`) stops WPO evaluation past a given screen
+individual component instances in or out at runtime (`StaticMeshComponent.h`:165–169).
+`WorldPositionOffsetDisableDistance` (`:161`) stops WPO evaluation past a given screen
 distance, which also helps Nanite cluster culling.
 
 ### Fallback mesh
 
 The fallback mesh is a conventional LOD mesh rendered on platforms that don't support
 Nanite (DX11, mobile, ray-tracing passes). `HasNaniteFallbackMesh(EShaderPlatform)`
-(`StaticMesh.h`:2192) queries its presence. Set `FallbackPercentTriangles` < 1.0 to reduce
+(`StaticMesh.h`:2234) queries its presence. Set `FallbackPercentTriangles` < 1.0 to reduce
 its cost. For ray tracing, the fallback is used by default; lower `FallbackRelativeError`
 for higher-fidelity RT shadows/reflections.
 
@@ -129,7 +129,7 @@ UE defaults to **deferred shading** (desktop/console). The G-buffer stores mater
 properties (base color, normals, roughness, metallic) in the depth pass and base pass; the
 lighting pass reads them. This enables many dynamic lights at low per-light cost.
 
-**Forward shading** (`r.ForwardShading 1`, `RendererSettings.h`:736) renders lighting in a
+**Forward shading** (`r.ForwardShading 1`, `RendererSettings.h`:742) renders lighting in a
 single pass per draw. It supports MSAA but does not support Nanite, has fewer features
 (no deferred decals, no light functions by default), and is mainly used for VR.
 
@@ -173,13 +173,13 @@ Screen percentage (`r.ScreenPercentage`) is the primary resolution lever: 50–7
 still produces near-native quality. Third-party temporal upscalers (DLSS, FSR 2+, XeSS)
 plug in via the `ITemporalUpscaler` interface (`Renderer/Public/TemporalUpscaler.h`).
 
-`RendererSettings.h`:863–866 maps `r.AntiAliasingMethod` to `EAntiAliasingMethod` (project
+`RendererSettings.h`:875–878 maps `r.AntiAliasingMethod` to `EAntiAliasingMethod` (project
 setting `DefaultFeatureAntiAliasing`). Forward shading forces FXAA or MSAA; TSR/TAAU
 require deferred.
 
 ## Post process (FPostProcessSettings)
 
-`FPostProcessSettings` (`Engine/Classes/Engine/Scene.h`:711–2712) is the single struct that
+`FPostProcessSettings` (`Engine/Classes/Engine/Scene.h`:715–2716) is the single struct that
 controls all post-process overrides. Apply it via:
 - An unbound **Post Process Volume** (global baseline).
 - A bounded volume with a Blend Radius (local override).
@@ -300,21 +300,21 @@ hardcode `GConsoleManager->FindTConsoleVariableDataFloat` calls in game logic.
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
-- `Runtime/Engine/Classes/Engine/EngineTypes.h` — `FMeshNaniteSettings`:3280,
-  `ENaniteGenerateFallback`:3213, `ENaniteFallbackTarget`:3222.
-- `Runtime/Engine/Classes/Engine/StaticMesh.h` — `GetNaniteSettings`:855,
-  `SetNaniteSettings`:864, `IsNaniteEnabled`:1049, `HasNaniteFallbackMesh`:2192;
-  `NaniteSettings` member deprecated at 5.7:744.
-- `Runtime/Engine/Classes/Engine/SkeletalMesh.h` — `FMeshNaniteSettings NaniteSettings`:964,
-  `GetNaniteSettings`:970, `SetNaniteSettings`:974.
-- `Runtime/Engine/Classes/Components/StaticMeshComponent.h` — `bDisallowNanite`:166,
-  `bForceNaniteForMasked`:162, `WorldPositionOffsetDisableDistance`:158,
-  `bEvaluateWorldPositionOffset`:176.
-- `Runtime/Engine/Classes/Engine/Scene.h` — `FPostProcessSettings`:711.
-- `Runtime/Engine/Classes/Engine/RendererSettings.h` — `DefaultFeatureAntiAliasing`:866,
-  `bForwardShading`:736, `bVirtualTextures`:417, `MobileShadingPath`:342.
-- `Runtime/Engine/Public/Rendering/NaniteResources.h` — `Nanite::FResources`:452
+Engine source (UE 5.9, under `Engine/Source/`):
+- `Runtime/Engine/Classes/Engine/EngineTypes.h` — `FMeshNaniteSettings`:3286,
+  `ENaniteGenerateFallback`:3219, `ENaniteFallbackTarget`:3228.
+- `Runtime/Engine/Classes/Engine/StaticMesh.h` — `GetNaniteSettings`:874,
+  `SetNaniteSettings`:883, `IsNaniteEnabled`:1068, `HasNaniteFallbackMesh`:2234;
+  `NaniteSettings` member deprecated at 5.7:763.
+- `Runtime/Engine/Classes/Engine/SkeletalMesh.h` — `FMeshNaniteSettings NaniteSettings`:997,
+  `GetNaniteSettings`:1003, `SetNaniteSettings`:1007.
+- `Runtime/Engine/Classes/Components/StaticMeshComponent.h` — `bDisallowNanite`:169,
+  `bForceNaniteForMasked`:165, `WorldPositionOffsetDisableDistance`:161,
+  `bEvaluateWorldPositionOffset`:179.
+- `Runtime/Engine/Classes/Engine/Scene.h` — `FPostProcessSettings`:715.
+- `Runtime/Engine/Classes/Engine/RendererSettings.h` — `DefaultFeatureAntiAliasing`:878,
+  `bForwardShading`:742, `bVirtualTextures`:417, `MobileShadingPath`:342.
+- `Runtime/Engine/Public/Rendering/NaniteResources.h` — `Nanite::FResources`:455
   (streaming pages, cluster hierarchy, position/normal precision stored here).
 - `Runtime/Renderer/Private/GPUScene.h` — `FGPUScene`:218 (GPU-resident primitive/instance
   buffer driving Nanite and instanced rendering).
