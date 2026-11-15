@@ -6,12 +6,14 @@ description: Cook, package, and ship an Unreal project — the cook process (by-
   declared in *.Target.cs files, UAT BuildCookRun command-line pipeline, pak files and the
   modern IoStore (.utoc/.ucas) container format, asset chunking and Primary Asset Rules for
   DLC/patching, ProjectPackagingSettings (bUseIoStore, bGenerateChunks, bCompressed,
-  DirectoriesToAlwaysCook/NeverCook), platform targets, content-on-demand / IoStore On-Demand,
+  DirectoriesToAlwaysCook/NeverCook), platform targets and per-platform config
+  (Platforms/<Platform>/Config, the 5.9 Wasm web target), content-on-demand / IoStore On-Demand,
   and shipping-vs-development behavioral differences (WITH_EDITOR, stripped checks/logs). Use
   when producing a runnable build, automating cook/package in CI, diagnosing packaging failures,
   configuring what ships, or setting up chunked DLC delivery.
 metadata:
-  engine-version: "5.8"
+  aliases: "packaging, package, cook, cooking, BuildCookRun, UAT, RunUAT, pak, IoStore, shipping build, DirectoriesToNeverCook, DirectoriesToAlwaysCook, web build, Wasm"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -57,7 +59,7 @@ compiled in:
 | `Shipping` | Max | No | Minimal | Release builds |
 
 Source: `UnrealTargetConfiguration` enum —
-`Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs`:1147.
+`Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs`:1149.
 
 The packaging UI (`EProjectPackagingBuildConfigurations`) mirrors these five values as
 `PPBC_Debug … PPBC_Shipping` — see `ProjectPackagingSettings.h`:18.
@@ -172,8 +174,25 @@ Access in code: `GetDefault<UProjectPackagingSettings>()` (editor only).
 
 ## Platforms, Device Profiles, and scalability
 
-Each platform target (Win64, Android, iOS, console) requires its SDK and platform files.
-Platform-specific packaging overrides live in `Config/[Platform]/[Platform]Game.ini`.
+Each platform target (Win64, Android, iOS, console, `Wasm`) requires its SDK and platform files.
+Platform-specific overrides live in either of two project folders, both read only for that
+platform:
+
+- `Config/<Platform>/<Platform><Type>.ini` (e.g. `Config/Wasm/WasmGame.ini`), and
+- the **platform-extension folder** `Platforms/<Platform>/Config/<Platform><Type>.ini`
+  (e.g. `Platforms/Wasm/Config/WasmDeviceProfiles.ini`). The config hierarchy maps
+  `{PROJECT}/Config/{PLATFORM}/` to `{EXTPROJECT}/Config/`, and `{EXTPROJECT}` expands to
+  `<Project>/Platforms/<Platform>` (`ConfigHierarchy.h` "Platform Extensions",
+  `Paths.cpp` `EPathConversion::Project_PlatformExtension`).
+
+Use them for anything that must differ on one platform only: a texture-group cap or cvar in
+that platform's device profile changes its cook and run time and never touches Win64.
+Engine-side, the same layout holds: `Engine/Platforms/<Platform>/Config/Base<Platform>*.ini`.
+
+**Web (`Wasm`, new in 5.9):** WebAssembly + WebGPU on the mobile renderer (no Lumen), C++
+projects only, emscripten 6.0.10, cross-origin-isolated hosting. Epic's procedure is
+`Engine/Platforms/Wasm/Skills/web-deploy/SKILL.md`; the traps (plugins to deny for Wasm,
+in-memory toolset manifests, download size, hosting headers) are in `ue-web-wasm-webgpu`.
 
 **Device Profiles** (`DeviceProfiles.ini`) set per-platform CVars and scalability groups —
 the correct way to vary rendering quality per platform. Never hardcode `r.*` CVars in
@@ -222,6 +241,32 @@ compiles out of runtime targets. See `ue-logging-and-assertions` for `verify` vs
   unrunnable result; confirm the `BuildTarget` in `ProjectPackagingSettings`.
 - **Cook time blowup** — enable iterative cooking (`-iterate` flag to UAT) during
   iteration; disable for final CI builds to guarantee a clean output.
+- **A plugin root in `DirectoriesToNeverCook`** — fails the cook on an ensure
+  `Registered the path /<Plugin>/ for two different domains: Plugin:<Plugin> and Never
+  Cooked Content` (raised by the `AssetReferenceRestrictions` plugin's domain table,
+  `AssetReferencingDomains.cpp`, when that plugin is enabled). Never-cook a **sub-folder**
+  (`/MetaHumanCoreTech/RealtimeMono`); to drop all of a plugin's content, disable the plugin
+  for that target. Never-cook only what nothing kept references, or the cook fails with
+  `Content is missing from cook`.
+- **Plugins always-cook their own content** through their own `Config/Game.ini`
+  (`+DirectoriesToAlwaysCook=...`; e.g. `MetaHumanLiveLink` always-cooks `/MetaHumanCoreTech`,
+  about 319 MB of realtime solver models a game with baked face animation never reads).
+  Grep the enabled plugins' `Config/*.ini` when a container is bigger than expected.
+- **Assets loaded by path string are not cooked.** `LoadObject` / `StaticLoadObject` with a
+  built path, a soft path assembled from a naming convention, a DataTable row name turned into
+  an asset path: none is a reference the cooker follows. The asset works in PIE and is silently
+  missing in the package. Add its folder to `DirectoriesToAlwaysCook` (or give it a Primary
+  Asset rule), and verify with a full playthrough of the packaged build.
+- **The cooker runs with editor plugins loaded.** Denying a plugin for a platform
+  (`PlatformDenyList` / `TargetAllowList` in the `.uproject`) keeps its modules out of the
+  game, not its cook-time side effects: in-memory packages it generates are still cooked, and
+  an editor extension it registers can be written into cooked assets. Disable such plugins
+  for the cook (details in `ue-web-wasm-webgpu`).
+- **Nothing may write `Config/*.ini` or create assets while a cook runs.** An ini changed
+  mid-cook shipped shaders compiled under the old settings with the new ini, and every load
+  aborted with `Failed to find shader map for default material ...`; assets created mid-cook
+  are missed by the cook's asset scan. Re-package after any such change; with several agents
+  or tools on one project, hold the editor lock for the whole cook.
 
 ## Version notes
 
@@ -234,14 +279,14 @@ compiles out of runtime targets. See `ue-logging-and-assertions` for `verify` vs
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 - `UProjectPackagingSettings` (properties, enums, cook rules) —
   `Engine/Source/Developer/DeveloperToolSettings/Classes/Settings/ProjectPackagingSettings.h`:179.
   `EProjectPackagingBuildConfigurations`:18, `EAssetRegistryWritebackMethod`:106,
   `bUseIoStore`:250, `bGenerateChunks`:265, `bCompressed`:323, `DirectoriesToAlwaysCook`:568.
 - `TargetType` enum — `Engine/Source/Programs/UnrealBuildTool/Configuration/Rules/TargetRules.cs`:21.
 - `UnrealTargetConfiguration` enum (Debug…Shipping) —
-  `Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs`:1147.
+  `Engine/Source/Programs/UnrealBuildTool/Configuration/UEBuildTarget.cs`:1149.
 - `BuildCookRun` UAT command class —
   `Engine/Source/Programs/AutomationTool/Scripts/BuildCookRun.Automation.cs`:24.
 - IoStore container format (`EIoStoreTocVersion`, `FIoStoreTocHeader`) —
@@ -250,6 +295,16 @@ Engine source (UE 5.8):
   `Engine/Source/Runtime/Experimental/IoStore/OnDemandCore/Public/IO/IoStoreOnDemand.h`.
 - `WITH_EDITOR`, `WITH_EDITORONLY_DATA` preprocessor guards —
   `Engine/Source/Runtime/Core/Public/Misc/Build.h`:66.
+- Config layers including platform extensions (`{EXTPROJECT}/Config/`) —
+  `Engine/Source/Runtime/Core/Public/Misc/ConfigHierarchy.h`; expansion in
+  `Engine/Source/Runtime/Core/Private/Misc/ConfigContext.cpp` and
+  `Engine/Source/Runtime/Core/Private/Misc/Paths.cpp` (`EPathConversion::Project_PlatformExtension`).
+- Plugin-root never-cook ensure —
+  `Engine/Plugins/Editor/AssetReferenceRestrictions/Source/AssetReferenceRestrictions/Private/AssetReferencingDomains.cpp`.
+- "Content is missing from cook" — `Engine/Source/Editor/UnrealEd/Private/Cooker/CookImportsChecker.cpp`.
+- A plugin's own always-cook list, example — `Engine/Plugins/MetaHuman/MetaHumanLiveLink/Config/Game.ini`.
+- Web platform (5.9): `Engine/Platforms/Wasm/Docs/README.md`,
+  `Engine/Platforms/Wasm/Skills/web-deploy/SKILL.md`, `Engine/Platforms/Wasm/Config/BaseWasmEngine.ini`.
 
 Official docs (UE 5.8, all fetched and confirmed live):
 - Build Configurations Reference —
@@ -277,4 +332,4 @@ Deep-dive references in this skill:
   Device Profiles, Client/Server split, IoStore On-Demand / content-on-demand, patching.
 
 Related skills: `ue-module-and-build-system`, `ue-asset-management`, `ue-logging-and-assertions`,
-`ue-networking-and-replication`, `ue-project-structure`.
+`ue-networking-and-replication`, `ue-project-structure`, `ue-web-wasm-webgpu` (browser builds).

@@ -51,7 +51,7 @@ apply the same logic at directory granularity without touching the Asset Manager
 
 ## Build configuration details
 
-`UnrealTargetConfiguration` (source: `UEBuildTarget.cs`:1147) maps to compiler flags
+`UnrealTargetConfiguration` (source: `UEBuildTarget.cs`:1149) maps to compiler flags
 and engine preprocessor macros:
 
 **`Debug`** — no optimization (`/Od` on MSVC), full debug info. Both engine and game

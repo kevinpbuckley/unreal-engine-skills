@@ -70,7 +70,7 @@ The IoStore On-Demand system (`Runtime/Experimental/IoStore/OnDemand/`) enables 
 shipped game to fetch content from a CDN at runtime without requiring the full install
 upfront — the foundation for streaming installs and live-service drops.
 
-Core interface (source: `Engine/Source/Runtime/Experimental/IoStore/OnDemandCore/Public/IO/IoStoreOnDemand.h`:46/647):
+Core interface (source: `Engine/Source/Runtime/Experimental/IoStore/OnDemandCore/Public/IO/IoStoreOnDemand.h`:46/678):
 
 ```cpp
 namespace UE::IoStore
