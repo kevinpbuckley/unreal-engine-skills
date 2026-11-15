@@ -10,7 +10,8 @@ description: Work with static and skeletal meshes in Unreal C++ — UStaticMesh 
   components, attaching to mesh sockets, overriding material slots, querying LOD data,
   or debugging missing materials, wrong skeleton, or silent socket attachment failures.
 metadata:
-  engine-version: "5.8"
+  aliases: "static mesh, skeletal mesh, StaticMesh, SkeletalMesh, LOD, LODs, mesh, sockets"
+  engine-version: "5.9"
   category: content-assets
 ---
 
@@ -213,6 +214,31 @@ for `UBodySetup` setup, adding convex shapes, and the `ue-physics-and-chaos` cro
   only the visible-pixel detail. Keep a fallback mesh at a reasonable error setting
   for ray tracing and unsupported platforms.
 
+### Skeletal LOD info from editor Python (UE 5.9)
+
+The LOD array is not script-visible: `mesh.lod_info` / `get_editor_property("lod_info")` and
+`mesh.get_lod_num()` fail (`USkeletalMesh::GetLODNum` / `GetLODInfo` are plain C++; the old
+`LODInfo` member is now a non-exposed `LODInfo_DEPRECATED`). Go through
+`USkeletalMeshEditorSubsystem`, whose LOD functions are mostly **static** (call them on the
+class) while the per-section queries are instance methods:
+
+```python
+SMES = unreal.SkeletalMeshEditorSubsystem
+sub = unreal.get_editor_subsystem(SMES)
+n = SMES.get_lod_count(mesh)                                    # static
+for lod in range(n):
+    verts = sub.get_num_verts(mesh, lod)                        # instance method
+    sections = sub.get_num_sections(mesh, lod)
+    slots = [sub.get_lod_material_slot(mesh, lod, s) for s in range(sections)]
+build = SMES.get_lod_build_settings(mesh, 0)                    # out-param -> returned struct
+```
+
+On a component at run time or in PIE: `comp.get_num_lods()`, `comp.set_forced_lod(n)` and
+`comp.get_forced_lod()` use **1-based** values (`1` = LOD 0, `0` = automatic). Per-LOD screen
+sizes and bone-reduction settings have no Python getter on the mesh; when the mesh uses an LOD
+Settings asset, `mesh.get_editor_property("lod_settings")` returns it (declared readable, not run
+by this skill's author).
+
 ## Nanite
 
 Nanite is enabled per-mesh via `FMeshNaniteSettings::bEnabled` on the `UStaticMesh`
@@ -283,31 +309,36 @@ ecosystem, leader-pose setup, bone queries, and `ue-animation-system` cross-refe
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/`):
-- `Engine/Classes/Engine/StaticMesh.h` — `UStaticMesh`, `NaniteSettings`:746,
-  `GetNaniteSettings()`:855, `SetNaniteSettings()`:864.
-- `Engine/Classes/Engine/SkeletalMesh.h` — `USkeletalMesh`, `GetSkeleton()`:747,
-  `GetPhysicsAsset()`:1538, `FindSocket()`:2658, `GetMaterials()`:933.
-- `Engine/Classes/Components/StaticMeshComponent.h` — `UStaticMeshComponent`:105,
-  `SetStaticMesh()`:450, `GetStaticMesh()`:453, `GetMaterial()`:665,
-  `GetSocketByName()`:921.
+Engine source (UE 5.9, under `Engine/Source/Runtime/`):
+- `Engine/Classes/Engine/StaticMesh.h` — `UStaticMesh`, `NaniteSettings`:765,
+  `GetNaniteSettings()`:874, `SetNaniteSettings()`:883.
+- `Engine/Classes/Engine/SkeletalMesh.h` — `USkeletalMesh`, `GetSkeleton()`:780,
+  `GetPhysicsAsset()`:1592, `FindSocket()`:2712, `GetMaterials()`:966.
+- `Engine/Classes/Components/StaticMeshComponent.h` — `UStaticMeshComponent`:108,
+  `SetStaticMesh()`:463, `GetStaticMesh()`:466, `GetMaterial()`:678,
+  `GetSocketByName()`:940.
 - `Engine/Classes/Components/SkeletalMeshComponent.h` — `USkeletalMeshComponent`:341,
-  `SetSkeletalMesh()`:2198, `SetPhysicsAsset()`:2197, `SetAnimInstanceClass()`:1096.
+  `SetSkeletalMesh()`:2193, `SetPhysicsAsset()`:2191, `SetAnimInstanceClass()`:1096.
 - `Engine/Classes/Components/SkinnedMeshComponent.h` — `USkinnedMeshComponent`,
-  `GetSocketByName()`:1955.
+  `GetSocketByName()`:1991.
 - `Engine/Classes/Components/MeshComponent.h` — `UMeshComponent`, `SetMaterial()`:121,
   `GetMaterial()`:119, `GetNumMaterials()`:118.
 - `Engine/Classes/Components/InstancedStaticMeshComponent.h` —
   `UInstancedStaticMeshComponent`:158, `AddInstance()`:271, `RemoveInstance()`:417,
   `UpdateInstanceTransform()`:375, `GetInstanceCount()`:435.
 - `Engine/Classes/Components/HierarchicalInstancedStaticMeshComponent.h` — `UHISMC`.
-- `Engine/Classes/Engine/EngineTypes.h` — `FMeshNaniteSettings`:3280, `bEnabled`:3286.
+- `Engine/Classes/Engine/EngineTypes.h` — `FMeshNaniteSettings`:3286, `bEnabled`:3292.
 - `Engine/Classes/Engine/StaticMeshSocket.h` — `UStaticMeshSocket`:15.
 - `Engine/Classes/PhysicsEngine/BodySetup.h` — `UBodySetup`.
 - `PhysicsCore/Public/BodySetupCore.h` — `UBodySetupCore`, `CollisionTraceFlag`:37.
 - `PhysicsCore/Public/BodySetupEnums.h` — `ECollisionTraceFlag`:10,
   `CTF_UseSimpleAsComplex`:17, `CTF_UseComplexAsSimple`:19.
 - `Engine/Classes/PhysicsEngine/PhysicsAsset.h` — `UPhysicsAsset`.
+
+Python LOD access (UE 5.9): `Engine/Source/Editor/SkeletalMeshEditor/Public/SkeletalMeshEditorSubsystem.h`
+(`GetLODCount`, `GetNumVerts`, `GetNumSections`, `GetLODMaterialSlot`, `GetLodBuildSettings`);
+`Engine/Source/Runtime/Engine/Classes/Components/SkinnedMeshComponent.h` (`GetNumLODs`,
+`SetForcedLOD` 1-based, `GetForcedLOD`).
 
 Official docs (UE 5.8, fetched and confirmed):
 - Static Meshes — <https://dev.epicgames.com/documentation/unreal-engine/static-meshes>

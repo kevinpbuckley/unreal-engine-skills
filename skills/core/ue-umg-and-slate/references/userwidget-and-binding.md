@@ -99,7 +99,7 @@ virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override
 
 ## CreateWidget and ownership
 
-`CreateWidget<T>` (`UserWidget.h`:1819) accepts these owner types:
+`CreateWidget<T>` (`UserWidget.h`:1833) accepts these owner types:
 - `UWorld*` — widget owned by the world; any player can see it via `AddToViewport`.
 - `APlayerController*` — widget owned by that player; use `AddToPlayerScreen` for split-screen.
 - `UGameInstance*` — persists across level transitions.

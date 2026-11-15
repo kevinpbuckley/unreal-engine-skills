@@ -201,7 +201,7 @@ per-platform layout variants when a simple inset isn't enough.
 
 ## Sources
 
-Engine source (UE 5.8, under `Engine/Source/` and `Engine/Plugins/`):
+Engine source (UE 5.9, under `Engine/Source/` and `Engine/Plugins/`):
 - `Engine/Plugins/Runtime/CommonUI/Source/CommonUI/Public/Widgets/CommonActivatableWidgetContainer.h`
   — `UCommonActivatableWidgetContainerBase`:24, `AddWidget`:33, `RemoveWidget`:70,
   `UCommonActivatableWidgetStack`:202, `UCommonActivatableWidgetQueue`:235.

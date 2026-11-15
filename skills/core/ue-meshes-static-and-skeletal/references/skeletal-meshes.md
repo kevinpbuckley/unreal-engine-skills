@@ -37,7 +37,7 @@ Designers add **virtual bones** in the Skeleton Editor to extend the hierarchy f
 targets or attachment points without changing the source mesh. Virtual bones are
 visible to AnimBP nodes but not rendered.
 
-`USkeletalMesh::GetSkeleton()` (line 747) returns the skeleton. Attempting to play an
+`USkeletalMesh::GetSkeleton()` (line 780) returns the skeleton. Attempting to play an
 animation sequence whose skeleton differs from the component's mesh skeleton will log
 a warning and play nothing at runtime.
 
@@ -53,7 +53,7 @@ A `UPhysicsAsset` holds:
 Assign at runtime:
 
 ```cpp
-SkMesh->SetPhysicsAsset(MyPhysicsAsset, /*bForceReInit=*/false);  // line 2197
+SkMesh->SetPhysicsAsset(MyPhysicsAsset, /*bForceReInit=*/false);  // line 2191
 ```
 
 Setting `bForceReInit = true` rebuilds all physics bodies immediately (expensive; avoid
@@ -66,7 +66,7 @@ Skeletal sockets follow the animation of their parent bone every frame. They are
 stored on the `USkeletalMesh` asset and are shared across all components:
 
 ```cpp
-// Retrieve a socket by name (USkinnedMeshComponent, line 1955):
+// Retrieve a socket by name (USkinnedMeshComponent, line 1991):
 USkeletalMeshSocket const* Sock = SkMesh->GetSocketByName(TEXT("hand_r"));
 if (Sock)
 {
@@ -81,8 +81,8 @@ if (Sock)
 FTransform WorldSockTransform = SkMesh->GetSocketTransform(TEXT("hand_r"));
 ```
 
-`USkeletalMesh::FindSocket()` (line 2658) searches the mesh's socket array and the
-skeleton's sockets. `FindSocketInfo()` (line 2674) also returns the bone index and
+`USkeletalMesh::FindSocket()` (line 2712) searches the mesh's socket array and the
+skeleton's sockets. `FindSocketInfo()` (line 2728) also returns the bone index and
 the socket's local offset — useful for FK corrections.
 
 ## Setting up a skeletal mesh component
@@ -93,9 +93,9 @@ SkMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharMesh"));
 SetRootComponent(SkMesh);
 
 // Assign mesh + animation class (both can be set via UPROPERTY in editor):
-SkMesh->SetSkeletalMesh(MySkeletalMesh);         // line 2198
+SkMesh->SetSkeletalMesh(MySkeletalMesh);         // line 2193
 SkMesh->SetAnimInstanceClass(MyAnimBPClass);     // line 1096
-SkMesh->SetPhysicsAsset(MyPhysicsAsset);         // line 2197
+SkMesh->SetPhysicsAsset(MyPhysicsAsset);         // line 2191
 
 // Swap mesh at runtime without resetting current pose:
 SkMesh->SetSkeletalMesh(NewMesh, /*bReinitPose=*/false);

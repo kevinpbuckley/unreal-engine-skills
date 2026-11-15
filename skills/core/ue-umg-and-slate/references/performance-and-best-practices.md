@@ -112,8 +112,8 @@ Timers, delegates, and animations cover almost every "per-frame" need.
 Creating and destroying `UUserWidget`s churns UObjects *and* their Slate trees. For
 dynamic lists/entries:
 
-- **`UListView` / `UTileView` / `UTreeView`** (`Components/ListView.h`:41,
-  `Components/ListViewBase.h`:587) — virtualized *and* pooled: only visible rows have
+- **`UListView` / `UTileView` / `UTreeView`** (`Components/ListView.h`:46,
+  `Components/ListViewBase.h`:592) — virtualized *and* pooled: only visible rows have
   live widgets, and rows are recycled as you scroll. Always the first choice for 20+
   items. Entry widgets implement `IUserObjectListEntry`; treat entries as views over
   their item object — reset all state in `OnListItemObjectSet`, because the widget you
@@ -255,7 +255,7 @@ widget/subtree → fix with the rules above → re-measure.
 
 ## Sources
 
-Engine source (UE 5.8, under `Engine/Source/Runtime/UMG/Public/`):
+Engine source (UE 5.9, under `Engine/Source/Runtime/UMG/Public/`):
 - `Components/InvalidationBox.h` — `UInvalidationBox`:19,
   `GetCanCache`:37, `SetCanCache`:44.
 - `Components/RetainerBox.h` — `URetainerBox`:26,
@@ -265,8 +265,8 @@ Engine source (UE 5.8, under `Engine/Source/Runtime/UMG/Public/`):
 - `Blueprint/UserWidgetPool.h` — `FUserWidgetPool`:26,
   `GetOrCreateInstance`:59, `Release`:79, `ReleaseAll`:85, `ResetPool`:88,
   `ReleaseInactiveSlateResources`:91, `ReleaseAllSlateResources`:97.
-- `Components/ListView.h` — `UListView`:41.
-- `Components/ListViewBase.h` — `UListViewBase`:587.
+- `Components/ListView.h` — `UListView`:46.
+- `Components/ListViewBase.h` — `UListViewBase`:592.
 - `Components/Spacer.h` — `USpacer`:19.
 - `Components/SizeBox.h` — `USizeBox`:21.
 - `Components/ScaleBox.h` — `UScaleBox`:21.

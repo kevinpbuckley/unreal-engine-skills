@@ -8,7 +8,7 @@ sends, and Audio Gameplay Volumes. Grounded in UE 5.8
 ## Key types
 
 - `USoundAttenuation` — UObject asset wrapping an `FSoundAttenuationSettings`
-  struct (`SoundAttenuation.h`:453–459). Create one in the Content Browser and
+  struct (`SoundAttenuation.h`:456–462). Create one in the Content Browser and
   assign it to sounds or pass it to play functions.
 - `FSoundAttenuationSettings` — the full settings struct (`SoundAttenuation.h`:148).
   Can be embedded directly on a `UAudioComponent` via `AttenuationOverrides` when

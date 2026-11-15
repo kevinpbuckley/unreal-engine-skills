@@ -1,22 +1,21 @@
 ---
 name: ue-umg-and-slate
 description: >
-  Build game UI in Unreal — UMG user widgets (UUserWidget) with the C++ lifecycle
-  (NativeOnInitialized, NativeConstruct, NativeDestruct, NativeTick), the widget tree and
-  common leaf/panel widgets (UButton/UTextBlock/UImage/UProgressBar/UCanvasPanel/UHorizontalBox/
-  UVerticalBox/UOverlay), the meta=(BindWidget/BindWidgetOptional) pattern to wire C++ to
-  Blueprint-designed widgets, CreateWidget + AddToViewport / RemoveFromParent, UWidgetComponent
-  for 3D in-world UI, event binding (OnClicked AddDynamic), the Slate layer (SWidget,
-  SCompoundWidget, declarative syntax), and CommonUI for input-routed multiplatform menus —
-  plus UI best practices and performance optimization: invalidation boxes/retainer boxes/
-  volatility, widget pooling (FUserWidgetPool, ListView), event-driven updates instead of
-  property bindings or Tick, Canvas Panel nesting rules, animation cost tiers, MVVM
-  viewmodels (FieldNotify), CommonUI layer stacks (the Lyra pattern), DPI scaling, and safe
-  zones. Use when creating HUDs/menus/inventory/widgets, wiring UI to gameplay in C++,
-  handling button/input events, choosing UMG vs Slate vs CommonUI, debugging BindWidget name
-  mismatches, optimizing slow UI, or architecting screen flow for a production game.
+  Build game UI in Unreal — UMG user widgets (UUserWidget) and their C++ lifecycle
+  (NativeOnInitialized, NativeConstruct, NativeDestruct, NativeTick), common widgets
+  (UButton, UTextBlock, UImage, UProgressBar, UCanvasPanel, boxes, UOverlay), the
+  meta=(BindWidget/BindWidgetOptional) pattern, CreateWidget + AddToViewport / RemoveFromParent,
+  UWidgetComponent for in-world UI, OnClicked AddDynamic, the Slate layer (SWidget,
+  SCompoundWidget), CommonUI layer stacks, MVVM viewmodels (FieldNotify), font measuring
+  (FSlateFontMeasure, LetterSpacing), DPI scaling and safe zones, and UI performance
+  (invalidation and retainer boxes, volatility, widget pooling, ListView, event-driven updates
+  instead of bindings or Tick). Use when creating HUDs, menus, inventory or widgets, wiring UI to
+  gameplay in C++, handling button or input events, choosing UMG vs Slate vs CommonUI, debugging
+  BindWidget name mismatches, text that renders wider than measured, slow UI, or screen flow for
+  a production game.
 metadata:
-  engine-version: "5.8"
+  aliases: "UI, HUD, widget, widgets, UMG, Slate, CommonUI, menu, text block, button"
+  engine-version: "5.9"
   category: ui
 ---
 
@@ -195,7 +194,7 @@ void AMyPlayerController::HideHUD()
 }
 ```
 
-- `CreateWidget` is a templated free function (`UserWidget.h`:1819); it accepts a `UWorld*`,
+- `CreateWidget` is a templated free function (`UserWidget.h`:1833); it accepts a `UWorld*`,
   `APlayerController*`, `UGameInstance*`, `UWidget*`, or `UWidgetTree*` as owner.
 - Hold widget pointers in a `UPROPERTY()` — without it the GC destroys the widget even if it
   is displayed (`ue-memory-and-gc`).
@@ -274,7 +273,7 @@ multiplatform UI:
 - **`UCommonUserWidget`** — `UUserWidget` + input-action binding (`CommonUserWidget.h`:33).
 - **`UCommonActivatableWidget`** — adds activate/deactivate semantics and a back-navigation
   stack; the widget can turn on/off without being removed from the hierarchy
-  (`CommonActivatableWidget.h`:43).
+  (`CommonActivatableWidget.h`:44).
 - **Input routing** — only the topmost active activatable widget in a layer receives input;
   no need to manually manage focus across multiple overlapping menus.
 - **Style assets** — `UCommonButtonBase`, `UCommonTextBlock`, etc., separate style data from
@@ -316,8 +315,8 @@ public:
 ```
 
 Core Slate types:
-- `SWidget` (`SlateCore/Public/Widgets/SWidget.h`) — base; pure abstract (`OnPaint`:1771,
-  `ComputeDesiredSize`:774, `GetChildren`:899).
+- `SWidget` (`SlateCore/Public/Widgets/SWidget.h`) — base; pure abstract (`OnPaint`:1772,
+  `ComputeDesiredSize`:777, `GetChildren`:902).
 - `SCompoundWidget` (`SCompoundWidget.h`) — single `ChildSlot`; base for most authored widgets.
 - `SLeafWidget` — no children; for custom-drawn leaf elements.
 - `SNew(WidgetType)` / `SAssignNew(Ptr, WidgetType)` — declarative construction macros
@@ -362,6 +361,16 @@ For game UI, stay in UMG/CommonUI — Slate skips `UPROPERTY`/GC and needs more 
 - **`NativeTick` never called** — `UUserWidget` has `DisableNativeTick` by default; the tick
   only runs if you override `NativeTick` and the widget has latent actions or Blueprint tick
   is set to `Auto` (`EWidgetTickFrequency`:`UserWidget.h`:117).
+- **`FSlateFontMeasure::Measure` ignores `FSlateFontInfo::LetterSpacing`.** Tracking is
+  applied only by the text shaper (`SlateTextShaper.cpp`), which adds
+  `LetterSpacing * FontScale * Size / 1000` (truncated to whole units) to each glyph's advance
+  before the next glyph. A label measured with
+  `FSlateApplication::Get().GetRenderer()->GetFontMeasureService()->Measure(Text, Font)` to
+  size a box, wrap, or auto-shrink a font therefore comes out narrower than it draws when
+  `LetterSpacing` is set (wide-tracked titles overflow their box). Either add
+  `(Len - 1) * LetterSpacing * Size * Scale / 1000` yourself, or measure the real widget:
+  `TextBlock->ForceLayoutPrepass(); TextBlock->GetDesiredSize()` goes through the shaped text
+  layout and includes the tracking (UE 5.9 source; 5.8 behaves the same).
 
 ## Version notes
 
@@ -374,7 +383,7 @@ For game UI, stay in UMG/CommonUI — Slate skips `UPROPERTY`/GC and needs more 
 
 ## References & source material
 
-Engine source (UE 5.8, under `Engine/Source/`):
+Engine source (UE 5.9, under `Engine/Source/`):
 - `Runtime/UMG/Public/Blueprint/UserWidget.h` — `UUserWidget` UCLASS:280,
   `AddToViewport`:342, `AddToPlayerScreen`:351, `RemoveFromViewport` (deprecated 5.1):358,
   `NativeOnInitialized`:1582, `NativePreConstruct`:1583, `NativeConstruct`:1584,
@@ -391,15 +400,20 @@ Engine source (UE 5.8, under `Engine/Source/`):
 - `Runtime/UMG/Public/Components/PanelWidget.h` — `UPanelWidget`:14, `AddChild`:59,
   `GetChildAt`:36, `GetChildrenCount`:28.
 - `Runtime/UMG/Public/Components/WidgetComponent.h` — `UWidgetComponent`:95,
-  `EWidgetSpace`:25, `GetWidget`:207, `SetWidget`:214, `SetWidgetClass`:338.
-- `Runtime/SlateCore/Public/Widgets/SWidget.h` — `SWidget`, `ComputeDesiredSize`:774,
-  `GetChildren`:899, `OnPaint`:1771.
+  `EWidgetSpace`:25, `GetWidget`:207, `SetWidget`:214, `SetWidgetClass`:365.
+- `Runtime/SlateCore/Public/Widgets/SWidget.h` — `SWidget`, `ComputeDesiredSize`:777,
+  `GetChildren`:902, `OnPaint`:1772.
 - `Runtime/SlateCore/Public/Widgets/SCompoundWidget.h` — `SCompoundWidget`:21, `ChildSlot`:113.
 - `Runtime/SlateCore/Public/Widgets/DeclarativeSyntaxSupport.h` — `SNew`:37, `SAssignNew`:41.
+- `Runtime/SlateCore/Public/Fonts/FontMeasure.h` — `FSlateFontMeasure::Measure` (no
+  letter-spacing term; `Private/Fonts/FontMeasure.cpp` never reads it).
+- `Runtime/SlateCore/Public/Fonts/SlateFontInfo.h` — `FSlateFontInfo::LetterSpacing` (1/1000 em).
+- `Runtime/SlateCore/Private/Fonts/SlateTextShaper.cpp` — where `LetterSpacing` is added to
+  each glyph's `XAdvance`.
 - `Engine/Plugins/Runtime/CommonUI/Source/CommonUI/Public/CommonUserWidget.h` —
   `UCommonUserWidget`:33.
 - `Engine/Plugins/Runtime/CommonUI/Source/CommonUI/Public/CommonActivatableWidget.h` —
-  `UCommonActivatableWidget`:43, `ActivateWidget`:52, `DeactivateWidget`:55.
+  `UCommonActivatableWidget`:44, `ActivateWidget`:53, `DeactivateWidget`:56.
 
 Official docs (UE 5.8, verified):
 - Creating User Interfaces —

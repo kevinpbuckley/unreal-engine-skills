@@ -34,7 +34,7 @@ void UMySubsystem::Initialize(FSubsystemCollectionBase& Collection)
 }
 ```
 
-`InitializeDependency` (`SubsystemCollection.h`:35, template form :42) initializes the named
+`InitializeDependency` (`SubsystemCollection.h`:53, template form :60) initializes the named
 class immediately if not already done, then returns its pointer. It only works within the same
 collection — world and game-instance subsystems cannot declare dependencies on each other.
 Circular dependency cycles are detected at runtime and result in an assertion failure.
@@ -85,7 +85,7 @@ TSubsystem* S = GI->GetSubsystem<TSubsystem>();                           // Gam
 TSubsystem* S = UGameInstance::GetSubsystem<TSubsystem>(GI);             // :450 (null-safe static)
 
 // World:
-TSubsystem* S = World->GetSubsystem<TSubsystem>();                        // World.h:4312
+TSubsystem* S = World->GetSubsystem<TSubsystem>();                        // World.h:4313
 TSubsystem& S = *World->GetSubsystemChecked<TSubsystem>();                // :4321 (asserts on null)
 TSubsystem* S = UWorld::GetSubsystem<TSubsystem>(World);                  // :4331 (null-safe static)
 
@@ -95,7 +95,7 @@ TSubsystem* S = ULocalPlayer::GetSubsystem<TSubsystem>(LP);              // :375
 TSubsystem* S = ULocalPlayer::GetSubsystemFromController<TSubsystem>(PC);// :389
 
 // Engine:
-TSubsystem* S = GEngine->GetEngineSubsystem<TSubsystem>();                // Engine.h:3847
+TSubsystem* S = GEngine->GetEngineSubsystem<TSubsystem>();                // Engine.h:3837
 ```
 
 ### Multiple implementations (interface pattern)
@@ -121,12 +121,25 @@ appears under the relevant category (GameInstance Subsystems, World Subsystems, 
 
 ### Python access (editor only)
 
+`USubsystemBlueprintLibrary` is not in Python (its functions are `BlueprintInternalUseOnly`).
+Use the `unreal` module's free functions:
+
 ```python
 # Engine subsystem:
 sub = unreal.get_engine_subsystem(unreal.MyEngineSubsystem)
 # Editor subsystem:
 sub = unreal.get_editor_subsystem(unreal.MyEditorSubsystem)
+# UE 5.9+: game-side subsystems of a PIE or game world
+world = unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_game_world()  # None = no PIE
+gi = unreal.GameplayStatics.get_game_instance(world)
+sub = unreal.get_game_instance_subsystem(gi, unreal.MyGameInstanceSubsystem)
+sub = unreal.get_world_subsystem(world, unreal.MyWorldSubsystem)
+sub = unreal.get_local_player_subsystem(local_player, unreal.MyLocalPlayerSubsystem)
 ```
+
+The getter must match the subsystem kind (`Cannot nativize 'X' as 'Class'` otherwise); each
+returns `None` when the owner does not create the subsystem. `gi.get_subsystem(...)` and
+`unreal.SubsystemBlueprintLibrary` do not exist.
 
 ## Null-safety rules
 

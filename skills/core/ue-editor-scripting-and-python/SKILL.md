@@ -2,17 +2,20 @@
 name: ue-editor-scripting-and-python
 description: >
   Automate and extend the Unreal Editor using Python (the `unreal` module, startup scripts,
-  commandlets), Editor Utility Widgets/Blueprints (Blutility — UEditorUtilityWidget,
-  UEditorUtilityObject, UEditorUtilityWidgetBlueprint, UAssetActionUtility), the editor
+  commandlets, and the UE 5.9 execute_python agent tool), Editor Utility Widgets/Blueprints
+  (Blutility: UEditorUtilityWidget, UAssetActionUtility), the editor
   scripting subsystems (UEditorActorSubsystem, UEditorAssetSubsystem, ULevelEditorSubsystem,
-  UAssetEditorSubsystem, UEditorUtilitySubsystem), and how C++ UFUNCTION specifiers
-  (BlueprintCallable, CallInEditor, ScriptMethod, ScriptName) control which APIs surface in
-  Python and Blueprints. Use when batch-processing assets, building in-editor tools or
-  dockable UMG panels, running headless Python commandlets in CI, scripting repetitive
-  editor tasks, or exposing custom C++ editor APIs to Python/Blueprints. Editor-only —
-  never used in packaged games.
+  UAssetEditorSubsystem), and how UFUNCTION specifiers (BlueprintCallable,
+  BlueprintInternalUseOnly, ScriptMethod, ScriptName) control what surfaces in Python. Use
+  when batch-processing assets, building in-editor tools, running headless Python, scripting
+  the editor from an agent, or after a Python error such as "has no attribute",
+  "is protected and cannot be read", "Cannot set ... on a temporary value", "Cannot
+  pythonize", "Cannot nativize", "Object of type Array is not JSON serializable", "Text and
+  str", "There are unsaved level changes" (LoadLevel), "imports must be at the top level of
+  the script", "running a slow task". Editor-only, never in packaged games.
 metadata:
-  engine-version: "5.8"
+  aliases: "editor Python, Python, unreal module, execute_python, Editor Utility Widget, Blutility, editor scripting, automation script"
+  engine-version: "5.9"
   category: tooling
 ---
 
@@ -60,12 +63,32 @@ Enum values become `UPPER_SNAKE_CASE`. The `U`/`A`/`F`/`T` prefix is dropped.
 ```python
 import unreal
 
-actor = unreal.EditorActorSubsystem().get_actor_reference("PersistentLevel.MyActor")
+actor = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)\
+    .get_actor_reference("PersistentLevel.MyActor")
 # BlueprintReadWrite → direct attribute access
 val = actor.some_property
 # EditAnywhere → use get/set_editor_property for pre/post-edit notifications
 actor.set_editor_property("hidden_in_game", True)
 ```
+
+**The coercions are not fully transparent** (each one cost failed calls in a 5.9 project):
+`Text + str` raises (use `str(text)`); a read array is an `unreal.Array`, which `json.dumps`
+rejects (use `list(arr)`); a protected C++ property `is protected and cannot be read` even
+when it is `BlueprintReadWrite`; assigning a field of a struct read out of an array raises
+`Cannot set ... on a temporary value` (copy, edit, write the whole array back, or use the 5.9
+`edit()` / `edit_property()` editors); enum entries hidden with `UMETA(Hidden)` are not
+exported and reading one raises `Cannot pythonize`. Functions that are
+`BlueprintInternalUseOnly` are not generated at all, which is why
+`unreal.SubsystemBlueprintLibrary` does not exist; the subsystem getters are free functions:
+`get_editor_subsystem`, `get_engine_subsystem`, and in 5.9 `get_game_instance_subsystem`,
+`get_world_subsystem`, `get_local_player_subsystem`.
+
+**Levels and dirty state:** in 5.9 `LevelEditorSubsystem.load_level(path, policy)` takes an
+`unreal.LevelEditorUnsavedChangesPolicy` (`FAIL` by default, `SAVE`, `DISCARD`). `Package` has
+no `is_dirty` / `set_dirty_flag`; inspect with
+`EditorLoadingAndSavingUtils.get_dirty_content_packages()` / `get_dirty_map_packages()`, mark
+with `obj.modify()`, and save with `save_asset(path, only_if_is_dirty=False)` when an edit did
+not set the flag.
 
 **Transactions (undo/redo support):**
 ```python
@@ -97,7 +120,23 @@ UnrealEditor-Cmd.exe MyProject.uproject -run=pythonscript -script="my_script.py"
 Source: `Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PythonScriptCommandlet.h:10`.
 
 See [references/python-api.md](references/python-api.md) for the C++↔Python mapping,
-`get_editor_subsystem`, type coercion, logging, and subsystem access patterns.
+the subsystem getters, type coercion and its limits, property errors, enums, level loading,
+dirty packages, logging, and commandlets.
+
+### Python from an agent: `execute_python` (UE 5.9)
+
+UE 5.9's `ToolsetRegistry` + `ModelContextProtocol` plugins serve editor tools over MCP; the
+tool `editor_toolset.toolsets.python_scripting.PythonScriptingTools.execute_python` runs a
+Python script in the editor (`EditorToolset` plugin, `python_scripting.py`). Its contract in
+brief: `script` is `{"language": "Python", "content": ...}`; each call gets a fresh namespace
+with `unreal`, `asyncio` and `call_tool` injected; top-level `await` works; imports must be at
+the top level and `time.sleep` / blocking `subprocess` / network calls are rejected before the
+script runs; the final expression is the result. While a slow task runs, the server refuses
+every tool ("Not run: the Unreal Editor is running a slow task"), and a client timeout does
+not stop the script, so keep each call under about 50 s. Full contract, `call_tool` rules,
+helper modules and a headless second editor:
+[references/execute-python-toolset.md](references/execute-python-toolset.md). Driving a
+running PIE game from Python: `ue-pie-python`.
 
 ---
 
@@ -177,16 +216,16 @@ EAS->RenameAsset("/Game/Src", "/Game/Dst");                 // :215
 EAS->DeleteAsset("/Game/MyFolder/MyAsset");                 // :155
 ```
 
-### `ULevelEditorSubsystem` (`Editor/LevelEditor/Public/LevelEditorSubsystem.h:38`)
+### `ULevelEditorSubsystem` (`Editor/LevelEditor/Public/LevelEditorSubsystem.h:54`)
 
 Level-file and viewport operations:
 
 ```cpp
 ULevelEditorSubsystem* LS = GEditor->GetEditorSubsystem<ULevelEditorSubsystem>();
-LS->NewLevel("/Game/Maps/MyLevel");        // :147
-LS->LoadLevel("/Game/Maps/Existing");      // :167
-LS->SaveCurrentLevel();                    // :174
-LS->EditorRequestBeginPlay();              // :78
+LS->NewLevel("/Game/Maps/MyLevel");        // :187
+LS->LoadLevel("/Game/Maps/Existing", ELevelEditorUnsavedChangesPolicy::Fail); // :210 (policy param new in 5.9)
+LS->SaveCurrentLevel();                    // :217
+LS->EditorRequestBeginPlay();              // :101
 ```
 
 ### `UAssetEditorSubsystem` (`Editor/UnrealEd/Public/Subsystems/AssetEditorSubsystem.h:112`)
@@ -255,8 +294,14 @@ Source: `Runtime/CoreUObject/Public/UObject/ObjectMacros.h:1285`.
   Prefer `UEditorAssetSubsystem` and `UEditorActorSubsystem` in all new code.
 - `UAssetActionUtility::GetSupportedClass()` deprecated UE 5.2; use the `SupportedClasses`
   array in class defaults instead.
-- Python 3.11.8 is the embedded version for UE 5.8 (VFX Reference Platform CY2024).
-  Set `UE_PYTHON_DIR` to embed a different CPython build (requires source rebuild).
+- Python 3.11.8 is the embedded version for UE 5.8 (VFX Reference Platform CY2024); 5.9
+  still ships Python 3.11. Set `UE_PYTHON_DIR` to embed a different CPython build (requires
+  source rebuild).
+- **UE 5.9:** `LoadLevel` gained the `ELevelEditorUnsavedChangesPolicy` parameter (default
+  `Fail`); Python gained `get_game_instance_subsystem`, `get_world_subsystem` and
+  `get_local_player_subsystem`, and `edit` / `edit_each` / `modify` on containers plus
+  `edit_property` / `modify_property` on objects and structs; the engine ships the AI toolset
+  system with the `execute_python` tool.
 
 ## Gotchas
 
@@ -275,10 +320,16 @@ Source: `Runtime/CoreUObject/Public/UObject/ObjectMacros.h:1285`.
 - **`SpawnActorFromClass` vs `SpawnActor`** — `SpawnActorFromClass` on
   `UEditorActorSubsystem` places into the editor world and notifies the editor; use it
   instead of `UWorld::SpawnActor` for editor-placed actors.
+- **Guessing names** — in a 5.9 project 110 of 320 failed editor-Python calls were a guessed
+  attribute or property name. Check what this session exposes (`dir()`, `help()`, or the 5.9
+  `search_symbols` / `get_symbol` tools) before calling; a C++ function that is not a
+  `UFUNCTION`, is `BlueprintInternalUseOnly`, or is protected is simply not there.
+- **Chaining on `None`** — `load_asset`, `find_object`, `get_game_world` and similar return
+  `None` instead of raising; check before calling a method on the result.
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 
 **Blutility** (`Engine/Source/Editor/Blutility/`):
 - `Classes/EditorUtilityWidget.h` — `UEditorUtilityWidget`:27, `Run()`:34, `TabDisplayName`:74
@@ -294,15 +345,20 @@ Engine source (UE 5.8):
 - `UnrealEditorSubsystem.h` — `UUnrealEditorSubsystem`:17, `GetLevelViewportCameraInfo`:32
 
 **Level editor** (`Engine/Source/Editor/LevelEditor/Public/`):
-- `LevelEditorSubsystem.h` — `ULevelEditorSubsystem`:38, `NewLevel`:147, `LoadLevel`:167, `SaveCurrentLevel`:174, `EditorRequestBeginPlay`:78
+- `LevelEditorSubsystem.h` — `ELevelEditorUnsavedChangesPolicy`:39, `ULevelEditorSubsystem`:54, `EditorRequestBeginPlay`:101, `GetPlaySettings`:109, `NewLevel`:187, `LoadLevel`:210, `SaveCurrentLevel`:217
 
 **Python plugin** (`Engine/Plugins/Experimental/PythonScriptPlugin/`):
-- `Source/PythonScriptPlugin/Public/IPythonScriptPlugin.h` — `IPythonScriptPlugin`:11, `ExecPythonCommand`:54
+- `Source/PythonScriptPlugin/Public/IPythonScriptPlugin.h` — `IPythonScriptPlugin`:15, `ExecPythonCommand`:58
 - `Source/PythonScriptPlugin/Private/PythonScriptCommandlet.h` — `UPythonScriptCommandlet`:10
 - `Source/PythonScriptPlugin/Private/PythonScriptPluginSettings.h` — `StartupScripts`:67, `AdditionalPaths`:71
+- `Source/PythonScriptPlugin/Private/PyEngine.cpp` — `get_world_subsystem`, `get_game_instance_subsystem`, `get_local_player_subsystem` (5.9)
+- `Source/PythonScriptPlugin/Private/PyGenUtil.cpp` — `IsScriptExposedFunction` (skips `BlueprintInternalUseOnly`)
+
+**Agent tool** (`Engine/Plugins/Experimental/Toolsets/EditorToolset/`, UE 5.9):
+- `Content/Python/editor_toolset/toolsets/python_scripting.py` — `PythonScriptingTools.execute_python`, `read_me`, `search_symbols`, `get_symbol`
 
 **Reflection/meta specifiers** (`Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h`):
-- `CallInEditor`:1005, `ScriptName`:1243, `ScriptMethod`:1671, `ScriptMethodSelfReturn`:1674, `ScriptMethodMutable`:1677
+- `CallInEditor`:1047, `ScriptName`:1285, `ScriptMethod`:1723, `ScriptMethodSelfReturn`:1726, `ScriptMethodMutable`:1729
 
 **Deprecated (EditorScriptingUtilities plugin, prefer subsystems)**:
 - `Engine/Plugins/Editor/EditorScriptingUtilities/Source/EditorScriptingUtilities/Public/EditorAssetLibrary.h`
@@ -320,6 +376,12 @@ Deep-dive references in this skill:
 - [references/editor-utility-widgets.md](references/editor-utility-widgets.md) — Blutility
   class hierarchy, tab lifecycle, `UEditorUtilityTask`, scripted actions.
 - [references/python-api.md](references/python-api.md) — C++↔Python naming rules, type
-  mapping, `get_editor_subsystem`, transactions, logging, commandlet invocation.
+  mapping and where it is not transparent, subsystem getters, property errors, editing
+  struct/array values in place, enums, level loading policy, dirty packages, transactions,
+  logging, commandlet invocation.
+- [references/execute-python-toolset.md](references/execute-python-toolset.md) — the UE 5.9
+  `execute_python` agent tool: script shape, namespace, rejected constructs, `call_tool`,
+  slow tasks and timeouts, helper modules, a headless second editor.
 
-Related skills: `ue-subsystems`, `ue-plugins-and-modules`, `ue-asset-management`.
+Related skills: `ue-pie-python` (Python against a running PIE game), `ue-subsystems`,
+`ue-plugins-and-modules`, `ue-asset-management`.

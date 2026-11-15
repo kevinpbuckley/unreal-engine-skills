@@ -24,11 +24,11 @@ UMyEngineSubsystem* Sub = GEngine->GetEngineSubsystem<UMyEngineSubsystem>();
 ```
 
 **Dynamic loading:** `UEngineSubsystem` (and `UEditorSubsystem`) are *dynamic* subsystems via
-`UDynamicSubsystem` (`Subsystem.h`:80). If a plugin containing a `UEngineSubsystem` subclass is
+`UDynamicSubsystem` (`Subsystem.h`:90). If a plugin containing a `UEngineSubsystem` subclass is
 loaded at runtime, the collection instantiates the subsystem automatically. Similarly, unloading
 the plugin calls `Deinitialize` and removes the instance. Use
 `FSubsystemCollectionBase::ActivateExternalSubsystem` / `DeactivateExternalSubsystem`
-(`SubsystemCollection.h`:50, :55) if you need to manually trigger this.
+(`SubsystemCollection.h`:68, :73) if you need to manually trigger this.
 
 **Use for:** process-wide services that outlive any game session — asset registries, analytics
 services, cross-session caches, plugin lifecycle management.
@@ -144,7 +144,7 @@ public:
 };
 ```
 
-`GetStatId` is declared `PURE_VIRTUAL` in `WorldSubsystem.h`:92. Every concrete subclass must
+`GetStatId` is declared `PURE_VIRTUAL` in `WorldSubsystem.h`:93. Every concrete subclass must
 implement it; forgetting it results in a compile error because the class remains abstract.
 
 `IsTickable` defaults to `true`. Override it if tick should be paused conditionally.
@@ -192,7 +192,7 @@ utility extensions, scripted validation pipelines.
 
 - `UWorldSubsystem::UpdateStreamingState` was deprecated in UE 5.5 and removed in 5.8.
   Implement `IStreamingWorldSubsystemInterface` instead if streaming state callbacks are needed.
-- `GetSubsystemChecked` on `UWorld` (`World.h`:4321) is new in UE 5.x; it returns
+- `GetSubsystemChecked` on `UWorld` (`World.h`:4322) is new in UE 5.x; it returns
   `TNotNull<T*>` and asserts when the subsystem is absent.
 - The subsystem framework is stable across UE5; the per-type headers and class hierarchy
   have not changed since the feature was introduced in UE 4.22.

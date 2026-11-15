@@ -10,7 +10,8 @@ description: >
   it to the process, game session, world, or local player — and when choosing between a
   subsystem, a manager actor, or a GameInstance override.
 metadata:
-  engine-version: "5.8"
+  aliases: "subsystem, subsystems, singleton, manager, service, GameInstanceSubsystem, WorldSubsystem"
+  engine-version: "5.9"
   category: gameplay-framework
 ---
 
@@ -139,6 +140,28 @@ The node is available for any subsystem that is a `UCLASS()` (even without `Blue
 long as the function is marked `BlueprintCallable`. `USubsystemBlueprintLibrary` provides the
 static getters that Blueprint graph searches surface.
 
+In **Python** that library does not exist: every getter on it is `BlueprintInternalUseOnly`,
+which the Python generator skips, so `unreal.SubsystemBlueprintLibrary` raises
+`module 'unreal' has no attribute 'SubsystemBlueprintLibrary'`. Use the free functions of the
+`unreal` module, one per subsystem kind; the owner argument must be the right kind of object
+(a `GameInstance`, a `World`, a `LocalPlayer`), and a class of the wrong kind raises
+`Cannot nativize 'X' as 'Class'`:
+
+```python
+unreal.get_engine_subsystem(unreal.MyEngineSub)
+unreal.get_editor_subsystem(unreal.MyEditorSub)                    # editor only
+gi = unreal.GameplayStatics.get_game_instance(world)               # world: a PIE or game world
+unreal.get_game_instance_subsystem(gi, unreal.MyGameInstanceSub)   # 5.9+
+unreal.get_world_subsystem(world, unreal.MyWorldSub)               # 5.9+
+unreal.get_local_player_subsystem(local_player, unreal.MyLPSub)    # 5.9+
+```
+
+These also do not exist: `gi.get_subsystem(...)`, `MySub.get()`. *Version note:* the
+game-instance, world and local-player getters are new in UE 5.9 (`PyEngine.cpp`); 5.8 Python has
+only the engine and editor getters, so reaching a game subsystem from 5.8 Python needs your own
+`BlueprintCallable` static that returns it. All return `None` when the owner does not create
+that subsystem.
+
 ## Dependency ordering
 
 ```cpp
@@ -220,27 +243,34 @@ caching, and UI logic. See `ue-networking-and-replication` and `ue-gameplay-fram
 
 ## References & source material
 
-Engine source (UE 5.8, `Engine/Source/Runtime/Engine/Public/Subsystems/`):
-- `Subsystem.h` — `USubsystem`:44 — `ShouldCreateSubsystem`:56, `Initialize`:59,
-  `Deinitialize`:62. `UDynamicSubsystem`:80 (base for `UEngineSubsystem`).
-- `SubsystemCollection.h` — `FSubsystemCollectionBase`:16, `InitializeDependency`:35,
-  `ActivateExternalSubsystem`:50, `DeactivateExternalSubsystem`:55.
+Engine source (UE 5.9, `Engine/Source/Runtime/Engine/Public/Subsystems/`):
+- `Subsystem.h` — `USubsystem`:44 — `ShouldCreateSubsystem`:56, `Initialize`:69,
+  `Deinitialize`:72. `UDynamicSubsystem`:90 (base for `UEngineSubsystem`).
+- `SubsystemCollection.h` — `FSubsystemCollectionBase`:16, `InitializeDependency`:53,
+  `ActivateExternalSubsystem`:68, `DeactivateExternalSubsystem`:73.
 - `GameInstanceSubsystem.h` — `UGameInstanceSubsystem`:16 (`Within=GameInstance`),
   `GetGameInstance()`:25.
 - `WorldSubsystem.h` — `UWorldSubsystem`:16 — `PostInitialize`:37,
   `OnWorldBeginPlay`:43, `DoesSupportWorldType`:66. `UTickableWorldSubsystem`:80 —
-  `GetStatId` pure virtual:92.
+  `GetStatId` pure virtual:93.
 - `LocalPlayerSubsystem.h` — `ULocalPlayerSubsystem`:17 (`Within=LocalPlayer`),
   `PlayerControllerChanged`:35.
 - `EngineSubsystem.h` — `UEngineSubsystem`:20 (derives from `UDynamicSubsystem`).
-- `SubsystemBlueprintLibrary.h` — Blueprint-internal getters for all subsystem types:15.
+- `SubsystemBlueprintLibrary.h` — Blueprint-internal getters for all subsystem types:15
+  (each `meta = (BlueprintInternalUseOnly = "true")`, so none reach Python).
 
-Engine source (UE 5.8, `Engine/Source/Runtime/Engine/Classes/Engine/`):
+Python getters (UE 5.9): `Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyEngine.cpp`
+(`get_world_subsystem`, `get_game_instance_subsystem`, `get_local_player_subsystem`) and
+`Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyEditor.cpp`
+(`get_engine_subsystem`, `get_editor_subsystem`); the generator's skip rule is
+`IsScriptExposedFunction` in `Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyGenUtil.cpp`.
+
+Engine source (UE 5.9, `Engine/Source/Runtime/Engine/Classes/Engine/`):
 - `GameInstance.h` — `GetSubsystem<T>()`:440, static `GetSubsystem(GameInstance*)`:450.
-- `World.h` — `GetSubsystem<T>()`:4312, `GetSubsystemChecked<T>()`:4321,
-  static `GetSubsystem(World*)`:4331.
+- `World.h` — `GetSubsystem<T>()`:4313, `GetSubsystemChecked<T>()`:4322,
+  static `GetSubsystem(World*)`:4332.
 - `LocalPlayer.h` — `GetSubsystem<T>()`:365, `GetSubsystemFromController<T>()`:389.
-- `Engine.h` — `GetEngineSubsystem<T>()`:3847, `EngineSubsystemCollection`:3877.
+- `Engine.h` — `GetEngineSubsystem<T>()`:3837, `EngineSubsystemCollection`:3886.
 
 Official docs (UE 5.8):
 - Programming Subsystems —

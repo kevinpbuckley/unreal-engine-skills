@@ -71,7 +71,7 @@ Key properties (`Engine/Classes/Engine/StaticMeshSocket.h`):
 Retrieve the socket's current world-space transform at runtime:
 
 ```cpp
-UStaticMeshSocket const* S = Mesh->GetSocketByName(TEXT("MuzzleFlash")); // line 921
+UStaticMeshSocket const* S = Mesh->GetSocketByName(TEXT("MuzzleFlash")); // line 940
 if (S)
 {
     FTransform WT = Mesh->GetSocketTransform(TEXT("MuzzleFlash"));
@@ -84,7 +84,7 @@ the `UStaticMesh` asset and are shared across all component instances.
 
 ## Nanite settings
 
-`FMeshNaniteSettings` (declared `Engine/Classes/Engine/EngineTypes.h`:3280):
+`FMeshNaniteSettings` (declared `Engine/Classes/Engine/EngineTypes.h`:3286):
 
 | Field | Type | Meaning |
 |---|---|---|

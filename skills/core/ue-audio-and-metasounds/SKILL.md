@@ -8,7 +8,8 @@ description: Play and control audio in Unreal — the sound asset types (SoundWa
   mixing/ducking audio, driving procedural audio with MetaSounds, or debugging silent
   sounds, voice spam, or parameter mismatches.
 metadata:
-  engine-version: "5.8"
+  aliases: "audio, sound, SoundWave, MetaSound, MetaSounds, SoundCue, music, voice, VO, dialogue audio"
+  engine-version: "5.9"
   category: vfx-audio
 ---
 
@@ -205,6 +206,12 @@ appropriate steal rule.
   looping sounds silently continue (`PlayWhenSilent`), restart, or drop when
   evicted. Default is `Disabled`; forgotten virtualization config is a common
   cause of music "disappearing" under heavy load.
+- **Sound length from editor Python** — `USoundBase::GetDuration()` is not a `UFUNCTION`, so
+  `snd.get_duration()` raises `'SoundWave' object has no attribute 'get_duration'`. Read the
+  reflected property instead: `snd.get_editor_property("duration")` (seconds, a
+  `BlueprintReadOnly` float on `USoundBase`). Looping cues and MetaSounds with no fixed length
+  store about 10000 (`INDEFINITELY_LOOPING_DURATION`); an imported looping wave keeps its source
+  length. Size Sequencer audio sections and shot timings from this value, not from an estimate.
 
 ## Version notes
 
@@ -221,7 +228,7 @@ appropriate steal rule.
 
 ## References & source material
 
-Engine source (UE 5.8):
+Engine source (UE 5.9):
 - `Runtime/Engine/Classes/Components/AudioComponent.h` — `UAudioComponent`:167;
   `Play`:517, `Stop`:583, `FadeIn`:500, `FadeOut`:511, `SetFloatParameter`:548,
   `SetBoolParameter`:534, `SetIntParameter`:541, `SetWaveParameter`:622,
@@ -230,21 +237,22 @@ Engine source (UE 5.8):
   `ISoundParameterControllerInterface`:24, `SetTriggerParameter`:32.
 - `Runtime/Engine/Classes/Sound/SoundBase.h` — `USoundBase`:108,
   `SoundClassObject`:117, `AttenuationSettings`:222, `ConcurrencySet`:188,
-  `VirtualizationMode`:170, `EVirtualizationMode`:57.
-- `Runtime/Engine/Classes/Sound/SoundWave.h` — `USoundWave`:421 (extends
+  `VirtualizationMode`:170, `EVirtualizationMode`:57, `Duration` (the script-readable length;
+  `GetDuration()` is C++ only).
+- `Runtime/Engine/Classes/Sound/SoundWave.h` — `USoundWave`:422 (extends
   `USoundBase`; leaf asset for raw PCM audio).
 - `Runtime/Engine/Classes/Sound/SoundCue.h` — `USoundCue`:90 (legacy node
   graph over `USoundWave` assets).
-- `Runtime/Engine/Classes/Sound/SoundAttenuation.h` — `USoundAttenuation`:453,
+- `Runtime/Engine/Classes/Sound/SoundAttenuation.h` — `USoundAttenuation`:456,
   `FSoundAttenuationSettings`:148.
 - `Runtime/Engine/Classes/Sound/SoundClass.h` — `USoundClass`, `FSoundClassProperties`:54.
 - `Runtime/Engine/Classes/Sound/SoundSubmix.h` — `USoundSubmix`, submix effects.
 - `Runtime/Engine/Classes/Sound/SoundConcurrency.h` — `FSoundConcurrencySettings`:74,
   `EMaxConcurrentResolutionRule`:31.
 - `Runtime/Engine/Classes/Sound/AudioBus.h` — `UAudioBus`, `EAudioBusChannels`:13.
-- `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — `PlaySound2D`:680,
-  `SpawnSound2D`:699, `PlaySoundAtLocation`:732, `SpawnSoundAtLocation`:754,
-  `SpawnSoundAttached`:778.
+- `Runtime/Engine/Classes/Kismet/GameplayStatics.h` — `PlaySound2D`:629,
+  `SpawnSound2D`:648, `PlaySoundAtLocation`:681, `SpawnSoundAtLocation`:703,
+  `SpawnSoundAttached`:727.
 - `Plugins/Runtime/Metasound/Source/MetasoundEngine/Public/MetasoundSource.h` —
   `UMetaSoundSource`:89, `GetGeneratorForAudioComponent`:326,
   `OnGeneratorInstanceInfoCreated`:343.
